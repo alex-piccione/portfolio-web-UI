@@ -17,11 +17,14 @@ a {
 
 
 .default-page 
-.wrapper {
-  margin: 20px;
-  background: linear-gradient(to bottom, #e7ffb3, #707070);
+{
+  padding: 1rem;
+  background: linear-gradient(to bottom, #fdfbff, #e3dbff, #fff);
+}
+.content {
+  padding: .5rem;
 }
 
-.title {
-  color: red
+h1.title {
+  color: rgb(173, 16, 160)
 }

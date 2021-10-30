@@ -10,10 +10,11 @@ class DefaultPageLayout extends React.Component {
 export default DefaultPageLayout
 
 type DefaultPageProps = {
-    title:string | undefined
+    title?:string | undefined,
+    children: any
 }
 
-export function DefaultPage(props) {
+export function DefaultPage(props:DefaultPageProps) {
     const {title} = props
     return <div className="default-page">
         {title && <h1 className="title">{title}</h1>}
