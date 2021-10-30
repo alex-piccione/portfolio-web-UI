@@ -19,18 +19,31 @@ a {
 .default-page 
 {
   padding: 1rem;
-  background: linear-gradient(to bottom, #fdfbff, #e3dbff, #fff);
+  background: linear-gradient(to bottom, #fdfbff, #dbe2ff, #fff);
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 .link-to-home {
-  position: absolute;
-  top: 2px;
+  position: fixed;
+  top: 5px;
+  left:5px;
   font-size: 80%;
 }
 
 .content {
   padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1.title {
-  color: rgb(173, 16, 160)
+  
+  color: #0070f3;
+  
 }
