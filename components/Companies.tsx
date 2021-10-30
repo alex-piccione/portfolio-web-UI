@@ -1,6 +1,5 @@
 import React from "react"
-import { Company } from "../providers/providerBase"
-
+import { Company } from "./entities"
 
 type Props = {
     companies: Company[]
@@ -22,9 +21,9 @@ class CompaniesTable extends React.Component<Props> {
             </thead>
             <tbody>
                 {companies && companies.map(company => 
-                <tr>
+                <tr key={company.Id}>
                     <td>{company.Name}</td>
-                    <td>{company.Types.map(t => <span>{t}</span>)}</td>
+                    <td>{company.Types.map(t => <span key={t}>{t}</span>)}</td>
                 </tr>
                 )}
             </tbody>
