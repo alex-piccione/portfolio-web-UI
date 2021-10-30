@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+.default-page 
+.wrapper {
+  margin: 20px;
+  background: linear-gradient(to bottom, #e7ffb3, #707070);
+}
+
+.title {
+  color: red
+}

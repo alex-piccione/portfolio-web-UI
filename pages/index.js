@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from "next/link"
 import styles from '../styles/Home.module.css'
+
 import Currency from "./components/currency"
 
 export default function Home() {
@@ -25,6 +27,15 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
+          
+          <Link href="/currencies">
+            <a className={styles.card}> 
+            <h2>Currencies &rarr;</h2>
+            <p>Fiat and Crypto currencies.</p>
+            </a>
+          </Link>
+          
+
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
