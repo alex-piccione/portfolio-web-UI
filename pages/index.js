@@ -3,8 +3,6 @@ import Image from 'next/image'
 import Link from "next/link"
 import styles from '../styles/Home.module.css'
 
-import Currency from "./components/currency"
-
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -18,8 +16,6 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to Portfolio!
         </h1>
-
-        Currency: <Currency />
 
         <p className={styles.description}>
           Get started by editing{' '}
@@ -42,6 +38,7 @@ export default function Home() {
             </a>
           </Link>
           
+          <hr/>
 
           <a href="https://nextjs.org/docs" className={styles.card}>
             <h2>Documentation &rarr;</h2>
