@@ -21,6 +21,12 @@ a {
   padding: 1rem;
   background: linear-gradient(to bottom, #fdfbff, #e3dbff, #fff);
 }
+.link-to-home {
+  position: absolute;
+  top: 2px;
+  font-size: 80%;
+}
+
 .content {
   padding: .5rem;
 }
