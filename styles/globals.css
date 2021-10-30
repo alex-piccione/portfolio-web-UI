@@ -19,6 +19,7 @@ a {
 .default-page 
 {
   padding: 1rem;
+  
   background: linear-gradient(to bottom, #fdfbff, #dbe2ff, #fff);
   padding: .5rem;
   display: flex;
@@ -36,6 +37,7 @@ a {
 
 .content {
   padding: .5rem;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

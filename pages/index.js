@@ -34,6 +34,13 @@ export default function Home() {
             <p>Fiat and Crypto currencies.</p>
             </a>
           </Link>
+
+          <Link href="/companies">
+            <a className={styles.card}> 
+              <h2>Companies &rarr;</h2>
+              <p>Banks, Exchanges and other companies where you can store funds.</p>
+            </a>
+          </Link>
           
 
           <a href="https://nextjs.org/docs" className={styles.card}>
