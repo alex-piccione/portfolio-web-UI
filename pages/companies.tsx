@@ -5,8 +5,6 @@ import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/Companies"
 import CompanyProvider from "../providers/compnayProvider"
 import { Company } from "../components/entities"
-import axios from "axios"
-import useSWR from "swr"
 
 const fetchCompanies = () => fetch("/api/companies").then(res => res.json())
 
@@ -26,18 +24,8 @@ export default function Page(props) {
     .catch(error => setError(`${error}`))
   }
 
-  //reload()
-
-  //const [companies, setCompanies] = useState<Company[]>([])  
-
   useEffect(() => {
-    console.log("useEffect")
     reload()
-
-    /*CompanyProvider.getCompanies().then(result => {
-        setCompanies(result)
-    })*/
-
   }, [])
 
   return <DefaultPage title="Companies">
@@ -47,7 +35,6 @@ export default function Page(props) {
     
     {error && <div className="error-on-load">Failed to load companies</div>}
     {companies && <CompaniesTable companies={companies}></CompaniesTable>}
-    <span onClick={reload}>reload</span>
     
   </DefaultPage>  
 }
