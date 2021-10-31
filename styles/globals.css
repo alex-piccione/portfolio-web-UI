@@ -35,7 +35,7 @@ a {
   font-size: 80%;
 }
 
-.content {
+.content, .error-on-load  {
   padding: .5rem;
   min-height: 50vh;
   display: flex;
@@ -44,8 +44,11 @@ a {
   align-items: center;
 }
 
-h1.title {
-  
-  color: #0070f3;
-  
+h1.title {  
+  color: #0070f3;  
+}
+
+.error-on-load {
+  color: red;
+  font-size: 150%;
 }

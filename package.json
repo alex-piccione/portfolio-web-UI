@@ -9,16 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "next": "12.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "7",
-    "eslint-config-next": "12.0.1",
+    "@aws-sdk/client-lambda": "^3.39.0",
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
+    "eslint": "7",
+    "eslint-config-next": "12.0.1",
     "typescript": "^4.4.4"
   }
 }

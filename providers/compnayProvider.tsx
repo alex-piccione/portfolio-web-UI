@@ -18,10 +18,10 @@ const CompanyProvider = {
         //const client = new LambdaClient({ region: "REGION" });
         //onst response = await fetch()
 
-        console.log(`aaa: ${serverRuntimeConfig.mySecret}`)
+        //console.log(`aaa: ${serverRuntimeConfig.mySecret}`) // it works only if called server-side
 
         let companies:Company[] = []
-        companies.push({Id:"1", Name: "Fineco", Types: ["Bank 3"]})
+        companies.push({Id:"1", Name: "Fineco", Types: ["Bank 4"]})
         return companies
     }
 }
