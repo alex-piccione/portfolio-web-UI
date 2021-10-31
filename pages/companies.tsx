@@ -8,22 +8,37 @@ import { Company } from "../components/entities"
 import axios from "axios"
 import useSWR from "swr"
 
-const fetchCompanies = (url) => fetch(url).then(res => res.json())
+const fetchCompanies = () => fetch("/api/companies").then(res => res.json())
 
 export default function Page(props) {
 
-  const {data:companies, error} = useSWR("/api/companies", fetchCompanies)
+  //const {data:companies, error} = useSWR("/api/companies", fetchCompanies)
+
+  const [companies, setCompanies] = useState<Company[]>([])
+  const [error, setError] = useState<string>(undefined)
+
+  const reload = () => {
+    console.log(`reload`)
+    fetchCompanies().then(data => {
+      setError(undefined)
+      setCompanies(data)
+    })
+    .catch(error => setError(`${error}`))
+  }
+
+  //reload()
 
   //const [companies, setCompanies] = useState<Company[]>([])  
 
-  /*useEffect(() => {
+  useEffect(() => {
     console.log("useEffect")
+    reload()
 
-    CompanyProvider.getCompanies().then(result => {
+    /*CompanyProvider.getCompanies().then(result => {
         setCompanies(result)
-    })
+    })*/
 
-  }, [])*/
+  }, [])
 
   return <DefaultPage title="Companies">
     <p>
@@ -32,6 +47,8 @@ export default function Page(props) {
     
     {error && <div className="error-on-load">Failed to load companies</div>}
     {companies && <CompaniesTable companies={companies}></CompaniesTable>}
+    <span onClick={reload}>reload</span>
+    
   </DefaultPage>  
 }
 
