@@ -1,6 +1,6 @@
 import getConfig from "next/config"
 import { Company } from "../../components/entities"
-import CompanyProvider from "../../providers/compnayProvider"
+import CompanyProvider from "../../providers/companyProvider"
 import helper from "./helper"
 
 //const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()

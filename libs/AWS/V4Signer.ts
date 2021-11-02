@@ -17,7 +17,26 @@ import utils from "./utils"
 import CryptoJS from "crypto-js"
 import axios from "axios";
 
-export default function newV4Signer(config) {
+export interface SignerV4Config {
+  accessKey: string,
+  secretKey: string,
+  serviceName: string,
+  //sessionToken: string,
+  apiGatewayId: string,
+  apiStage: string,
+  region: string
+}
+
+const defaultContentType = "application/json"
+const defaultAcceptType = "application/json"
+
+export default function newV4Signer(config:SignerV4Config) {
+
+  utils.assertDefined(config, "accessKey")
+
+  if(config.accessKey === undefined || config.secretKey === undefined) 
+    throw "Access Key or Secret key is missing"  
+
   var AWS_SHA_256 = 'AWS4-HMAC-SHA256'
   var AWS4_REQUEST = 'aws4_request'
   var AWS4 = 'AWS4';
@@ -26,17 +45,12 @@ export default function newV4Signer(config) {
   var HOST = 'host';
   var AUTHORIZATION = 'Authorization';
 
-  function hash(value) {
-    return CryptoJS.SHA256(value);
-  }
+  //var endpoint = `https://${config.apiGatewayId}.execute-api.${config.region}.amazonaws.com/${config.apiStage}`
+  var endpoint = `https://${config.apiGatewayId}.execute-api.${config.region}.amazonaws.com`
 
-  function hexEncode(value) {
-    return value.toString(CryptoJS.enc.Hex);
-  }
-
-  function hmac(secret, value) {
-    return CryptoJS.HmacSHA256(value, secret /*, {asBytes: true}*/);
-  }
+  const hash = (value:string) => CryptoJS.SHA256(value) 
+  const hexEncode = (value) => value.toString(CryptoJS.enc.Hex)
+  const hmac = (secret, value) => CryptoJS.HmacSHA256(value, secret /*, {asBytes: true}*/)
 
   function buildCanonicalRequest(method, path, queryParams, headers, payload) {
     return method + '\n' +
@@ -47,13 +61,8 @@ export default function newV4Signer(config) {
       hexEncode(hash(payload));
   }
 
-  function hashCanonicalRequest(request) {
-    return hexEncode(hash(request));
-  }
-
-  function buildCanonicalUri(uri) {
-    return encodeURI(uri);
-  }
+  const hashCanonicalRequest = (request) => hexEncode(hash(request))
+  const buildCanonicalUri = (uri:string) => encodeURI(uri)
 
   function buildCanonicalQueryString(queryParams) {
     if (Object.keys(queryParams).length < 1) {
@@ -109,15 +118,15 @@ export default function newV4Signer(config) {
     return sortedKeys.join(';');
   }
 
-    function buildStringToSign(datetime, credentialScope, hashedCanonicalRequest) {
-        return AWS_SHA_256 + '\n' +
-            datetime + '\n' +
-            credentialScope + '\n' +
-            hashedCanonicalRequest;
-    }
+  function buildStringToSign(datetime, credentialScope, hashedCanonicalRequest) {
+    return AWS_SHA_256 + '\n' +
+      datetime + '\n' +
+      credentialScope + '\n' +
+      hashedCanonicalRequest;
+  }
 
     function buildCredentialScope(datetime, region, service) {
-        return datetime.substr(0, 8) + '/' + region + '/' + service + '/' + AWS4_REQUEST
+      return datetime.substr(0, 8) + '/' + region + '/' + service + '/' + AWS4_REQUEST
     }
 
     function calculateSigningKey(secretKey, datetime, region, service) {
@@ -132,20 +141,16 @@ export default function newV4Signer(config) {
         return AWS_SHA_256 + ' Credential=' + accessKey + '/' + credentialScope + ', SignedHeaders=' + buildCanonicalSignedHeaders(headers) + ', Signature=' + signature;
     }
 
-    if(config.accessKey === undefined || config.secretKey === undefined) 
-      throw "Access Key or Secret key is missing";
-
     var awsSigV4Client = {    
       accessKey: utils.assertDefined(config.accessKey, 'accessKey'),
       secretKey: utils.assertDefined(config.secretKey, 'secretKey'),
-      sessionToken: config.sessionToken,
+      //sessionToken: config.sessionToken,
       serviceName: utils.assertDefined(config.serviceName, 'serviceName'),
       region: utils.assertDefined(config.region, 'region'),
-      endpoint: utils.assertDefined(config.endpoint, 'endpoint'),
 
       makeRequest: function (request) {
         var verb = utils.assertDefined(request.verb, 'verb');
-        var path = utils.assertDefined(request.path, 'path');
+        var path = `${config.apiStage}/${request.path}`;
         var queryParams = utils.copy(request.queryParams);
         if (queryParams === undefined) {
             queryParams = {};
@@ -156,14 +161,10 @@ export default function newV4Signer(config) {
         }
 
         //If the user has not specified an override for Content type the use default
-        if(headers['Content-Type'] === undefined) {
-            headers['Content-Type'] = config.defaultContentType;
-        }
+        if(headers['Content-Type'] === undefined) headers['Content-Type'] = defaultContentType;
 
         //If the user has not specified an override for Accept type the use default
-        if(headers['Accept'] === undefined) {
-            headers['Accept'] = config.defaultAcceptType;
-        }
+        if(headers['Accept'] === undefined) headers['Accept'] = defaultAcceptType
 
         var body = utils.copy(request.body);
         if (body === undefined || verb === 'GET') { // override request body and set to empty when signing GET requests
@@ -180,7 +181,7 @@ export default function newV4Signer(config) {
         var datetime = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z').replace(/[:\-]|\.\d{3}/g, '');
         headers[X_AMZ_DATE] = datetime;
         var parser = document.createElement('a');
-        parser.href = awsSigV4Client.endpoint;
+        parser.href = endpoint // 
         headers[HOST] = parser.hostname;
 
         var canonicalRequest = buildCanonicalRequest(verb, path, queryParams, headers, body);
@@ -190,27 +191,25 @@ export default function newV4Signer(config) {
         var signingKey = calculateSigningKey(awsSigV4Client.secretKey, datetime, awsSigV4Client.region, awsSigV4Client.serviceName);
         var signature = calculateSignature(signingKey, stringToSign);
         headers[AUTHORIZATION] = buildAuthorizationHeader(awsSigV4Client.accessKey, credentialScope, headers, signature);
-        if(awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
+        /*if(awsSigV4Client.sessionToken !== undefined && awsSigV4Client.sessionToken !== '') {
             headers[X_AMZ_SECURITY_TOKEN] = awsSigV4Client.sessionToken;
-        }
+        }*/
         delete headers[HOST];
 
-        var url = config.endpoint + path;
+        var url = endpoint + path;
         var queryString = buildCanonicalQueryString(queryParams);
         if (queryString != '') {
             url += '?' + queryString;
         }
 
         //Need to re-attach Content-Type if it is not specified at this point
-        if(headers['Content-Type'] === undefined) {
-            headers['Content-Type'] = config.defaultContentType;
-        }
+        if(headers['Content-Type'] === undefined) headers['Content-Type'] = defaultContentType
 
         var signedRequest = {
-            method: verb,
-            url: url,
-            headers: headers,
-            data: body
+          method: verb,
+          url: url,
+          headers: headers,
+          data: body
         };
         return axios(signedRequest);
       }

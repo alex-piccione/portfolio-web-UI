@@ -14,28 +14,26 @@
  */
  
 import utils from "./utils"
-import newV4Signer from "./V4Signer"
+import newV4Signer, { SignerV4Config } from "./V4Signer"
 
-export const newGatewayClient = function (config) {
+export function newGatewayClient(config:SignerV4Config) {
   const sigV4Client = newV4Signer(config)
 
   return {
     makeRequest: function (request) {
-
       //Attach the apiKey to the headers request if one was provided
       //if (apiKey) 
       //  request.headers['x-api-key'] = apiKey;
 
       if (request.body || Object.keys(request.body).length === 0) {
-        request.body = undefined;
+        request.body = undefined
       }
 
       // If the user specified any additional headers or query params that may not have been modeled
       // merge them into the appropriate request properties
       // request.headers = [...request.headers, additionalParams.headers] // utils.mergeInto(request.headers, additionalParams.headers)
       //request.queryParams = [...request.queryParams, additionalParams.queryParams] // utils.mergeInto(request.queryParams, additionalParams.queryParams)
-
-      return sigV4Client.makeRequest(request);
+      return sigV4Client.makeRequest(request)
     }
   }
 }

@@ -3,7 +3,8 @@ import { Company } from "../components/entities"
 import { LambdaClient, ServiceException } from "@aws-sdk/client-lambda"
 import { getConfiguration } from "./configuration"
 
-import {newGatewayClient } from "./../libs/AWS/apiGatewayClient"
+import {newGatewayClient } from "../libs/AWS/apiGatewayClient"
+import { SignerV4Config } from "../libs/AWS/V4Signer"
 
 const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
 
@@ -12,21 +13,20 @@ const serverConfig = getConfiguration(serverRuntimeConfig)
 console.log(`serverRuntimeConfig.baseLanguage: ${serverRuntimeConfig.baseLanguage}`)
 console.log(`publicRuntimeConfig.baseLanguage: ${publicRuntimeConfig.baseLanguage}`)
 
-var invokeUrl = `https://ikvqpq0ut9.execute-api.eu-central-1.amazonaws.com/live`
-var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
-var pathComponent = invokeUrl.substring(endpoint.length);
+//var invokeUrl = `https://ikvqpq0ut9.execute-api.eu-central-1.amazonaws.com/live`
+//var endpoint = /(^https?:\/\/[^\/]+)/g.exec(invokeUrl)[1];
+//var pathComponent = invokeUrl.substring(endpoint.length);
 
 const apiKey = ""
 
-var signerConfig = {
+var signerConfig:SignerV4Config = {
   accessKey: serverConfig.AWS.accessKey,
   secretKey: serverConfig.AWS.secretKey,
-  sessionToken: "",
+  //sessionToken: "",
   serviceName: 'execute-api',
-  region: serverConfig.AWS.region,
-  endpoint: endpoint,
-  defaultContentType: "application/json",
-  defaultAcceptType: "application/json"
+  region: serverConfig.AWS.region, 
+  apiGatewayId: serverConfig.AWS.apiGatewayId,
+  apiStage: serverConfig.AWS.apiStage,
 };
 
 // TODO: an error here (missing configuration)
@@ -50,14 +50,11 @@ const CompanyProvider = {
       body: ""
     };
 
-    throw Error(`Bum Bum Bum`)
-
-    /*return apiGatewayClient.makeRequest(request).then(result => {
+    return apiGatewayClient.makeRequest(request).then(result => {
       
-      throw Error(`Bum Bum Bum`)
       return parser.parseCompanies(result.data)     
 
-    }).catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});      */
+    }).catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});      
 
 /*
     apigClient.companyGet = function (params, body, additionalParams) {
@@ -116,7 +113,7 @@ const parser = {
       {Id:"1", Name:"Company A", Types:["Bank"]},
       {Id:"2", Name:"Company B", Types:["Exchange"]},
     ]
-    return companies;
+    return {data: companies};
   }  
 }
 

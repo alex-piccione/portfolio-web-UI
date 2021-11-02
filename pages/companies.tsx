@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react"
 
 import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/Companies"
-import CompanyProvider from "../providers/compnayProvider"
 import { Company } from "../components/entities"
 
 const fetchCompanies = () => fetch("/api/companies")
