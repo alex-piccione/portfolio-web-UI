@@ -2,7 +2,8 @@ module.exports = {
   reactStrictMode: true,
   serverRuntimeConfig: {
     AWS: {
-      region: "europe-central-1"
+      region: "europe-central-1",
+      apiGatewayId: "ikvqpq0ut9"
     },
     baseLanguage: "English",
     mySecret: "secret 123",
