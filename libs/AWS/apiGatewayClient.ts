@@ -20,7 +20,7 @@ export const newGatewayClient = function (config) {
   const sigV4Client = newV4Signer(config)
 
   return {
-    makeRequest: function (request, additionalParams:{headers, queryParams}) {
+    makeRequest: function (request) {
 
       //Attach the apiKey to the headers request if one was provided
       //if (apiKey) 
@@ -32,8 +32,8 @@ export const newGatewayClient = function (config) {
 
       // If the user specified any additional headers or query params that may not have been modeled
       // merge them into the appropriate request properties
-      request.headers = [...request.headers, additionalParams.headers] // utils.mergeInto(request.headers, additionalParams.headers)
-      request.queryParams = [...request.queryParams, additionalParams.queryParams] // utils.mergeInto(request.queryParams, additionalParams.queryParams)
+      // request.headers = [...request.headers, additionalParams.headers] // utils.mergeInto(request.headers, additionalParams.headers)
+      //request.queryParams = [...request.queryParams, additionalParams.queryParams] // utils.mergeInto(request.queryParams, additionalParams.queryParams)
 
       return sigV4Client.makeRequest(request);
     }

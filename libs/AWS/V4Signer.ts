@@ -18,96 +18,96 @@ import CryptoJS from "crypto-js"
 import axios from "axios";
 
 export default function newV4Signer(config) {
-    var AWS_SHA_256 = 'AWS4-HMAC-SHA256'
-    var AWS4_REQUEST = 'aws4_request'
-    var AWS4 = 'AWS4';
-    var X_AMZ_DATE = 'x-amz-date';
-    var X_AMZ_SECURITY_TOKEN = 'x-amz-security-token';
-    var HOST = 'host';
-    var AUTHORIZATION = 'Authorization';
+  var AWS_SHA_256 = 'AWS4-HMAC-SHA256'
+  var AWS4_REQUEST = 'aws4_request'
+  var AWS4 = 'AWS4';
+  var X_AMZ_DATE = 'x-amz-date';
+  var X_AMZ_SECURITY_TOKEN = 'x-amz-security-token';
+  var HOST = 'host';
+  var AUTHORIZATION = 'Authorization';
 
-    function hash(value) {
-        return CryptoJS.SHA256(value);
+  function hash(value) {
+    return CryptoJS.SHA256(value);
+  }
+
+  function hexEncode(value) {
+    return value.toString(CryptoJS.enc.Hex);
+  }
+
+  function hmac(secret, value) {
+    return CryptoJS.HmacSHA256(value, secret /*, {asBytes: true}*/);
+  }
+
+  function buildCanonicalRequest(method, path, queryParams, headers, payload) {
+    return method + '\n' +
+      buildCanonicalUri(path) + '\n' +
+      buildCanonicalQueryString(queryParams) + '\n' +
+      buildCanonicalHeaders(headers) + '\n' +
+      buildCanonicalSignedHeaders(headers) + '\n' +
+      hexEncode(hash(payload));
+  }
+
+  function hashCanonicalRequest(request) {
+    return hexEncode(hash(request));
+  }
+
+  function buildCanonicalUri(uri) {
+    return encodeURI(uri);
+  }
+
+  function buildCanonicalQueryString(queryParams) {
+    if (Object.keys(queryParams).length < 1) {
+      return '';
     }
 
-    function hexEncode(value) {
-        return value.toString(CryptoJS.enc.Hex);
+    var sortedQueryParams = [];
+    for (var property in queryParams) {
+      if (queryParams.hasOwnProperty(property)) {
+        sortedQueryParams.push(property);
+      }
     }
+    sortedQueryParams.sort();
 
-    function hmac(secret, value) {
-        return CryptoJS.HmacSHA256(value, secret /*, {asBytes: true}*/);
+    var canonicalQueryString = '';
+    for (var i = 0; i < sortedQueryParams.length; i++) {
+      canonicalQueryString += sortedQueryParams[i] + '=' + fixedEncodeURIComponent(queryParams[sortedQueryParams[i]]) + '&';
+    }    
+    return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
+  }
+
+  function fixedEncodeURIComponent (str) {
+    return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+      return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+    });
+  }
+
+  function buildCanonicalHeaders(headers) {
+    var canonicalHeaders = '';
+    var sortedKeys = [];
+    for (var property in headers) {
+      if (headers.hasOwnProperty(property)) {
+        sortedKeys.push(property);
+      }
     }
+    sortedKeys.sort();
 
-    function buildCanonicalRequest(method, path, queryParams, headers, payload) {
-        return method + '\n' +
-            buildCanonicalUri(path) + '\n' +
-            buildCanonicalQueryString(queryParams) + '\n' +
-            buildCanonicalHeaders(headers) + '\n' +
-            buildCanonicalSignedHeaders(headers) + '\n' +
-            hexEncode(hash(payload));
+    for (var i = 0; i < sortedKeys.length; i++) {
+      canonicalHeaders += sortedKeys[i].toLowerCase() + ':' + headers[sortedKeys[i]] + '\n';
     }
+    return canonicalHeaders;
+  }
 
-    function hashCanonicalRequest(request) {
-        return hexEncode(hash(request));
+  function buildCanonicalSignedHeaders(headers) {
+    var sortedKeys = [];
+    for (var property in headers) {
+      if (headers.hasOwnProperty(property)) {
+        sortedKeys.push(property.toLowerCase());
+      }
     }
+    sortedKeys.sort();
 
-    function buildCanonicalUri(uri) {
-        return encodeURI(uri);
-    }
-
-    function buildCanonicalQueryString(queryParams) {
-        if (Object.keys(queryParams).length < 1) {
-            return '';
-        }
-
-        var sortedQueryParams = [];
-        for (var property in queryParams) {
-            if (queryParams.hasOwnProperty(property)) {
-                sortedQueryParams.push(property);
-            }
-        }
-        sortedQueryParams.sort();
-
-        var canonicalQueryString = '';
-        for (var i = 0; i < sortedQueryParams.length; i++) {
-            canonicalQueryString += sortedQueryParams[i] + '=' + fixedEncodeURIComponent(queryParams[sortedQueryParams[i]]) + '&';
-        }
-        return canonicalQueryString.substr(0, canonicalQueryString.length - 1);
-    }
-
-    function fixedEncodeURIComponent (str) {
-      return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
-        return '%' + c.charCodeAt(0).toString(16).toUpperCase();
-      });
-    }
-
-    function buildCanonicalHeaders(headers) {
-        var canonicalHeaders = '';
-        var sortedKeys = [];
-        for (var property in headers) {
-            if (headers.hasOwnProperty(property)) {
-                sortedKeys.push(property);
-            }
-        }
-        sortedKeys.sort();
-
-        for (var i = 0; i < sortedKeys.length; i++) {
-            canonicalHeaders += sortedKeys[i].toLowerCase() + ':' + headers[sortedKeys[i]] + '\n';
-        }
-        return canonicalHeaders;
-    }
-
-    function buildCanonicalSignedHeaders(headers) {
-        var sortedKeys = [];
-        for (var property in headers) {
-            if (headers.hasOwnProperty(property)) {
-                sortedKeys.push(property.toLowerCase());
-            }
-        }
-        sortedKeys.sort();
-
-        return sortedKeys.join(';');
-    }
+    return sortedKeys.join(';');
+  }
 
     function buildStringToSign(datetime, credentialScope, hashedCanonicalRequest) {
         return AWS_SHA_256 + '\n' +

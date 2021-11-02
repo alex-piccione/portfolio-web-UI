@@ -1,6 +1,6 @@
 import getConfig from "next/config"
 import { Company } from "../components/entities"
-import { LambdaClient } from "@aws-sdk/client-lambda"
+import { LambdaClient, ServiceException } from "@aws-sdk/client-lambda"
 import { getConfiguration } from "./configuration"
 
 import {newGatewayClient } from "./../libs/AWS/apiGatewayClient"
@@ -29,17 +29,17 @@ var signerConfig = {
   defaultAcceptType: "application/json"
 };
 
+// TODO: an error here (missing configuration)
+// is returned as HTML and not properly managed.
+// Browser's console shows a HTML that is not readable and hides the problem.
+// UI shows an error because it cannot parse the returned HTML as JSON.
 var apiGatewayClient = newGatewayClient(signerConfig);
 
 const CompanyProvider = {
  
-  getCompanies: async () => {
+  getCompanies: async () =>  {
 
     //const client = new LambdaClient({ region: "REGION" });
-
-    const params = {
-      /** input parameters */
-    };
     //const command = new AddLayerVersionPermissionCommand(params);
 
     var request = {
@@ -50,9 +50,14 @@ const CompanyProvider = {
       body: ""
     };
 
-    const additionalParams = {headers: null, queryParams: null}
+    throw Error(`Bum Bum Bum`)
 
-    return apiGatewayClient.makeRequest(request, additionalParams);      
+    /*return apiGatewayClient.makeRequest(request).then(result => {
+      
+      throw Error(`Bum Bum Bum`)
+      return parser.parseCompanies(result.data)     
+
+    }).catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});      */
 
 /*
     apigClient.companyGet = function (params, body, additionalParams) {
@@ -103,6 +108,16 @@ const CompanyProvider = {
     companies.push({Id:"1", Name: "Fineco", Types: ["Bank 4"]})
     return companies
   }
+}
+
+const parser = {
+  parseCompanies: (data) => {
+    var companies:Company[] = [
+      {Id:"1", Name:"Company A", Types:["Bank"]},
+      {Id:"2", Name:"Company B", Types:["Exchange"]},
+    ]
+    return companies;
+  }  
 }
 
 export default CompanyProvider

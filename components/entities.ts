@@ -3,3 +3,5 @@ export type Company = {
     Name: string,
     Types: string[]
 }
+
+//export CompanyType = "Bank" | "Exchange" | "Stacking"
