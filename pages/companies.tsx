@@ -44,7 +44,7 @@ export default function Page(props) {
     </p>
     
     {error && <div className="error-on-load">Failed to load companies.<br/>{error}</div>}
-    {companies && <CompaniesTable companies={companies}></CompaniesTable>}
+    {companies ? <CompaniesTable companies={companies}></CompaniesTable> : <div>loading...</div>}
     
   </DefaultPage>  
 }
