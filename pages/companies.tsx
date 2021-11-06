@@ -4,6 +4,7 @@ import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/Companies"
 import { Company } from "../components/entities"
 
+// todo: use axios instead of fetch to avoid checking .ok and have a betetr management of timeout ?
 const fetchCompanies = () => fetch("/api/companies")
 
 const parseApiError = (response, setError) => {
@@ -13,8 +14,6 @@ const parseApiError = (response, setError) => {
 }
    
 export default function Page(props) {
-
-  //const {data:companies, error} = useSWR("/api/companies", fetchCompanies)
 
   const [companies, setCompanies] = useState<Company[]>([])
   const [error, setError] = useState<string>(undefined)
@@ -33,12 +32,6 @@ export default function Page(props) {
         parseApiError(res, setError) //`${res.statusText} - ${res.text().}`)         
     })
     .catch(error => setError(`Oh My God! ${error}`))
-/*
-    fetchCompanies().then(data => {
-      setError(undefined)
-      setCompanies(data)
-    })
-    .catch(error => setError(`Oh My God! ${error}`))*/
   }
 
   useEffect(() => {
