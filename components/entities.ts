@@ -5,3 +5,8 @@ export type Company = {
 }
 
 //export CompanyType = "Bank" | "Exchange" | "Stacking"
+
+export type Currency = {
+  Code: string,
+  Name: string
+}
