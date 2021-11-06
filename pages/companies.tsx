@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 
 import { DefaultPage } from "../components/layouts"
-import CompaniesTable from "../components/Companies"
+import CompaniesTable from "../components/CompaniesTable"
 import { Company } from "../components/entities"
+import Spinner from "../components/Spinner"
 
 // todo: use axios instead of fetch to avoid checking .ok and have a betetr management of timeout ?
 const fetchCompanies = () => fetch("/api/companies")
@@ -15,7 +16,7 @@ const parseApiError = (response, setError) => {
    
 export default function Page(props) {
 
-  const [companies, setCompanies] = useState<Company[]>([])
+  const [companies, setCompanies] = useState<Company[]>(undefined)
   const [error, setError] = useState<string>(undefined)
 
   const reload = () => {
@@ -39,12 +40,12 @@ export default function Page(props) {
   }, [])
 
   return <DefaultPage title="Companies">
-    <p>
+    <p >
         Banks, Exchanges and other similar entities where you can store funds.
-    </p>
+    </p>    
     
     {error && <div className="error-on-load">Failed to load companies.<br/>{error}</div>}
-    {companies ? <CompaniesTable companies={companies}></CompaniesTable> : <div>loading...</div>}
+    {companies ? <CompaniesTable companies={companies} /> : <Spinner />}
     
   </DefaultPage>  
 }
