@@ -40,12 +40,13 @@ export default function Page(props) {
   }, [])
 
   return <DefaultPage title="Companies">
-    <p >
+    <p>
         Banks, Exchanges and other similar entities where you can store funds.
     </p>    
     
-    {error && <div className="error-on-load">Failed to load companies.<br/>{error}</div>}
-    {companies ? <CompaniesTable companies={companies} /> : <Spinner />}
+    { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
+      companies ? <CompaniesTable companies={companies} /> :
+      <Spinner />}
     
   </DefaultPage>  
 }
