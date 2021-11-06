@@ -1,5 +1,3 @@
-import { GetFunctionConfigurationCommand } from "@aws-sdk/client-lambda"
-
 export type configuration = {
   AWS: {
     region: string,
