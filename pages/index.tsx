@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
-import BalanceTable, { BalanceTable1 } from '../components/BalanceTable'
+import BalanceTable from '../components/BalanceTable'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -16,15 +16,10 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to Portfolio!
+          Your Portfolio!
         </h1>
 
-        <BalanceTable1 />
-
-        <hr />
-
         <BalanceTable />
-
 
         <div className={styles.grid}>
           

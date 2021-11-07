@@ -1,64 +1,41 @@
+import axios from "axios"
 import React, { FC, useEffect, useState } from "react"
-import CompanyBadge, { CompanyNameBadge, CompanyNameBadge2 } from "./CompanyBadge"
+import Alert from "./Alert"
+import CompanyBadge, { CompanyNameBadge } from "./CompanyBadge"
 import { Balance } from "./entities"
 import Spinner from "./Spinner"
 
+const baseCurrency = "EUR"
 
-/* axios usage example: https://stackoverflow.com/questions/52766608/how-to-retrieve-data-from-reactjs-and-api */
+const getBalance = async (setBalance, setError) => {
+  /* axios usage example: https://stackoverflow.com/questions/52766608/how-to-retrieve-data-from-reactjs-and-api */
+  await axios.get(`/api/balance?base-currency=${baseCurrency}`)
+    .then(response => setBalance(response.data))
+    .catch(error => {
+      setError(error?.response?.data?.error || `${error}`)
+  });
+}
 
-
-export const BalanceTable1 = () => {
+export const BalanceTable = () => {
 
   const [balance, setBalance] = useState<Balance>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
-  // const [error, setError] = useState<string>(undefined)
+  const [error, setError] = useState<string>(undefined)
 
   const loadBalance = () => {
-    setLoading(true)
-    setTimeout(() => { setLoading(false); setBalance(undefined); }, 2000)
+    setLoading(true)   
+    getBalance(setBalance, setError).then(_ => setLoading(false))
   }
 
   useEffect(() => loadBalance(), [])
 
-  const renderCompanies = (companies:string[]) => companies.map(company => 
-    <CompanyNameBadge2 company={company} />
+  const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
+    <CompanyNameBadge key={company.id} company={company.name} />
     )  
 
   return loading ? <Spinner /> :
-  <table>
-    <thead>
-      <tr>
-        <th>Currency</th>
-        <th>Quantity</th>
-        <th>Companies</th>
-      </tr>
-    </thead>
-    <tbody>
-    {balance && balance.fundsByCurrency.map(fund => 
-      <tr key={fund.currencyCode}>
-        <td>{fund.currencyCode}</td>
-        <td>{fund.amount}</td>
-        <td>{renderCompanies(fund.companies)}</td>
-      </tr>
-      )}
-    </tbody>
-  </table>  
-  
-}
-
-class BalanceTable extends React.Component {
-  
-  //useEffect( () => loadBalance(), [])
-  //[balance, setBalance] = useState<Balance>(undefined)
-  balance:Balance = undefined
-
-  render() { 
-  
-    const renderCompanies = (companies:string[]) => companies.map(company => 
-      <CompanyNameBadge2 company={company} />
-      )    
-
-    return <table>
+    error ? <Alert error={error} /> :
+    <table className="table table-stripped">
       <thead>
         <tr>
           <th>Currency</th>
@@ -67,7 +44,7 @@ class BalanceTable extends React.Component {
         </tr>
       </thead>
       <tbody>
-      {this.balance && this.balance.fundsByCurrency.map(fund => 
+      {balance && balance.fundsByCurrency.map(fund => 
         <tr key={fund.currencyCode}>
           <td>{fund.currencyCode}</td>
           <td>{fund.amount}</td>
@@ -75,9 +52,7 @@ class BalanceTable extends React.Component {
         </tr>
         )}
       </tbody>
-    </table> 
-  }
-
+    </table>    
 }
 
 export default BalanceTable

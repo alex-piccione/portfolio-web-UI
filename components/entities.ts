@@ -13,5 +13,5 @@ export type Currency = {
 
 export type Balance = {
   date: Date,
-  fundsByCurrency: { currencyCode:string, amount:string, companies:string[] }[]
+  fundsByCurrency: { currencyCode:string, amount:number, companies:{id:string, name:string}[] }[]
 }
