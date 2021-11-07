@@ -1,4 +1,4 @@
-import CompanyProvider from "../../providers/companyProvider"
+import CompanyProvider from "../../providers/CompanyProvider"
 import helper from "./helper"
 
 export default async function handler (req, res) {

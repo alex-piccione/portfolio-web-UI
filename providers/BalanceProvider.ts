@@ -1,6 +1,6 @@
 import { Balance, Company } from "../components/entities"
 import BaseProvider from "./BaseProvider"
-import CompanyProvider from "./rename_CompanyProvider";
+import CompanyProvider from "./CompanyProvider";
 
 class BalanceProvider extends BaseProvider {  
   async getBalance(baseCurrency:string) {
