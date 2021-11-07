@@ -1,8 +1,7 @@
 import BaseProvider from "./BaseProvider"
 import { Currency } from "../components/entities"
 
-class CurrenciesProvider extends BaseProvider {
-  
+class CurrenciesProvider extends BaseProvider {  
   getCurrencies() {
     return super.get("currency", parser.parseCurrencies)
   }

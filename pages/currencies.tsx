@@ -28,7 +28,7 @@ export default function Page() {
     .catch(error => setError(`Oh My God! ${error}`))
   }
 
-  useEffect(() => { loadCurrencies() }, [])
+  useEffect(() => loadCurrencies(), [])
 
   return <DefaultPage title="Currencies">
     <p>Fiat and Crypto currencies.</p>    
