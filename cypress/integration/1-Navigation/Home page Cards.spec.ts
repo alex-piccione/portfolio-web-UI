@@ -9,17 +9,19 @@ const CardsNavigation =
     {
       const url = cards[card]
       describe(`When click the '${card}' card`, () => {
-        it(`Should open the '${card}' page`, () => {
-          // Assert
+        it(`Should open the '${card}' page and return to home`, () => {
+
           cy.visit("http://localhost:3000")
 
-          // Act
+          // open Card page
           //cy.get("a > h2").contains("Currencies").click()
           cy.get("[class*='_card_']").contains(card).click()
+          cy.url().should("include", url)
 
-          // Assert
-          cy.url()
-            .should("include", url)
+          // go back to home
+          cy.get("a").contains("home").click()
+          cy.url().should("eq", "http://localhost:3000/")
+
         })
       })
     }
