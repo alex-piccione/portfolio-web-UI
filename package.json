@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:ui": "cypress open"
+    "test:ui": "next dev | cypress open"
   },
   "dependencies": {
     "axios": "^0.24.0",
