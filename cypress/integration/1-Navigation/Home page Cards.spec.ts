@@ -12,7 +12,7 @@ const CardsNavigation =
       const url = cards[card]
 
       describe(`When click the '${card}' card`, () => {
-        it(`Should open the '${card}' page`, () => {
+        it(`Should open the '${card}' page at '${url}'`, () => {
 
           cy.visit(baseUrl)
 
