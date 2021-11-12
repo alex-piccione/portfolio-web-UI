@@ -3,25 +3,33 @@ const cards = {
   "Companies": "/companies"
 }
 
+const baseUrl = "http://localhost:3000"
+
 const CardsNavigation = 
-  describe("For each card in home page", () => {
+  describe("For each Card in home page:", () => {
     for (let card in cards) 
     {
       const url = cards[card]
-      describe(`When click the '${card}' card`, () => {
-        it(`Should open the '${card}' page and return to home`, () => {
 
-          cy.visit("http://localhost:3000")
+      describe(`When click the '${card}' card`, () => {
+        it(`Should open the '${card}' page`, () => {
+
+          cy.visit(baseUrl)
 
           // open Card page
           //cy.get("a > h2").contains("Currencies").click()
           cy.get("[class*='_card_']").contains(card).click()
           cy.url().should("include", url)
+        })
+      })
+
+      describe(`When I'm in the '${url}' page and click "home"`, () => {
+        it(`Should return to the home page`, () => {
+          cy.visit(baseUrl + url)
 
           // go back to home
           cy.get("a").contains("home").click()
-          cy.url().should("eq", "http://localhost:3000/")
-
+          cy.url().should("eq", baseUrl + "/")
         })
       })
     }
