@@ -35,24 +35,27 @@ export const BalanceTable = () => {
 
   return loading ? <Spinner /> :
     error ? <Alert error={error} /> :
-    <table className="table table-stripped">
-      <thead>
-        <tr>
-          <th>Currency</th>
-          <th>Quantity</th>
-          <th>Companies</th>
-        </tr>
-      </thead>
-      <tbody>
-      {balance && balance.fundsByCurrency.map(fund => 
-        <tr key={fund.currencyCode}>
-          <td>{fund.currencyCode}</td>
-          <td>{fund.amount}</td>
-          <td>{renderCompanies(fund.companies)}</td>
-        </tr>
-        )}
-      </tbody>
-    </table>    
+    <>
+      <div>button</div>
+      <table className="table table-stripped">
+        <thead>
+          <tr>
+            <th>Currency</th>
+            <th>Quantity</th>
+            <th>Companies</th>
+          </tr>
+        </thead>
+        <tbody>
+        {balance && balance.fundsByCurrency.map(fund => 
+          <tr key={fund.currencyCode}>
+            <td>{fund.currencyCode}</td>
+            <td>{fund.amount}</td>
+            <td>{renderCompanies(fund.companies)}</td>
+          </tr>
+          )}
+        </tbody>
+      </table>    
+    </>
 }
 
 export default BalanceTable
