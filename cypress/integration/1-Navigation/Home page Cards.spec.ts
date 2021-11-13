@@ -7,13 +7,13 @@ const baseUrl = "http://localhost:3000"
 
 const CardsNavigation = 
   describe("For each Card in home page:", () => {
+
     for (let card in cards) 
     {
       const url = cards[card]
 
       describe(`When click the '${card}' card`, () => {
         it(`Should open the '${card}' page at '${url}'`, () => {
-
           cy.visit(baseUrl)
 
           // open Card page
