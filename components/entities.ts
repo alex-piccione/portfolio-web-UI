@@ -15,3 +15,10 @@ export type Balance = {
   date: Date,
   fundsByCurrency: { currencyCode:string, amount:number, companies:{id:string, name:string}[] }[]
 }
+
+export type FundAtDateSaveRequest = {
+  date: Date,
+  currencyCode: string,
+  quantity: number,
+  companyIds: string[]
+}
