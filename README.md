@@ -1,6 +1,8 @@
 # portfolio-web-UI
 Web UI for the Portfolio project
 
+[![Cypress tests](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Cypress.yml/badge.svg)](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Cypress.yml)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## To run the app

@@ -1,13 +1,13 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Add a functionality to this project
 title: ''
 labels: frontend
 assignees: alex-piccione
 
 ---
 
-As the owner of the project
+As a user of the applicarion
 I want ...
 So that ...
 

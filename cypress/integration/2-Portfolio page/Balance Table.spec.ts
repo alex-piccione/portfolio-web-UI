@@ -1,10 +1,25 @@
-import { FundAtDateSaveRequest } from "../../../components/entities"
-import helper from "../helper"
+import { Balance, FundAtDateSaveRequest } from "../../../components/entities"
+
+const balance:Balance = {
+  date: new Date(),
+  fundsByCurrency: [{
+    currencyCode: "EUR", 
+    amount: 100, 
+    companies: [{id: "c1", name: "Company 1"}]}]
+}
 
 export default describe("BalanceTable", () => {
 
   before("Open home page", () => {
     cy.visit("/")
+
+      //https://docs.cypress.io/api/commands/intercept#Syntax
+    cy.intercept("GET", "/api/balance?base-currency=EUR", 
+      {
+        statusCode: 200,
+        body:balance
+      }
+    )
   })
 
   it("has the defined headers", () => {

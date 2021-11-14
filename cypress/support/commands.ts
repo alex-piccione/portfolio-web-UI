@@ -23,3 +23,24 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      createFund: typeof createFund
+    }
+  }
+}
+
+export interface FundAtDate {
+
+}
+
+export function createFund(record:FundAtDate) {
+  // TODO: create a record on DB or cache
+}
+
+Cypress.Commands.add("createFund", createFund)
+
+
+export default {}
