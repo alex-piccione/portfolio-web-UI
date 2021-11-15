@@ -7,6 +7,8 @@ import { Balance } from "./entities"
 import Spinner from "./Spinner"
 import { FiPlusCircle } from "react-icons/fi"
 import { Table } from "react-bootstrap"
+import Icon from "./Icon"
+import AddFundDialog from "./dialogs/AddFundDialog"
 
 const baseCurrency = "EUR"
 
@@ -53,12 +55,8 @@ export const BalanceTable = () => {
             <td>{fund.currencyCode}</td>
             <td>{fund.amount}</td>
             <td>{renderCompanies(fund.companies)}</td>
-            <td>
-              <Dialog clickableElement={<FiPlusCircle />} title="Change Fund">
-                <div>Date: </div>
-                <div>Currency: </div>
-                <div>Quantity: </div>                
-              </Dialog>
+            <td>   
+              <AddFundDialog fund={fund} save={(update) => { alert("update") } } />
             </td>
           </tr>
           )}
