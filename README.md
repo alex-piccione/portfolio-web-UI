@@ -43,3 +43,22 @@ AWS_KEY_SECRET=***
 These values are loded by Next.js within by _process.env.AAA_.  
 
 For production these values are passed by ...
+
+
+## Bootstrap
+
+Using "modal" (and other componentthat needs JavaScript) from vanilla bootstrap does not work (it does not show up).    
+You need to use _Modal_ component from bootstrap package.    
+When use ``import {Modal} from "bootstrap"`` and try to use the _Modal_ component I receive this error: "document is not defined".  
+(The same error I receive when I try to import _bootstrap.js_ in _app.js or other componnets)
+Also using workaround like this it wasn't possible to use Bootstrap:
+```typescript
+  // https://www.kindacode.com/article/how-to-correctly-use-bootstrap-5-in-next-js/
+  // Next.js render the app both client side and sever side, so "document" and "window" does not exists.
+  useEffect && useEffect(() => {
+    import("bootstrap/dist/js/bootstrap")
+  }, []);
+```
+So I'm using React-Bootstrap: ``yarn add react-bootstrap``.  
+(it still need bootstrap for CSS, ``yarn add bootstrap``)  
+Reference: https://react-bootstrap.github.io/getting-started/introduction/

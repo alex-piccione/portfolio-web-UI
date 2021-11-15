@@ -2,8 +2,10 @@ import axios from "axios"
 import React, { FC, useEffect, useState } from "react"
 import Alert from "./Alert"
 import CompanyBadge, { CompanyNameBadge } from "./CompanyBadge"
+import { Dialog } from "./Dialog"
 import { Balance } from "./entities"
 import Spinner from "./Spinner"
+//import { Modal } from "bootstrap"
 
 const baseCurrency = "EUR"
 
@@ -36,13 +38,13 @@ export const BalanceTable = () => {
   return loading ? <Spinner /> :
     error ? <Alert error={error} /> :
     <>
-      <div>button</div>
       <table className="table table-stripped">
         <thead>
           <tr>
             <th>Currency</th>
             <th>Quantity</th>
             <th>Companies</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -51,6 +53,8 @@ export const BalanceTable = () => {
             <td>{fund.currencyCode}</td>
             <td>{fund.amount}</td>
             <td>{renderCompanies(fund.companies)}</td>
+            <td>
+              <Dialog icon="Edit" title="Change Fund" /></td>
           </tr>
           )}
         </tbody>
