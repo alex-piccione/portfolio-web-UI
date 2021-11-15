@@ -62,3 +62,9 @@ Also using workaround like this it wasn't possible to use Bootstrap:
 So I'm using React-Bootstrap: ``yarn add react-bootstrap``.  
 (it still need bootstrap for CSS, ``yarn add bootstrap``)  
 Reference: https://react-bootstrap.github.io/getting-started/introduction/
+
+### Icons
+Good reference: https://react-icons.github.io  
+I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
+``yarn add react-icons``  
+``import { IconName } from "react-icons/fi"``

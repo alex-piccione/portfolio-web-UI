@@ -1,13 +1,16 @@
 import React, { FC, useState } from "react"
 //import 'bootstrap/dist/js/bootstrap.min.js'
 import { Button, Modal } from 'react-bootstrap'
+import { IconType } from "react-icons"
+import { FiPlus, FiPlusCircle } from "react-icons/fi"
 
 // https://getbootstrap.com/docs/5.0/components/modal/
 type OpenIcons = "Edit" | "Delete"
 
 interface Props {
   // open by:
-  icon?: OpenIcons, 
+  //icon?: IconType, 
+  clickableElement?: JSX.Element,
   button?: string,
   link?: string,
 
@@ -16,15 +19,14 @@ interface Props {
 }
 
 export const Dialog:FC<Props> = (props) => {
-  let {icon, button, link, title, children} = props
+  let {clickableElement, button, link, title, children} = props
 
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
-  return <> 
-  <Icon />
-    {icon && <span className="" onClick={open}>(icon)</span> }
+  return <>     
+    {clickableElement && <span onClick={open}>{clickableElement}</span> }
     {button && <button className="btn btn-sm" onClick={() => open()}>button</button> }
     {link && <a className="" onClick={open}>{link}</a> }
     

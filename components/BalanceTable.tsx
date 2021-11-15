@@ -5,7 +5,8 @@ import CompanyBadge, { CompanyNameBadge } from "./CompanyBadge"
 import { Dialog } from "./Dialog"
 import { Balance } from "./entities"
 import Spinner from "./Spinner"
-//import { Modal } from "bootstrap"
+import { FiPlusCircle } from "react-icons/fi"
+import { Table } from "react-bootstrap"
 
 const baseCurrency = "EUR"
 
@@ -19,7 +20,6 @@ const getBalance = async (setBalance, setError) => {
 }
 
 export const BalanceTable = () => {
-
   const [balance, setBalance] = useState<Balance>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>(undefined)
@@ -38,7 +38,7 @@ export const BalanceTable = () => {
   return loading ? <Spinner /> :
     error ? <Alert error={error} /> :
     <>
-      <table className="table table-stripped">
+      <Table striped bordered hover >
         <thead>
           <tr>
             <th>Currency</th>
@@ -54,11 +54,16 @@ export const BalanceTable = () => {
             <td>{fund.amount}</td>
             <td>{renderCompanies(fund.companies)}</td>
             <td>
-              <Dialog icon="Edit" title="Change Fund" /></td>
+              <Dialog clickableElement={<FiPlusCircle />} title="Change Fund">
+                <div>Date: </div>
+                <div>Currency: </div>
+                <div>Quantity: </div>                
+              </Dialog>
+            </td>
           </tr>
           )}
         </tbody>
-      </table>    
+      </Table>    
     </>
 }
 
