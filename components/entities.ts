@@ -26,8 +26,3 @@ export interface FundUpdate {
   quantity: number,
   companyIds: string[]
 }
-
-/*export interface FundUpdateAtDate {
-  date: Date,
-  fund: Fund
-}*/
