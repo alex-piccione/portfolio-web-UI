@@ -1,0 +1,13 @@
+name: Cypress tests
+on: push
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress runs
+        uses: cypress-io/github-action@v2
+        with:
+          start: yarn dev
