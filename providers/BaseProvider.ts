@@ -20,6 +20,15 @@ abstract class BaseProvider {
         ) 
       .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
   }
+
+  put<T,R>(path:string, data:T, parse:(response:AxiosResponse) => R) { 
+    return axios.put(`${baseUrl}/${path}`, {headers:headers, data:data,})
+      .then(response => 
+        //response.status
+        parse(response.data)
+        ) 
+      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+  }
 }
 
 export default BaseProvider
