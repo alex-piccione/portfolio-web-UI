@@ -12,7 +12,7 @@ export type Currency = {
 }
 
 export interface Fund {
-  currencyCode:string, amount:number, companies:{ id:string, name:string }[]
+  currencyCode:string, quantity:number, companies:{ id:string, name:string }[]
 }
 
 export type Balance = {
@@ -21,10 +21,13 @@ export type Balance = {
 }
 
 export interface FundUpdate {
-  fund: Fund
+  date: Date,
+  currencyCode: string,
+  quantity: number,
+  companyIds: string[]
 }
 
-export interface FundUpdateAtDate {
+/*export interface FundUpdateAtDate {
   date: Date,
   fund: Fund
-}
+}*/

@@ -1,22 +1,26 @@
 import React, { useState } from "react"
-import { Button, Modal } from "react-bootstrap"
-import { Fund } from "../entities"
+import { Button, Modal, Form, Row, Col } from "react-bootstrap"
+/*import { FundUpdate } from "../../containers/BalanceContainer"*/
+import {CompanyNameBadges, renderCompanies} from "../CompanyBadge"
+import { Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
 
-export interface Update {
-  quantity: number
-}
-
-const AddFundDialog = (props:{fund:Fund, save:(update:Update) => void}) => {
-  const {fund, save} = props
+const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
+  const {date, fund, save} = props
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
-  const [quantity, setQuantity] = useState(fund.amount)
+  const [quantity, setQuantity] = useState(fund.quantity)
 
   const saveClick = () => {
-    const update:Update = {quantity: quantity }
+    const update:FundUpdate = {
+      date: date,
+      currencyCode: fund.currencyCode,
+      quantity: quantity,
+      companyIds: fund.companies.map(c => c.id)
+     }
+
     save(update)
     close()
   }
@@ -29,9 +33,32 @@ const AddFundDialog = (props:{fund:Fund, save:(update:Update) => void}) => {
         <Modal.Title>Add fund for <strong>{fund.currencyCode}</strong></Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div>Date: </div>
-        <div>Currency: </div>
-        <div>Quantity: <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.valueAsNumber)} /></div>   
+        <Form>
+          <Form.Group as={Row}>
+            <Form.Label column sm="5">Date</Form.Label>
+            <Col sm="7">
+              <Form.Control plaintext readOnly defaultValue={new Date(date).toLocaleDateString()} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm="5">Currency</Form.Label>
+            <Col sm="7">
+              <Form.Control plaintext readOnly defaultValue={fund.currencyCode} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row}>
+            <Form.Label column sm="5">Companies</Form.Label>
+            <Col sm="7">
+              <CompanyNameBadges companyIds={fund.companies.map(c => c.name)} />
+            </Col>
+          </Form.Group>
+        </Form>
+        <Form.Group as={Row}>
+            <Form.Label column sm="5">Currency</Form.Label>
+            <Col sm="7">
+              <Form.Control type="number" defaultValue={quantity} onChange={e => setQuantity(Number.parseFloat(e.target.value))} />
+            </Col>
+          </Form.Group>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={close}>
