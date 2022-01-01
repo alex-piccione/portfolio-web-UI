@@ -15,18 +15,15 @@ const headers = {Host: host}
 // Browser's console shows a HTML that is not readable and hides the problem.
 // UI shows an error because it cannot parse the returned HTML as JSON.
 
-const CompanyProvider = {
-  
+const CompanyProvider = {  
   getCompanies: async () =>  {
     return axios.get(`${baseUrl}/company`, {headers:headers})
     .then(result =>  parser.parseCompanies(result.data))
     .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
   },
-
 }
 
 const parser = {
-
   parseCompanies: (data) => {
     try{
       const companies = (data as Array<any>).map(item => {

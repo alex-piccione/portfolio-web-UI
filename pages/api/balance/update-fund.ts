@@ -6,7 +6,7 @@ const balanceProivier = new BalanceProvider()
 export default async function handler (req, res) {
   try {
     const body = req.body // null if not found
-    return balanceProivier.updateFund(req.body).then(result => {
+    return balanceProivier.updateFund(body).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {

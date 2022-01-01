@@ -9,7 +9,7 @@ export const CompanyNameBadge = (props:{company:string}) =>
 
 export const CompanyNameBadges = (props:{companyIds:string[]}) =>   
   <>{props.companyIds.map(company => 
-    <span className="badge rounded-pill bg-primary" style={{marginRight:".5em"}}>{company}</span>
+    <span key={company} className="badge rounded-pill bg-primary" style={{marginRight:".5em"}}>{company}</span>
   )}</>
 
 const CompanyBadge:FC<Company> = (company) =>
