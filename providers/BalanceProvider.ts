@@ -36,7 +36,10 @@ const parser = {
         return {id:id, name:companies.filter(c => c.Id == id)[0]?.Name || "unknown"} 
       })                
       const funds = (data.FundsByCurrency as Array<any>).map(fund => {
-        return { currencyCode: fund.CurrencyCode, quantity:fund.Quantity, companies: getCompanies(fund.CompaniesIds) }
+        return { 
+          currencyCode: fund.CurrencyCode, 
+          amount: fund.Quantity, 
+          companies: getCompanies(fund.CompaniesIds) }
       })
       return {date:date, fundsByCurrency:funds}
     }
