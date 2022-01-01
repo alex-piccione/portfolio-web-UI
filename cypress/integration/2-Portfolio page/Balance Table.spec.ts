@@ -1,4 +1,4 @@
-import { Balance, FundAtDateSaveRequest } from "../../../components/entities"
+import { Balance/*, FundAtDateSaveRequest*/ } from "../../../components/entities"
 
 const balance:Balance = {
   date: new Date(),
@@ -31,7 +31,20 @@ export default describe("BalanceTable", () => {
 
   it("has data rows", () => {
     cy.get("table > tbody > tr").should("have.length.gt", 0)
+      //.get("a:Contains(Add)").should("exist")
+      //.click()
   })
+
+  describe("rows have an 'Add' button", () => {    
+    it("that opens a modal", () => {
+      const addButton = cy.get("table > tbody > tr").first().get("a:Contains(Add)")
+      addButton.click().then(() => {
+        cy.get("[class*='modal-dialog']").should("exist").and("be.visible")
+      })
+    })
+  })
+
+
 
   /*
   describe("when an item is saved", () => {    
