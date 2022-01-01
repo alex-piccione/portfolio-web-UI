@@ -54,7 +54,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
           </Form.Group>
         </Form>
         <Form.Group as={Row}>
-            <Form.Label column sm="5">Currency</Form.Label>
+            <Form.Label column sm="5">Quantity</Form.Label>
             <Col sm="7">
               <Form.Control type="number" defaultValue={quantity} onChange={e => setQuantity(Number.parseFloat(e.target.value))} />
             </Col>
