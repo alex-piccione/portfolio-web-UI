@@ -70,3 +70,17 @@ Good reference: https://react-icons.github.io
 I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
 ``yarn add react-icons``  
 ``import { IconName } from "react-icons/fi"``
+
+
+## Tests
+I use [Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress#Assertions) 
+and _Gherkin_.
+
+Gherkin link 1: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor  
+Gherkin link 2: https://wanago.io/2020/01/13/javascript-testing-cypress-cucumber/
+
+In order to use TypeScript for Ghrkin I followed the instruction here:
+https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescript-407c612d2f34
+
+
+Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
