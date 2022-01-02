@@ -70,3 +70,12 @@ Good reference: https://react-icons.github.io
 I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
 ``yarn add react-icons``  
 ``import { IconName } from "react-icons/fi"``
+
+## Yarn
+Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
+To add a package use ``yarn add package@version``.
+``yarn help  upgrade`` does not explain if and how a single package can be updated.  
+``yarn upgrade [package]`` does not work (it does not upgrade the package to the latest, like next 12.0.1 to 12.0.7).  
+You have to specify the version yourself.
+
+## Issues
