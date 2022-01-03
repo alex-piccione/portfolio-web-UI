@@ -79,3 +79,10 @@ To add a package use ``yarn add package@version``.
 You have to specify the version yourself.
 
 ## Issues
+
+0. Warning when run ``yarn test:ui:open``
+> [0102/180334.258:ERROR:registration_protocol_win.cc(102)] CreateFile: The system cannot find the file specified. (0x2)
+It does not happen on another project with older versions:  
+- "next": "11.1.2",
+- "react": "17.0.2",
+Upgrading Cypress from version 9.0.0 to 9.2.0 does not fix the issue.
