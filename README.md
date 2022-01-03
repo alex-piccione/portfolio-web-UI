@@ -84,3 +84,20 @@ https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescri
 
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
+
+## Yarn
+Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
+To add a package use ``yarn add package@version``.
+``yarn help  upgrade`` does not explain if and how a single package can be updated.  
+``yarn upgrade [package]`` does not work (it does not upgrade the package to the latest, like next 12.0.1 to 12.0.7).  
+You have to specify the version yourself.
+
+## Issues
+
+0. Warning when run ``yarn test:ui:open``
+> [0102/180334.258:ERROR:registration_protocol_win.cc(102)] CreateFile: The system cannot find the file specified. (0x2)
+It does not happen on another project with older versions:  
+- "next": "11.1.2",
+- "react": "17.0.2",
+Upgrading Cypress from version 9.0.0 to 9.2.0 does not fix the issue.
+
