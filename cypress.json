@@ -1,5 +1,5 @@
 {
   "baseUrl": "http://localhost:3000",
   "video": false,
-  "testFiles": "**/*{.spec.ts,*.feature,*.features}"
+  "testFiles": ["**/*.{feature,features,spec.ts,test.ts}"]
 }
