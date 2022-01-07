@@ -23,9 +23,9 @@ const View = (props:TableProps) => {
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
 
-  return isLoading ? <Spinner /> :
+  return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
-    <Table striped bordered hover >
+    <Table striped bordered hover id="balanceTable">
       <thead>
         <tr>
           <th>Currency</th>

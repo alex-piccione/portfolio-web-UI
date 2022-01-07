@@ -20,6 +20,9 @@ Then('I should see {string} in the header', (header) => {
 
 
 Then('I should see a table with the following headers', (dataTable) => {    
+
+    cy.get('#balanceTable-spinner').as("spinner") 
+
     // it calls backend to retrieve data
     // TODO: mock provider to remove dependency on wait: 
     // https://github.com/alex-piccione/portfolio-web-UI/issues/31
