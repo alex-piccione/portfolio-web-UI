@@ -13,6 +13,7 @@ Scenario: Open portfolio page
       | Quantity  |
       | Companies |
 
+# TODO: https://github.com/alex-piccione/portfolio-web-UI/issues/32
 #Scenario: Open dialog to add new asset
 #  And a record with:
 #    | Currency | Quantity |
