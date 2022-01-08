@@ -13,7 +13,7 @@ export default describe("BalanceTable", () => {
   before("Open home page", () => {
     cy.visit("/")
 
-      //https://docs.cypress.io/api/commands/intercept#Syntax
+    //https://docs.cypress.io/api/commands/intercept#Syntax
     cy.intercept("GET", "/api/balance?base-currency=EUR", 
       {
         statusCode: 200,
@@ -31,8 +31,6 @@ export default describe("BalanceTable", () => {
 
   it("has data rows", () => {
     cy.get("table > tbody > tr").should("have.length.gt", 0)
-      //.get("a:Contains(Add)").should("exist")
-      //.click()
   })
 
   describe("rows have an 'Add' button", () => {    
@@ -43,8 +41,6 @@ export default describe("BalanceTable", () => {
       })
     })
   })
-
-
 
   /*
   describe("when an item is saved", () => {    

@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:ui:open": "cypress open",
-    "test:ui:open2": "cypress run ",
-    "test:ui:run": "cypress run --spec **/*.feature"
+    "test:ui:run": "cypress run ",
+    "test:ui:run-feature": "cypress run --spec **/*.{feature,features}"
   },
   "dependencies": {
     "@babel/core": "^7.16.7",
