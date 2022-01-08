@@ -1,6 +1,7 @@
 import { Before, Then, When} from "cypress-cucumber-preprocessor/steps"
 
 Before(() => {
+  cy.log("intercept get balance request")
   cy.intercept("GET", "/api/balance?base-currency=EUR").as("getBalance")
 
   cy.log("intercept any request")
@@ -24,9 +25,9 @@ When("A call to {string} is executed", (endpoint) => {
 })
 
 Then("I see a table with the following headers:", (data) => {
-  cy.wait("@getBalance").then(() => {
+  //cy.wait("@getBalance").then(() => {
     cy.get("table#balanceTable").as("table").should("exist")
     data.rows().forEach(row => 
       cy.get("@table").find(`thead > tr > th:Contains(${row[0]})`).should("exist"))
-  })
+  //})
 })
