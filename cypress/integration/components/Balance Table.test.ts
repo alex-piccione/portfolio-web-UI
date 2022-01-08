@@ -4,7 +4,7 @@ const balance:Balance = {
   date: new Date(),
   fundsByCurrency: [{
     currencyCode: "EUR", 
-    amount: 100, 
+    quantity: 100, 
     companies: [{id: "c1", name: "Company 1"}]}]
 }
 
