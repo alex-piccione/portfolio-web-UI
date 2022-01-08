@@ -4,6 +4,7 @@ Before(() => {
   cy.intercept("GET", "/api/balance?base-currency=EUR").as("getBalance")
 
   cy.log("intercept any request")
+  //cy.log(`base URL: ${cy.baseUrl}`)
   cy.intercept('*/api/*', { hostname: 'localhost' }, (req) => {
     /* do something with request and/or response */
     cy.log(`req: ${req.url}`)
