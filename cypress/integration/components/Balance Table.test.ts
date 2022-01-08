@@ -19,14 +19,16 @@ export default describe("BalanceTable", () => {
         statusCode: 200,
         body:balance
       }
-    )
+    ).as("getBalance")
   })
 
   it("has the defined headers", () => {
-    cy.get("table > thead > tr > th")      
-      .first().should("have.text", "Currency")
-      .next().should("have.text", "Quantity")
-      .next().should("have.text", "Companies") 
+    cy.wait("@getBalance").then(() => {
+      cy.get("table > thead > tr > th")      
+        .first().should("have.text", "Currency")
+        .next().should("have.text", "Quantity")
+        .next().should("have.text", "Companies") 
+      })
   })   
 
   it("has data rows", () => {
