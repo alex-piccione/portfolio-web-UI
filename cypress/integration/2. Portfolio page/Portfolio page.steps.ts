@@ -23,6 +23,7 @@ When("I receive the response", () => {
 })
 
 Then("I see a table with the following headers:", (data) => {
+  cy.wait(200)
   cy.get("table#balanceTable").as("table").should("exist")
   data.rows().forEach(row => 
     cy.get("@table").find(`thead > tr > th:Contains(${row[0]})`).should("exist"))
