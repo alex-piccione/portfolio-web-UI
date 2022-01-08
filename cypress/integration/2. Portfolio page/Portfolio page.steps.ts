@@ -2,6 +2,12 @@ import { Before, Then, When} from "cypress-cucumber-preprocessor/steps"
 
 Before(() => {
   cy.intercept("GET", "/api/balance?base-currency=EUR").as("getBalance")
+
+  cy.log("intercept any request")
+  cy.intercept('*/api/*', { hostname: 'localhost' }, (req) => {
+    /* do something with request and/or response */
+    cy.log(`req: ${req.url}`)
+  })
 })
 
 When("I visit the {string} page", (path) => {
