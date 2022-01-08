@@ -11,7 +11,6 @@ Feature: Portfolio page
   @focus
   Scenario: I see the balance table populated
     And A call to "/api/balance/base-currency=EUR" is executed
-    When I receive the response
     Then I see a table with the following headers:
       | Header    |
       | Currency  |

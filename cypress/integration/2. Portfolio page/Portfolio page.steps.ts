@@ -13,13 +13,7 @@ Then("I should see {string} in the header", (header) => {
 })
 
 When("A call to {string} is executed", (endpoint) => {
-  cy.wrap(endpoint).as("endpoint")
-  cy.wait(200)
-  cy.get("@getBalance").should("exist")
-})
-
-When("I receive the response", () => {
-  cy.wait("@getBalance")//.its("response.body").should("deep.equal", data)
+  cy.intercept("GET", endpoint).as("getBalance")
 })
 
 Then("I see a table with the following headers:", (data) => {
