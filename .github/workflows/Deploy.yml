@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Configure environment
-        run: >
+        run: |
           ls -l ./devops
           echo change permissions
           chmod +x ./devops/*
