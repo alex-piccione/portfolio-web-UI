@@ -11,3 +11,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: yarn dev
+          record: true
+        env:         
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
