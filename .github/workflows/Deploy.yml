@@ -10,15 +10,16 @@ jobs:
       
       - name: Configure environment
         run: |
-          export AWS_API_ID=${{ secrets.AWS_API_ID}}
-          chmod +x ./devops/test.sh
-          ./devops/test.sh BBB
+          #export AWS_API_ID=${{ secrets.AWS_API_ID}}
+          chmod +x ./devops/set_env.sh
+          ./devops/set_env.sh
 
       - name: Check
         run: |
           #envsubst '${AWS_API_ID}' < .env > .env_new
           echo .env
           cat .env
+          echo \n
           echo .env_new
           cat .env_new
 

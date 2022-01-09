@@ -6,6 +6,6 @@
 # is thia needed?
 #set -a
 
-echo var1 = $1
+export AWS_API_ID=${{ secrets.AWS_API_ID}}
 
 envsubst '${AWS_API_ID}' < .env > .env_new
