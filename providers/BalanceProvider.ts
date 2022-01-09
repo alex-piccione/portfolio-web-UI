@@ -1,4 +1,4 @@
-import { Balance, Company, FundUpdate } from "../components/entities"
+import { Balance, Company, Fund, FundUpdate } from "../components/entities"
 import BaseProvider from "./BaseProvider"
 import CompanyProvider from "./CompanyProvider";
 
@@ -38,7 +38,7 @@ const parser = {
       const funds = (data.FundsByCurrency as Array<any>).map(fund => {
         return { 
           currencyCode: fund.CurrencyCode, 
-          amount: fund.Quantity, 
+          quantity: fund.Quantity, 
           companies: getCompanies(fund.CompaniesIds) }
       })
       return {date:date, fundsByCurrency:funds}
