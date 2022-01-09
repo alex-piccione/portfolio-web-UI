@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Configure environment
-        run: ls -l /devops
+        run: ls -l ./devops
 
       - name: execute script
         run: ./devops/test.sh
