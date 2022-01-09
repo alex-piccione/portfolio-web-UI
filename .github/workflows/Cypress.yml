@@ -4,6 +4,10 @@ on: push
 jobs:
   cypress:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        machines: [1,2,3]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
