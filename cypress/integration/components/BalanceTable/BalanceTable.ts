@@ -1,4 +1,5 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps"
+import { RouteHandler } from "cypress/types/net-stubbing"
 import { Balance } from "../../../../components/entities"
 
 const balance:Balance = {
@@ -11,6 +12,10 @@ const balance:Balance = {
 
 const url = "/"
 Given("I visit the portfolio page", () => {
+    cy.intercept("GET", "/api/balance?base-currency=EUR", {
+        statusCode: 200,
+        body: balance,
+    } as RouteHandler)
     cy.visit(url)
 })
 

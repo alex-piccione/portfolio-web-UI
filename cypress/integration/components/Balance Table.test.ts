@@ -11,8 +11,6 @@ const balance:Balance = {
 export default describe("BalanceTable", () => {
 
   before("Open home page", () => {
-    cy.visit("/")
-
     //https://docs.cypress.io/api/commands/intercept#Syntax
     cy.intercept("GET", "/api/balance?base-currency=EUR", 
       {
@@ -20,15 +18,15 @@ export default describe("BalanceTable", () => {
         body:balance
       }
     ).as("getBalance")
+
+    cy.visit("/")
   })
 
   it("has the defined headers", () => {
-    cy.wait("@getBalance").then(() => {
-      cy.get("table > thead > tr > th")      
-        .first().should("have.text", "Currency")
-        .next().should("have.text", "Quantity")
-        .next().should("have.text", "Companies") 
-      })
+    cy.get("table > thead > tr > th")      
+      .first().should("have.text", "Currency")
+      .next().should("have.text", "Quantity")
+      .next().should("have.text", "Companies") 
   })   
 
   it("has data rows", () => {
