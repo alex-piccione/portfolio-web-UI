@@ -5,11 +5,11 @@ Feature: Portfolio page
   Background: 
     Given I visit the "/" page
 
-  #@ignore
+  @ignore
   Scenario: I see the page header
     Then I should see "Your Portfolio!" in the header
   
-  #@ignore
+  @ignore
   Scenario: I see the balance table populated
     Then I see a table with the following headers:
       | Header    |
