@@ -8,4 +8,4 @@
 
 echo var1 = $1
 
-envsubst '${AWS_API_ID} $1' < ../.env > ../.env_new
+envsubst '${AWS_API_ID} $1' < .env > .env_new
