@@ -4,7 +4,6 @@ I want to be able to see assets and add new assets.
 Background:
   Given I visit the portfolio page
 
-@focus
 Scenario: Open portfolio page
   Then I should see "Portfolio" in the header
   Then I should see a table with the following headers
