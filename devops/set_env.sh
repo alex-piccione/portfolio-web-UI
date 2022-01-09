@@ -9,4 +9,4 @@
 #export AWS_API_ID=$1
 
 envsubst '${AWS_API_ID}' < .env > .env_new
-mv .env _new .env 
+mv .env_new .env 
