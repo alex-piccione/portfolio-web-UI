@@ -16,6 +16,9 @@ jobs:
         with:
           start: yarn dev
           record: true
+          command: 
+            cypress run -e TAGS=`not @ignore`
+            #npm run e2e:ci
         env:         
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
