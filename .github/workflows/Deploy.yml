@@ -10,6 +10,7 @@ jobs:
       
       - name: Configure environment
         run: |
+          export AWS_API_ID=${{ secrets.AWS_API_ID}}
           chmod +x ./devops/test.sh
           ./devops/test.sh BBB
 
