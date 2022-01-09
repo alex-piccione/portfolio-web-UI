@@ -22,8 +22,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
 
       - name: Configure environment
-        run: >
-          ls -l ./devops
-          echo change permissions
-          chmod +x ./devops/*
-          ls -l ./devops
+        run: |
+          export AWS_API_ID=${{ secrets.AWS_API_ID }}
+          chmod +x ./devops/set_env.sh
+          ./devops/set_env.sh
