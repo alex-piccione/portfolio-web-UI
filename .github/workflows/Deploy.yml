@@ -10,10 +10,10 @@ jobs:
       
       - name: Configure environment
         run: |
-          ls -l ./devops
-          echo change permissions
-          chmod +x ./devops/*
-          ls -l ./devops
+          chmod +x ./devops/test.sh
+          ./devops/test.sh
 
-      - name: execute script
-        run: ./devops/test.sh
+      - name: Check
+        run: |
+          cat .env
+          
