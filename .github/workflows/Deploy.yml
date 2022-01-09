@@ -17,10 +17,10 @@ jobs:
       - name: Check
         run: |
           #envsubst '${AWS_API_ID}' < .env > .env_new
-          echo .env
-          cat .env
-          echo \n
-          echo .env_new
-          cat .env_new
+          #echo .env
+          #cat .env
+          #echo \n
+          #echo .env_new
+          #cat .env_new
 
           
