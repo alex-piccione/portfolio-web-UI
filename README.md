@@ -42,7 +42,11 @@ AWS_API_STAGE=***
 AWS_KEY_ID=***
 AWS_KEY_SECRET=***
 ```
-These values are loded by Next.js within by _process.env.AAA_.  
+These values are loded by Next.js within _process.env.AAA_.   
+ref: 
+  - https://vercel.com/docs/concepts/next.js/overview#adding-secrets  
+  - https://nextjs.org/docs/basic-features/environment-variables
+
 
 For production these values are passed by ...
 
