@@ -1,7 +1,7 @@
 {  
-  "prejectId": "i2ds8o",
+  "projectId": "i2ds8o",
   "baseUrl": "http://localhost:3000",  
   "screenshots": false,
-  "video": false,  
+  "video": true,  
   "testFiles": ["**/*.{feature,features,spec.ts,test.ts}"]
 }
