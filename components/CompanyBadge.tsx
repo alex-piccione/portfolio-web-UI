@@ -17,7 +17,7 @@ const CompanyBadge:FC<Company> = (company) =>
   <span className="badge rounded-pill" style={{marginRight:".5em"}}>{company.Name}</span>
 
 export const renderCompanies = (companies:string[]) => {
-  companies.map(c => <CompanyNameBadge company={c} />)
+  companies.map(c => <CompanyNameBadge key={c} company={c} />)
 }
 
 export default CompanyBadge

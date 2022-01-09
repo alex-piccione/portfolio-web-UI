@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import CurrenciesTable from "../components/CurrenciesTable"
 import { Currency } from "../components/entities"
 import { DefaultPage } from "../components/layouts"
 import Spinner from "../components/Spinner"
+import { useMountEffect } from "../common/hooks"
 
 export default function Page() {
   const [currencies, setCurrencies] = useState<Currency[]>(undefined)
@@ -14,7 +15,7 @@ export default function Page() {
       .catch(err => setError(`${response.statusText} - Failed to parse error. ${err}`))
   }
 
-  const loadCurrencies = () => {
+  function loadCurrencies () {
     setError(undefined)
     fetch("/api/currencies").then(res => {
       if (res.ok) {
@@ -28,7 +29,7 @@ export default function Page() {
     .catch(error => setError(`Oh My God! ${error}`))
   }
 
-  useEffect(() => loadCurrencies(), [])
+  useMountEffect(loadCurrencies)
 
   return <DefaultPage title="Currencies">
     <p>Fiat and Crypto currencies.</p>    

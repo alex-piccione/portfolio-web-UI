@@ -1,11 +1,12 @@
 import axios from "axios"
-import React, { FC, useEffect, useState } from "react"
+import React, { useState } from "react"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
 import { Balance, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
 import AddFundDialog from "./dialogs/AddFundDialog"
+import { useMountEffect } from "../common/hooks"
 
 const baseCurrency = "EUR"
 
@@ -49,7 +50,7 @@ const View = (props:TableProps) => {
     </Table> 
 }
 
-export default function() {
+const BalanceTable = () => {
   const [balance, setBalance] = useState<Balance>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>(undefined)
@@ -69,7 +70,7 @@ export default function() {
     loadBalance()
   }
 
-  useEffect(() => loadBalance(), [])
+  useMountEffect(loadBalance)
 
   const getBalance = async (setBalance, setError) => {
     await axios.get(`/api/balance?base-currency=${baseCurrency}`)
@@ -89,3 +90,5 @@ export default function() {
   
   return <View isLoading={loading} error={error} balance={balance} reload={reload} updateFund={updateFund} />
 }
+
+export default BalanceTable
