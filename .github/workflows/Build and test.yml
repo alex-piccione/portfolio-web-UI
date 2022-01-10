@@ -12,13 +12,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Build
+        run: yarn install; yarn build
+
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
           #start: yarn dev
-          #start: yarn install; yarn build; yarn start
+          start: yarn start
           record: true
-          command: yarn install; yarn build; yarn start
         env:         
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
