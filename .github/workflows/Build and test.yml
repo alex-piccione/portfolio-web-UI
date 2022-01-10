@@ -1,4 +1,4 @@
-name: Cypress tests
+name: Build and test
 on: push
 
 jobs:
@@ -15,14 +15,9 @@ jobs:
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
-          start: yarn dev
+          #start: yarn dev
+          start: yarn install; yarn build; yarn start
           record: true
         env:         
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
-
-      - name: Configure environment
-        run: |
-          export AWS_API_ID=${{ secrets.AWS_API_ID }}
-          chmod +x ./devops/set_env.sh
-          ./devops/set_env.sh
