@@ -10,7 +10,7 @@ const balance:Balance = {
       companies: [{id: "c1", name: "Company 1"}]}]
   }
 
-const url = "/"
+const url = "/" // portfolio is the home page
 Given("I visit the portfolio page", () => {
     cy.intercept("GET", "/api/balance?base-currency=EUR", {
         statusCode: 200,
@@ -23,16 +23,8 @@ Then('I should see {string} in the header', (header) => {
     cy.get('h1').should('contain', header)
 })
 
-
 Then('I should see a table with the following headers', (dataTable) => {    
-
     cy.get('#balanceTable-spinner').as("spinner") 
-
-    // it calls backend to retrieve data
-    // TODO: mock provider to remove dependency on wait: 
-    // https://github.com/alex-piccione/portfolio-web-UI/issues/31
-    cy.wait(2000) // wait 2 seconds
-
     cy.get('table').as("table") // alias
     cy.get('@table').should('be.visible')
 
