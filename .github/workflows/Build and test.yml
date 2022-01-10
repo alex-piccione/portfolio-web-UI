@@ -2,7 +2,7 @@ name: Build and test
 on: push
 
 jobs:
-  cypress:
+  build_and_test:
     runs-on: ubuntu-latest
     #strategy:
     #  fail-fast: true
