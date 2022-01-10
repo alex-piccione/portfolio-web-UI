@@ -36,19 +36,19 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Private configuration is stored in _.env.local_ file like:
 ```
-AWS_REGION=eu-central-1
-AWS_API_ID=***
-AWS_API_STAGE=***
-AWS_KEY_ID=***
-AWS_KEY_SECRET=***
+a_AWS_REGION=eu-central-1
+a_AWS_API_ID=***
+a_AWS_API_STAGE=***
+a_AWS_KEY_ID=***
+a_AWS_KEY_SECRET=***
 ```
 These values are loded by Next.js within _process.env.AAA_.   
 ref: 
   - https://vercel.com/docs/concepts/next.js/overview#adding-secrets  
   - https://nextjs.org/docs/basic-features/environment-variables
 
-
-For production these values are passed by ...
+variables are prefixed with "a_" because many of them are used  by Next.js/Vercel itself.  
+For production these values are stored in the Vercel project Environment Variables.  
 
 
 ## Bootstrap
