@@ -14,6 +14,12 @@ export const getUserLocale = (locale?:string):Locale => {
 
   const culture:L10N = locales[locale]
 
+  // ps, ps-fa have a date pattern like "g yyyy/M/d"
+  // the "g" is not recognized by DatePicker
+
+  if (culture.ShortDatePattern.startsWith("g ")) 
+    culture.ShortDatePattern = culture.ShortDatePattern.substring(2)
+
   return {
     ...baseLocale,
     code: locale,
