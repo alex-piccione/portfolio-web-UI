@@ -26,6 +26,25 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+### Locale
+
+Next.js detect the locale automatically.  
+https://nextjs.org/docs/advanced-features/i18n-routing#automatic-locale-detection  
+BUT **it forces you to define which locales you want to support** and a default one.  
+
+_next.config.js_
+```json
+module.exports = {
+  i18n: {
+    locales:["en-US", "en-GB", "en-UK", "it-IT"],
+    defaultLocale: "it-IT",
+    localeDetection: true,
+  }
+}
+```
+What if I want to support ALL locales?  
+To generate the locale.js and locale-names.js files I used F#: devops/[generate locale.fsx]("./devops/generate locale.fsx")
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
@@ -105,3 +124,29 @@ It does not happen on another project with older versions:
 - "react": "17.0.2",
 Upgrading Cypress from version 9.0.0 to 9.2.0 does not fix the issue.
 
+## Calendars (DatePicker)
+
+### react-datepicker  
+https://reactdatepicker.com/
+No.   
+You can't load dynamic locale, based on current request locale.  
+Also if you set locale="en-GB" it renders the date as MM/dd/yyyy !!
+Interface is not nice, too simple.  
+Documentation on localization is not clear and ambiguous.
+
+### react-modern-calendar-datepicker
+No No.   
+It rendered out of the screen, on top of the textbox.  
+Only 2 locales are available, actually languages,  "en" and "fa".  
+
+### react-nice-dates
+https://reactnicedates.hernansartorio.com
+``yarn add react-nice-dates date-fns``
+locale is in the format of "enUS" and needs to be imported in advance
+
+### react-day-picker
+http://react-day-picker.js.org/examples/localization
+
+
+
+### https://github.com/wojtekmaj/react-datetime-picker#readme

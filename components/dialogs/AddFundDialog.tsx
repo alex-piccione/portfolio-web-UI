@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
-/*import { FundUpdate } from "../../containers/BalanceContainer"*/
-import {CompanyNameBadges, renderCompanies} from "../CompanyBadge"
+import { CompanyNameBadges } from "../CompanyBadge"
+import DatePicker from "../controls/DatePicker"
 import { Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
 
@@ -10,7 +10,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
-
+  const [newDate, setNewDate] = useState(date||new Date())
   const [quantity, setQuantity] = useState(fund.quantity)
 
   const saveClick = () => {
@@ -24,7 +24,6 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     save(update)
     close()
   }
-
   return !isOpen ?
     //<Button variant="otline-secondary" size="sm" onClick={open}><Icon icon="add-record" /> Add</Button> :
     <a onClick={open} style={{cursor: "pointer"}}><Icon icon="add-record" /> Add</a> :
@@ -37,7 +36,8 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
             <Col sm="7">
-              <Form.Control plaintext readOnly defaultValue={new Date(date).toLocaleDateString()} />
+              <Form.Control plaintext readOnly defaultValue={new Date(date).toLocaleDateString()} />              
+              <DatePicker onChange={setNewDate} />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>

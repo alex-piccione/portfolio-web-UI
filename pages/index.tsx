@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
+import { default as DatePicker } from '../components/controls/DatePicker'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -18,6 +19,8 @@ export default function Home() {
         <h1 className={styles.title}>
           Your Portfolio!
         </h1>
+
+        <DatePicker onChange={d => {}} />
 
         <BalanceTable />
 
