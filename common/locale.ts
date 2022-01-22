@@ -15,10 +15,14 @@ export const getUserLocale = (locale?:string):Locale => {
   const culture:L10N = locales[locale]
 
   // ps, ps-fa have a date pattern like "g yyyy/M/d"
-  // the "g" is not recognized by DatePicker
+  // ar-SA has a date pattern like "d‏/M‏/yyyy g"
+  // the "g" create a problem when date-fns format the date
+  // Error: Format string contains an unescaped latin alphabet character `g`
 
   if (culture.ShortDatePattern.startsWith("g ")) 
     culture.ShortDatePattern = culture.ShortDatePattern.substring(2)
+  else if (culture.ShortDatePattern.endsWith(" g")) 
+    culture.ShortDatePattern = culture.ShortDatePattern.substring(0, -2)
 
   return {
     ...baseLocale,
@@ -36,3 +40,4 @@ export const getUserLocale = (locale?:string):Locale => {
     }
   }
 }
+
