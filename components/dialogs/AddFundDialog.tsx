@@ -15,7 +15,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
 
   const saveClick = () => {
     const update:FundUpdate = {
-      date: date,
+      date: newDate,
       currencyCode: fund.currencyCode,
       quantity: quantity,
       companyIds: fund.companies.map(c => c.id)
