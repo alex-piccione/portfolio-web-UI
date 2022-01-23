@@ -22,7 +22,7 @@ export const getUserLocale = (locale?:string):Locale => {
   if (culture.ShortDatePattern.startsWith("g ")) 
     culture.ShortDatePattern = culture.ShortDatePattern.substring(2)
   else if (culture.ShortDatePattern.endsWith(" g")) 
-    culture.ShortDatePattern = culture.ShortDatePattern.substring(0, -2)
+    culture.ShortDatePattern = culture.ShortDatePattern.substring(0, culture.ShortDatePattern.length-2)
 
   return {
     ...baseLocale,
