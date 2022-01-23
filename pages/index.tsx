@@ -20,8 +20,6 @@ export default function Home() {
           Your Portfolio!
         </h1>
 
-        <DatePicker onChange={d => {}} />
-
         <BalanceTable />
 
         <div className={styles.grid}>

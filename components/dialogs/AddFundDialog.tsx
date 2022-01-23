@@ -35,15 +35,14 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
         <Form>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
-            <Col sm="7">
-              <Form.Control plaintext readOnly defaultValue={new Date(date).toLocaleDateString()} />              
-              <DatePicker onChange={setNewDate} />
+            <Col sm="7">             
+              <DatePicker onChange={setNewDate} className="form-control" />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Currency</Form.Label>
             <Col sm="7">
-              <Form.Control plaintext readOnly defaultValue={fund.currencyCode} />
+              <Form.Control readOnly className="form-control" defaultValue={fund.currencyCode} />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
