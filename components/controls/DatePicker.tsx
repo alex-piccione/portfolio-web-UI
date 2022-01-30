@@ -6,8 +6,7 @@ import { getUserLocale } from "../../common/locale"
 
 export default function _(props:{initialDate?:Date, className?:string, onChange:(date:Date) => void}) {
   const [date, setDate] = useState(props.initialDate||new Date());
-  const router = useRouter()    
-  const locale = getUserLocale(router.locale)
+  const locale = getUserLocale()
 
   let dateFormat = locale.formatLong.date({ width: "short" })
   console.log("dateFormat: " + dateFormat)
@@ -18,7 +17,7 @@ export default function _(props:{initialDate?:Date, className?:string, onChange:
   }
 
   return <DatePicker
-    locale={locale}
+    locale={locale} // it expects a Locale type or a string
     dateFormat={dateFormat}
     selected={date}
     onChange={handleChange}

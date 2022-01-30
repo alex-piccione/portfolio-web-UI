@@ -1,15 +1,14 @@
 import {Locale} from "date-fns"
 import baseLocale from "date-fns/locale/en-US"
-import { useRouter } from "next/router"
+import { useLocale } from "./hooks"
 import locales, { L10N } from "./locales"
 
 export const getShortDateFormat = (locale:string) => {
   return "dd/MM/yyyy"
 }
 
-export const getUserLocale = (locale?:string):Locale => {  
-  const router = useRouter() 
-  locale = locale || router.locale || "en-US"
+export const getUserLocale = ():Locale => {  
+  const locale = useLocale().locale
   console.log("getUserLocale: " + locale)
 
   const culture:L10N = locales[locale]
