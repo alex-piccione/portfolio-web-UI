@@ -1,5 +1,5 @@
 import type { NextFetchEvent, NextRequest } from 'next/server'
-import { parseAcceptLanguageHeader } from '../common/utils';
+import { getLocale } from '../common/utils';
 
 export function middleware(request: NextRequest, ev: NextFetchEvent) {
 
@@ -30,10 +30,12 @@ export function middleware(request: NextRequest, ev: NextFetchEvent) {
   undefined
   */
 
-  console.log("accept-language", request.headers.get("accept-language"))
+  console.log("middleware")
+  //console.log("request", request)
+  //console.log("accept-language", request.headers.get("accept-language"))
 
   //return parseAcceptLanguageHeader(req.headers.get("accept-language"))
-  const locale = parseAcceptLanguageHeader(request.headers.get("accept-language"))[0]
+  // const locale = getLocale(request.headers.get("accept-language"))[0]
   
   //return new Response('Hello, world!')
 }
