@@ -1,8 +1,8 @@
-import { Balance, Company, Fund, FundUpdate } from "../components/entities"
-import BaseProvider from "./BaseProvider"
-import CompanyProvider from "./CompanyProvider";
+import { Balance, Company, Fund, FundUpdate } from "../../../components/entities"
+import BaseServerProvider from "./BaseServerProvider"
+import CompanyProvider from "./CompanyServerProvider";
 
-class BalanceProvider extends BaseProvider {  
+class BalanceServerProvider extends BaseServerProvider {  
   async getBalance(baseCurrency:string) {
     const companies = await CompanyProvider.getCompanies();
     return super.get(`balance?base-currency=${baseCurrency}`, (data) => parser.parseBalance(data, companies)) 
@@ -14,7 +14,7 @@ class BalanceProvider extends BaseProvider {
       "date": update.date, //.toISOString(),
       "currencyCode": update.currencyCode,
       "quantity": update.quantity,
-      "CompanyId": update.companyIds[0]
+      "CompanyId": update.companyId
     }
 
     return super.put(`balance/update`, payload, (data) => parser.parseResponse(data))
@@ -33,7 +33,7 @@ const parser = {
     try {      
       const date = new Date(data.Date)
       const getCompanies = (ids:string[]) => ids.map(id => { 
-        return {id:id, name:companies.filter(c => c.Id == id)[0]?.Name || "unknown"} 
+        return {id:id, name:companies.filter(c => c.id == id)[0]?.name || "unknown"} 
       })                
       const funds = (data.FundsByCurrency as Array<any>).map(fund => {
         return { 
@@ -53,4 +53,4 @@ const parser = {
   }
 }
 
-export default BalanceProvider
+export default BalanceServerProvider

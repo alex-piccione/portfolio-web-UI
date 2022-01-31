@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   serverRuntimeConfig: {
-    baseLanguage: "English",
+    DefaultLocale: "it",
     mySecret: "secret 123",
     a_secret: process.env.SECRET_AAA // Pass through env variables
   },

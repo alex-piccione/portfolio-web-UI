@@ -1,9 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
-import { CompanyNameBadges } from "../CompanyBadge"
 import DatePicker from "../controls/DatePicker"
-import { Fund, FundUpdate } from "../entities"
+import { getCompanies } from "../../api interfaces/CompaniesApi"
+
+import { Company, Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
+import Spinner from "../Spinner"
 
 const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
   const {date, fund, save} = props
@@ -11,19 +13,26 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
   const [newDate, setNewDate] = useState(date||new Date())
+  const [companies, setCompanies] = useState<Company[]>()
+  
+  useEffect(() => {getCompanies().then(setCompanies)}, [])
+
   const [quantity, setQuantity] = useState(fund.quantity)
+  const [companyId, setCompanyId] = useState(fund.companies[0].id)
 
   const saveClick = () => {
     const update:FundUpdate = {
       date: newDate,
       currencyCode: fund.currencyCode,
       quantity: quantity,
-      companyIds: fund.companies.map(c => c.id)
+      companyId: companyId
      }
 
     save(update)
     close()
   }
+
+
   return !isOpen ?
     //<Button variant="otline-secondary" size="sm" onClick={open}><Icon icon="add-record" /> Add</Button> :
     <a onClick={open} style={{cursor: "pointer"}}><Icon icon="add-record" /> Add</a> :
@@ -48,7 +57,12 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
-              <CompanyNameBadges companyIds={fund.companies.map(c => c.name)} />
+              { companies ? 
+              <Form.Select className="form-select-sm" onChange={(ev) => setCompanyId(ev.target.value)} >
+                {companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>)}                
+              </Form.Select>
+              : <Spinner small />
+              }              
             </Col>
           </Form.Group>
         </Form>

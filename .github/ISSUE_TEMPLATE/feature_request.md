@@ -2,7 +2,7 @@
 name: Feature request
 about: Add a functionality to this project
 title: ''
-labels: frontend
+labels: ''
 assignees: alex-piccione
 
 ---

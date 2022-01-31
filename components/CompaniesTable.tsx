@@ -20,9 +20,9 @@ class CompaniesTable extends React.Component<Props> {
       </thead>
       <tbody>
         {companies && companies.map(company => 
-        <tr key={company.Id}>
-            <td>{company.Name}</td>
-            <td>{company.Types.map(t => <CompanyTypeBadge key={t} companyType={t} /> )}</td>
+        <tr key={company.id}>
+            <td>{company.name}</td>
+            <td>{company.types.map(t => <CompanyTypeBadge key={t} companyType={t} /> )}</td>
             <td></td>
         </tr>
         )}

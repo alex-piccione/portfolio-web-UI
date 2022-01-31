@@ -1,7 +1,7 @@
 export type Company = {
-    Id:string,
-    Name: string,
-    Types: string[]
+    id:string,
+    name: string,
+    types: string[]
 }
 
 //export CompanyType = "Bank" | "Exchange" | "Stacking"
@@ -24,5 +24,5 @@ export type FundUpdate = {
   date: Date,
   currencyCode: string,
   quantity: number,
-  companyIds: string[]
+  companyId: string
 }
