@@ -1,4 +1,4 @@
-import CurrenciesProvider from "../../providers/CurrencyProvider"
+import CurrenciesProvider from "./server providers/CurrencyServerProvider"
 import helper from "./helper"
 
 const currencyProvider = new CurrenciesProvider()

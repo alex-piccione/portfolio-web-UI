@@ -1,7 +1,7 @@
-import BaseProvider from "./BaseProvider"
-import { Currency } from "../components/entities"
+import BaseProvider from "./BaseServerProvider"
+import { Currency } from "../../../components/entities"
 
-class CurrenciesProvider extends BaseProvider {  
+class CurrenciesServerProvider extends BaseProvider {  
   getCurrencies() {
     return super.get("currency", parser.parseCurrencies)
   }
@@ -22,4 +22,4 @@ const parser = {
   }  
 }
 
-export default CurrenciesProvider
+export default CurrenciesServerProvider

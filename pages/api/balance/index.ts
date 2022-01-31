@@ -1,13 +1,13 @@
-import BalanceProvider from "../../../providers/BalanceProvider"
+import BalanceServerProvider from "../server providers/BalanceServerProvider"
 import helper from "../helper"
 
-const balanceProivier = new BalanceProvider()
+const balanceProvider = new BalanceServerProvider()
 
 export default async function handler (req, res) {
 
   try {
     const baseCurrency = req.query["base-currency"] // undefined if not found
-    return balanceProivier.getBalance(baseCurrency).then(result => {
+    return balanceProvider.getBalance(baseCurrency).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {

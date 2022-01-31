@@ -5,7 +5,7 @@ import CompaniesTable from "../components/CompaniesTable"
 import { Company } from "../components/entities"
 import Spinner from "../components/Spinner"
 
-// todo: use axios instead of fetch to avoid checking .ok and have a betetr management of timeout ?
+// todo: use axios instead of fetch to avoid checking .ok and have a better management of timeout ?
 const fetchCompanies = () => fetch("/api/companies")
 
 const parseApiError = (response, setError) => {
@@ -16,8 +16,8 @@ const parseApiError = (response, setError) => {
    
 export default function Page(props) {
 
-  const [companies, setCompanies] = useState<Company[]>(undefined)
-  const [error, setError] = useState<string>(undefined)
+  const [companies, setCompanies] = useState<Company[]>()
+  const [error, setError] = useState<string>()
 
   const reload = () => {
     console.log(`reload`)

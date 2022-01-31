@@ -5,7 +5,8 @@ export type configuration = {
     apiStage: string,
     accessKey: string,
     secretKey: string
-  }
+  },
+  defaultLocale: string,
 }
 
 export const getConfiguration = (serverRuntimeConfig:any):configuration => { return {
@@ -15,5 +16,6 @@ export const getConfiguration = (serverRuntimeConfig:any):configuration => { ret
     apiStage: process.env.a_AWS_API_STAGE,
     accessKey: process.env.a_AWS_KEY_ID, // serverRuntimeConfig.AWS.accessKey,
     secretKey: process.env.a_AWS_KEY_SECRET, // serverRuntimeConfig.AWS.secretKey,
-  }
+  },
+  defaultLocale: serverRuntimeConfig.defaultLocale,
 }}
