@@ -7,7 +7,7 @@ const serverConfig = getConfiguration(serverRuntimeConfig)
 
 const host = `${serverConfig.AWS.apiGatewayId}.execute-api.${serverConfig.AWS.region}.amazonaws.com`
 const baseUrl = `https://${host}/${serverConfig.AWS.apiStage}`
-const headers = {Host: host}
+const headers = {Host: host} // what is this for???
 
 
 abstract class BaseProvider {
@@ -22,7 +22,7 @@ abstract class BaseProvider {
   }
 
   put<T,R>(path:string, data:T, parse:(response:AxiosResponse) => R) { 
-    return axios.put(`${baseUrl}/${path}`, {headers:headers, data:data,})
+    return axios.put(`${baseUrl}/${path}`, data, {headers:headers})
       .then(response => 
         //response.status
         parse(response.data)
