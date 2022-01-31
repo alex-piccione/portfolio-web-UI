@@ -1,4 +1,4 @@
-import BalanceProvider from "../../../providers/BalanceProvider"
+import BalanceProvider from "../server providers/BalanceServerProvider"
 import helper from "../helper"
 
 const balanceProivier = new BalanceProvider()

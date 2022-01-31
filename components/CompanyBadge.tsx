@@ -14,7 +14,7 @@ export const CompanyNameBadges = (props:{companyIds:string[]}) =>
 
 const CompanyBadge:FC<Company> = (company) =>
   // TODO: add icon
-  <span className="badge rounded-pill" style={{marginRight:".5em"}}>{company.Name}</span>
+  <span className="badge rounded-pill" style={{marginRight:".5em"}}>{company.name}</span>
 
 export const renderCompanies = (companies:string[]) => {
   companies.map(c => <CompanyNameBadge key={c} company={c} />)

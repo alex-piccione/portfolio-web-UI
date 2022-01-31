@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
-/*import { FundUpdate } from "../../containers/BalanceContainer"*/
-import {CompanyNameBadges, renderCompanies} from "../CompanyBadge"
-import { Fund, FundUpdate } from "../entities"
+import { getCompanies } from "../../api interfaces/CompaniesApi"
+import { useCompanies } from "../../common/hooks"
+
+import { Company, Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
 
 const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
@@ -11,19 +12,26 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
 
+  const [companies, setCompanies] = useState<Company[]>()
+  
+  useEffect(() => {getCompanies().then(setCompanies)}, [])
+
   const [quantity, setQuantity] = useState(fund.quantity)
+  const [companyId, setCompanyId] = useState(fund.companies[0].id)
 
   const saveClick = () => {
     const update:FundUpdate = {
       date: date,
       currencyCode: fund.currencyCode,
       quantity: quantity,
-      companyIds: fund.companies.map(c => c.id)
+      companyId: companyId
      }
 
     save(update)
     close()
   }
+
+
 
   return !isOpen ?
     //<Button variant="otline-secondary" size="sm" onClick={open}><Icon icon="add-record" /> Add</Button> :
@@ -49,7 +57,9 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
-              <CompanyNameBadges companyIds={fund.companies.map(c => c.name)} />
+              <Form.Select className="form-select-sm" onChange={(ev) => setCompanyId(ev.target.value)} >
+                {companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>)}                
+              </Form.Select>
             </Col>
           </Form.Group>
         </Form>

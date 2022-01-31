@@ -51,9 +51,9 @@ const View = (props:TableProps) => {
 }
 
 const BalanceTable = () => {
-  const [balance, setBalance] = useState<Balance>(undefined)
+  const [balance, setBalance] = useState<Balance>()
   const [loading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<string>(undefined)
+  const [error, setError] = useState<string>()
 
   const loadBalance = () => {    
     setLoading(true)       

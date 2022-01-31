@@ -6,8 +6,8 @@ import Spinner from "../components/Spinner"
 import { useMountEffect } from "../common/hooks"
 
 export default function Page() {
-  const [currencies, setCurrencies] = useState<Currency[]>(undefined)
-  const [error, setError] = useState<string>(undefined)
+  const [currencies, setCurrencies] = useState<Currency[]>()
+  const [error, setError] = useState<string>()
 
   const parseApiError = (response, setError) => {
     response.json()

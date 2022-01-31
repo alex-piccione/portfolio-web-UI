@@ -1,5 +1,5 @@
 import getConfig from "next/config"
-import { Company } from "../components/entities"
+import { Company } from "../../../components/entities"
 import { getConfiguration } from "./configuration"
 import axios from "axios"
 
@@ -15,7 +15,7 @@ const headers = {Host: host}
 // Browser's console shows a HTML that is not readable and hides the problem.
 // UI shows an error because it cannot parse the returned HTML as JSON.
 
-const CompanyProvider = {  
+const CompanyServerProvider = {  
   getCompanies: async () =>  {
     return axios.get(`${baseUrl}/company`, {headers:headers})
     .then(result =>  parser.parseCompanies(result.data))
@@ -28,7 +28,7 @@ const parser = {
     try{
       const companies = (data as Array<any>).map(item => {
         const types = item.Types.map((t: any) => t) 
-        return {Id: item.Id, Name: item.Name, Types: types} as Company
+        return {id: item.Id, name: item.Name, types: types} as Company
       })
       return companies;
     }
@@ -39,4 +39,4 @@ const parser = {
   }  
 }
 
-export default CompanyProvider
+export default CompanyServerProvider

@@ -1,4 +1,6 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
+import { Company } from "../components/entities"
 import { getLocale } from "./utils"
 
 const defaultLocale = "it"
@@ -18,6 +20,7 @@ export const useMountEffect = handler => useEffect(handler, [])
 
   const [locale, setLocale] = useState(defaultLocale)
   const [language, setLanguage] = useState("it") 
+
   useEffect(() => {
     console.log("useLocale::window.navigator.language", window.navigator.language)
     const locale = getLocale(window.navigator.language) || defaultLocale
@@ -32,4 +35,20 @@ export const useMountEffect = handler => useEffect(handler, [])
     setLocale,
     setLanguage,
   }
+}
+
+
+export const useCompanies = (setCompanies:(companies:Company[]) => void, setError:(error:string) => void) => {
+
+  //const companies = useState()
+
+  axios.get(`/api/companies`)
+    .then(response => setCompanies(response.data))
+    .catch(error => {
+      setError(error?.response?.data?.error || `${error}`)
+  });
+
+  /*return {
+    companies,
+  }*/
 }
