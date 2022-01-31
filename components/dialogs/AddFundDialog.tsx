@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
+import DatePicker from "../controls/DatePicker"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
-import { useCompanies } from "../../common/hooks"
 
 import { Company, Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
@@ -12,7 +12,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(true)
   const close = () => setIsOpen(false)
-
+  const [newDate, setNewDate] = useState(date||new Date())
   const [companies, setCompanies] = useState<Company[]>()
   
   useEffect(() => {getCompanies().then(setCompanies)}, [])
@@ -22,7 +22,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
 
   const saveClick = () => {
     const update:FundUpdate = {
-      date: date,
+      date: newDate,
       currencyCode: fund.currencyCode,
       quantity: quantity,
       companyId: companyId
@@ -31,7 +31,6 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     save(update)
     close()
   }
-
 
 
   return !isOpen ?
@@ -45,14 +44,14 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
         <Form>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
-            <Col sm="7">
-              <Form.Control plaintext readOnly defaultValue={new Date(date).toLocaleDateString()} />
+            <Col sm="7">             
+              <DatePicker onChange={setNewDate} className="form-control" />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Currency</Form.Label>
             <Col sm="7">
-              <Form.Control plaintext readOnly defaultValue={fund.currencyCode} />
+              <Form.Control readOnly className="form-control" defaultValue={fund.currencyCode} />
             </Col>
           </Form.Group>
           <Form.Group as={Row}>

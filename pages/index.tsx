@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
+import { default as DatePicker } from '../components/controls/DatePicker'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
