@@ -52,3 +52,18 @@ h1.title {
   color: red;
   font-size: 150%;
 }
+
+
+.date-picker-wrapper {
+  /*display: inline;*/
+  /*position: fixed;*/
+}
+.date-picker-wrapper input {
+  /*display: none;*/
+}
+
+/* Bootstrap overrides */
+
+.form-control {
+  padding: 2px 4px !important;
+}
