@@ -5,6 +5,7 @@ import { useCompanies } from "../../common/hooks"
 
 import { Company, Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
+import Spinner from "../Spinner"
 
 const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
   const {date, fund, save} = props
@@ -57,9 +58,12 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
+              { companies ? 
               <Form.Select className="form-select-sm" onChange={(ev) => setCompanyId(ev.target.value)} >
                 {companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>)}                
               </Form.Select>
+              : <Spinner small />
+              }              
             </Col>
           </Form.Group>
         </Form>
