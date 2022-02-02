@@ -15,33 +15,6 @@
   border-right-color: $border-dark
   border-bottom-color: $border-dark
 
-
-.button 
-  @include button-padding
-  @include button-border
-
-  color: $primary-text-on-background
-  background-color: $primary
-
-  &:hover
-    background-color: $primary-hover  
-
-  &.text
-    border: 0
-    background-color: transparent
-    color: $primary
-
-    &:hover 
-      color: $primary-hover
-      @include button-border    
-  
-/*&.alternative 
-  color: $alternative;
-  &:hover {
-    color: $alternative-hover; 
-  }
- */
-
 @mixin button() 
   @include button-padding
   @include button-border
@@ -57,7 +30,7 @@
     background-color: $primary-hover  
 
 .button_text 
-  @include button() 
+  @include button
   border: 0
   color: $primary
   background-color: transparent  
@@ -78,7 +51,7 @@
 
 
 .button_text_alternative 
-  @include button()
+  @include button
   border: 0
   color: $alternative
   background-color: transparent
