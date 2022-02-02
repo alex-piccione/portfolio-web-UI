@@ -1,5 +1,5 @@
 import { FC } from "react"
-import styles from  "../../CSS/styles.module.scss"
+import styles from  "../../CSS/styles.module.sass"
 import { ButtonVariant } from "../styles"
 
 const TextButton:FC<{variant:ButtonVariant, onClick:()=>void}> = (props) => {
