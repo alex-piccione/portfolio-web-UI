@@ -1,0 +1,100 @@
+// https://www.code-boost.com/beginners-guide-to-scss/
+
+@import "./colors.sass"
+
+
+@mixin button-padding()
+  padding: 2px 6px
+
+@mixin button-border() 
+  border-radius: 2px
+  border-width: 1px
+  border-style: solid
+  border-top-color: $border-light
+  border-left-color: $border-light
+  border-right-color: $border-dark
+  border-bottom-color: $border-dark
+
+
+.button 
+  @include button-padding
+  @include button-border
+
+  color: $primary-text-on-background
+  background-color: $primary
+
+  &:hover
+    background-color: $primary-hover
+  
+
+  &.text
+    border: 0
+    background-color: transparent
+    color: $primary
+
+    &:hover 
+      color: $primary-hover
+      @include button-border
+    
+  
+
+
+/*&.alternative 
+  color: $alternative;
+  &:hover {
+    color: $alternative-hover; 
+  }
+ */
+
+
+@mixin button() 
+  @include button-padding
+  @include button-border
+
+  text-transform: uppercase
+  font-weight: bold
+
+  color: $primary-text-on-background
+  background-color: $primary
+
+  &:hover
+    background-color: $primary-hover
+  
+
+.button_text 
+  @include button() 
+  border: 0
+  background-color: transparent
+  color: $primary
+
+  &:hover
+    color: $primary-hover
+    background-color: transparent  
+
+  &:focus
+    background-color: transparent
+    box-shadow: 0 0 2px 0.25rem $primary-shadow
+  
+
+
+.button_text_alternative 
+  @include button()
+  border: 0
+  color: $alternative
+  background-color: transparent
+
+  &:hover
+    color: $alternative
+    background-color: $alternative-text-on-background
+  
+  &:active
+    color: $alternative-active
+    
+    //box-shadow: 0 2px 0.25rem $alternative-shadow
+  
+  &:focus
+    // after clicked a button remain with :focus
+
+  &:active:focus 
+    //color: $alternative
+    //box-shadow: 0 0 0.25rem $alternative-shadow

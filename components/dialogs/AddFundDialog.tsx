@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
+import styles from  "../../CSS/styles.module.sass"
 
 import { Company, Fund, FundUpdate } from "../entities"
 import Icon from "../Icon"
 import Spinner from "../Spinner"
+import TextButton from "../controls/TextButton"
 
 const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
   const {date, fund, save} = props
@@ -31,11 +33,10 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     save(update)
     close()
   }
-
-
-  return !isOpen ?
     //<Button variant="otline-secondary" size="sm" onClick={open}><Icon icon="add-record" /> Add</Button> :
-    <a onClick={open} style={{cursor: "pointer"}}><Icon icon="add-record" /> Add</a> :
+ /* <a onClick={open} style={{cursor: "pointer"}}><Icon icon="add-record" /> Add</a> */
+  return <>
+    <button className={styles.button_text_alternative} onClick={open} >Add</button>  
     <Modal show={isOpen} onHide={close}>
       <Modal.Header>
         <Modal.Title>Add fund for <strong>{fund.currencyCode}</strong></Modal.Title>
@@ -82,6 +83,7 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
         </Button>
       </Modal.Footer>
     </Modal>
+    </>
 }
 
 export default AddFundDialog

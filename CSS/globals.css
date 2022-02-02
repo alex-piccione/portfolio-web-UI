@@ -54,14 +54,6 @@ h1.title {
 }
 
 
-.date-picker-wrapper {
-  /*display: inline;*/
-  /*position: fixed;*/
-}
-.date-picker-wrapper input {
-  /*display: none;*/
-}
-
 /* Bootstrap overrides */
 
 .form-control {
