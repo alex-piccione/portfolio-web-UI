@@ -1,0 +1,28 @@
+$primary: #074A6A
+$secondary: #04273B
+$alternative: #FF4141
+$background: #F9F9F9
+$text: #333
+
+@function lighten($color)
+  @return scale-color($color, $lightness: +80%)
+
+// text-on
+$primary-text-on-background: scale-color($primary, $lightness: -50%)
+$alternative-text-on-background: lighten($alternative)
+
+// hover
+$primary-hover: scale-color($primary, $lightness: +25%)
+$alternative-hover: scale-color($alternative, $lightness: +50%)
+
+// active  
+$alternative-active: $alternative-hover
+
+// shadows
+$primary-shadow: scale-color($primary, $alpha: 25%)
+$alternative-shadow: #FF414180 // opacify($alternative, .25)  // scale-color($alpha) does not work
+
+// borders
+$border-light: scale-color( mix($primary, $secondary), $lightness: +25%)
+$border-dark: scale-color( mix($primary, $secondary), $lightness: -25%)
+
