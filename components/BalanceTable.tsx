@@ -5,7 +5,7 @@ import { CompanyNameBadge } from "./CompanyBadge"
 import { Balance, Fund, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
-import AddOrUpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/AddOrUpdateFundDialog"
+import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import { useMountEffect } from "../common/hooks"
 import TextButton from "./controls/TextButton"
 
@@ -26,7 +26,7 @@ const View = (props:TableProps) => {
   )  
 
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
-  const [fundUpdateDialogIsOpen, setFundUpdateDialogIsOpen] = useState(false)
+  const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
 
   const openUpdateFundDialog = (fund:Fund) => {
     setUpdateFundDialogProps(
@@ -34,20 +34,20 @@ const View = (props:TableProps) => {
         initialDate: new Date(),
         fund,
         save: (fundUpdate) => {
-          setFundUpdateDialogIsOpen(false)
+          setUpdateFundDialogIsOpen(false)
           updateFund(fundUpdate)
         },
-        close: () => setFundUpdateDialogIsOpen(false)
+        close: () => setUpdateFundDialogIsOpen(false)
       }
     )
     
-    setFundUpdateDialogIsOpen(true)
+    setUpdateFundDialogIsOpen(true)
   }
 
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
-    <div>
+    <div style={{width: "100%", display: "flex", flexDirection: "row-reverse" }}>
       <TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton>
     </div>
     <Table striped bordered id="balanceTable">
@@ -72,8 +72,7 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
-    fundUpdateDialogIsOpen: {fundUpdateDialogIsOpen}
-    { fundUpdateDialogIsOpen && <AddOrUpdateFundDialog {...updateFundDialogProps} /> }
+    { updateFundDialogIsOpen && <UpdateFundDialog {...updateFundDialogProps} /> }
     </>
 }
 

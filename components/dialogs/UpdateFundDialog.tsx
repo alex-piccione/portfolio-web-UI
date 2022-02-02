@@ -4,7 +4,6 @@ import DatePicker from "../controls/DatePicker"
 
 import { Company, Currency, Fund, FundUpdate } from "../entities"
 import Spinner from "../Spinner"
-import TextButton from "../controls/TextButton"
 import { getCurrencies } from "../../api interfaces/CurrenciesApi"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
 
@@ -15,11 +14,8 @@ export interface UpdateFundDialogProps {
   close:() => void
 }
 
-const AddOrUpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
+const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const {initialDate, fund, save, close} = props
-  //const [isOpen, setIsOpen] = useState(false)
-  //const open = () => setIsOpen(true)
-  //const close = () => setIsOpen(false)
   const [date, setDate] = useState(initialDate||new Date())
   const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
   const [quantity, setQuantity] = useState(fund && fund.quantity || 0)
@@ -43,8 +39,6 @@ const AddOrUpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     save(update)
     close()
   }
-
-  // <TextButton onClick={open} variant="alternative" >Add</TextButton> 
 
   return <>     
     <Modal show onHide={close}>
@@ -103,4 +97,4 @@ const AddOrUpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     </>
 }
 
-export default AddOrUpdateFundDialog
+export default UpdateFundDialog

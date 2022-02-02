@@ -123,10 +123,7 @@ When there are conflicts,
 get the latest version from the repository and run ``yarn install``.  
 In this way it will take the old yarn.lock but it will update the packages changed in the current _package.json_.     
 ``git checkout -- yarn.lock`` or ``git checkout origin/main -- yarn.lock`` if we are merging from master.  
-``ayrn install`` will update the yarn.lock (based on the changes in the current package.json).    
-
-
-
+``yarn install`` will update the yarn.lock (based on the changes in the current package.json).    
 
 
 ## Issues
