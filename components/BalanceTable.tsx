@@ -29,7 +29,7 @@ const View = (props:TableProps) => {
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <TextButton onClick={()=>{alert("add fund")}}>Add Fund</TextButton>
-    <Table striped bordered hover id="balanceTable">
+    <Table striped bordered id="balanceTable">
       <thead>
         <tr>
           <th>Currency</th>

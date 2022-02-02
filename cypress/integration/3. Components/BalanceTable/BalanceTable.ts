@@ -15,8 +15,9 @@ Given("I visit the portfolio page", () => {
     cy.intercept("GET", "/api/balance?base-currency=EUR", {
         statusCode: 200,
         body: balance,
-    } as RouteHandler)
+    } as RouteHandler).as("getBalance")
     cy.visit(url)
+    cy.get('table').as("table") // alias for the table element
 })
 
 Then('I should see {string} in the header', (header) => {
@@ -25,10 +26,21 @@ Then('I should see {string} in the header', (header) => {
 
 Then('I should see a table with the following headers', (dataTable) => {    
     cy.get('#balanceTable-spinner').as("spinner") 
-    cy.get('table').as("table") // alias
+    //cy.get('table').as("table") // alias
     cy.get('@table').should('be.visible')
 
     for (let row of dataTable.rows()) {
         cy.get('@table').find('th').should("contain", row[0])
     }
+})
+
+Then('I should see a row with an "Add" button', () => {
+    cy.get('#balanceTable-spinner').as("spinner") // why the hell I need to wait for the spinner ?
+    //cy.get('table').as("table") // alias
+    cy.get('@table').find("tbody").find("tr").first().as("row")
+    //cy.get('@table').find("tr").eq(1).as("row")
+    //cy.wait("@getBalance")
+    //cy.get('@table').find("tbody tr").first().as("row")
+
+    cy.get('@row').find('td').find("button").should("contain", "Add")
 })

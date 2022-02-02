@@ -1,7 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 *.orig
-yarn.lock
 
 # dependencies
 /node_modules
@@ -39,3 +38,4 @@ yarn-error.log*
 debug.log
 cypress/videos/
 cypress/screenshots/
+yarn.lock

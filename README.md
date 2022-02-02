@@ -115,6 +115,20 @@ To add a package use ``yarn add package@version``.
 ``yarn upgrade [package]`` does not work (it does not upgrade the package to the latest, like next 12.0.1 to 12.0.7).  
 You have to specify the version yourself.
 
+### yarn.lock
+This file can change.   
+It should be part of the repositories: https://github.com/yarnpkg/yarn/issues/1776  
+
+When there are conflicts,  
+get the latest version from the repository and run ``yarn install``.  
+In this way it will take the old yarn.lock but it will update the packages changed in the current _package.json_.     
+``git checkout -- yarn.lock`` or ``git checkout origin/main -- yarn.lock`` if we are merging from master.  
+``ayrn install`` will update the yarn.lock (based on the changes in the current package.json).    
+
+
+
+
+
 ## Issues
 
 0. Warning when run ``yarn test:ui:open``
