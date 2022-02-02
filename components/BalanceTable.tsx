@@ -7,6 +7,7 @@ import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
 import AddFundDialog from "./dialogs/AddFundDialog"
 import { useMountEffect } from "../common/hooks"
+import TextButton from "./controls/TextButton"
 
 const baseCurrency = "EUR"
 
@@ -26,6 +27,8 @@ const View = (props:TableProps) => {
 
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
+    <>
+    <TextButton onClick={()=>{alert("add fund")}}>Add Fund</TextButton>
     <Table striped bordered hover id="balanceTable">
       <thead>
         <tr>
@@ -48,6 +51,7 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
+    </>
 }
 
 const BalanceTable = () => {
