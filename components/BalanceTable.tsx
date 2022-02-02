@@ -2,10 +2,10 @@ import axios from "axios"
 import React, { useState } from "react"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, FundUpdate } from "./entities"
+import { Balance, Fund, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
-import AddOrUpdateFundDialog from "./dialogs/AddOrUpdateFundDialog"
+import AddOrUpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/AddOrUpdateFundDialog"
 import { useMountEffect } from "../common/hooks"
 import TextButton from "./controls/TextButton"
 
@@ -25,10 +25,31 @@ const View = (props:TableProps) => {
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
 
+  const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
+  const [fundUpdateDialogIsOpen, setFundUpdateDialogIsOpen] = useState(false)
+
+  const openUpdateFundDialog = (fund:Fund) => {
+    setUpdateFundDialogProps(
+      {
+        initialDate: new Date(),
+        fund,
+        save: (fundUpdate) => {
+          setFundUpdateDialogIsOpen(false)
+          updateFund(fundUpdate)
+        },
+        close: () => setFundUpdateDialogIsOpen(false)
+      }
+    )
+    
+    setFundUpdateDialogIsOpen(true)
+  }
+
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
-    <TextButton onClick={()=>{alert("add fund")}}>Add Fund</TextButton>
+    <div>
+      <TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton>
+    </div>
     <Table striped bordered id="balanceTable">
       <thead>
         <tr>
@@ -45,13 +66,14 @@ const View = (props:TableProps) => {
           <td>{fund.quantity}</td>
           <td>{renderCompanies(fund.companies)}</td>
           <td>   
-            <AddOrUpdateFundDialog date={balance.date} fund={fund} save={updateFund} />
+            <TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton>
           </td>
         </tr>
         )}
       </tbody>
     </Table> 
-    {/* <AddOrUpdateFundDialog date={balance.date} save={updateFund} /> */ }
+    fundUpdateDialogIsOpen: {fundUpdateDialogIsOpen}
+    { fundUpdateDialogIsOpen && <AddOrUpdateFundDialog {...updateFundDialogProps} /> }
     </>
 }
 

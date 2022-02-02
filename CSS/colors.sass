@@ -8,14 +8,15 @@ $text: #333
   @return scale-color($color, $lightness: +80%)
 
 // text-on
-$primary-text-on-background: scale-color($primary, $lightness: -50%)
+$primary-text-on-background: lighten($primary)
 $alternative-text-on-background: lighten($alternative)
 
 // hover
-$primary-hover: scale-color($primary, $lightness: +25%)
+$primary-hover: scale-color($primary, $lightness: +50%)
 $alternative-hover: scale-color($alternative, $lightness: +50%)
 
 // active  
+$primary-active: $primary-hover
 $alternative-active: $alternative-hover
 
 // shadows
