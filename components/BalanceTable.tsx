@@ -5,7 +5,7 @@ import { CompanyNameBadge } from "./CompanyBadge"
 import { Balance, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
-import AddFundDialog from "./dialogs/AddFundDialog"
+import AddOrUpdateFundDialog from "./dialogs/AddOrUpdateFundDialog"
 import { useMountEffect } from "../common/hooks"
 import TextButton from "./controls/TextButton"
 
@@ -45,12 +45,13 @@ const View = (props:TableProps) => {
           <td>{fund.quantity}</td>
           <td>{renderCompanies(fund.companies)}</td>
           <td>   
-            <AddFundDialog date={balance.date} fund={fund} save={updateFund} />
+            <AddOrUpdateFundDialog date={balance.date} fund={fund} save={updateFund} />
           </td>
         </tr>
         )}
       </tbody>
     </Table> 
+    {/* <AddOrUpdateFundDialog date={balance.date} save={updateFund} /> */ }
     </>
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
@@ -7,7 +7,14 @@ import { Company, Fund, FundUpdate } from "../entities"
 import Spinner from "../Spinner"
 import TextButton from "../controls/TextButton"
 
-const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
+interface Props {
+  date: Date,
+  fund:Fund,
+  save:(update:FundUpdate) => void
+}
+
+
+const AddOrUpdateFundDialog:FC<Props> = (props) => {
   const {date, fund, save} = props
   const [isOpen, setIsOpen] = useState(false)
   const open = () => setIsOpen(true)
@@ -83,4 +90,4 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     </>
 }
 
-export default AddFundDialog
+export default AddOrUpdateFundDialog
