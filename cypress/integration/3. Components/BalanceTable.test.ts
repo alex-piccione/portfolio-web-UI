@@ -33,9 +33,9 @@ export default describe("BalanceTable", () => {
     cy.get("table > tbody > tr").should("have.length.gt", 0)
   })
 
-  describe("rows have an 'Add' button", () => {    
+  describe("rows have an 'Update' button", () => {    
     it("that opens a modal", () => {
-      const addButton = cy.get("table > tbody > tr").first().find("button:Contains(Add)")
+      const addButton = cy.get("table > tbody > tr").first().find("button:Contains(Update)")
       addButton.click().then(() => {
         cy.get("[class*='modal-dialog']").should("exist").and("be.visible")
       })

@@ -65,9 +65,7 @@ const View = (props:TableProps) => {
           <td>{fund.currencyCode}</td>
           <td>{fund.quantity}</td>
           <td>{renderCompanies(fund.companies)}</td>
-          <td>   
-            <TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton>
-          </td>
+          <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
         </tr>
         )}
       </tbody>

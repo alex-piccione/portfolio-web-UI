@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "cypress run",
-    "test:ui:open": "cypress open",
-    "test:ui:run": "cypress run ",
-    "test:ui:run-feature": "cypress run --spec **/*.{feature,features}"
+    "test:ui:run": "cypress run",
+    "test:ui:run-feature": "cypress run --spec **/*.{feature,features}",
+    "test:ui:open": "cypress open"
   },
   "dependencies": {
     "@babel/core": "^7.16.7",
