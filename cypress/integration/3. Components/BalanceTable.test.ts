@@ -8,9 +8,12 @@ const balance:Balance = {
     companies: [{id: "c1", name: "Company 1"}]}]
 }
 
-//const interceptGetBalance = (cy:any) => {
-
-// })
+const currencies = [{Code: "EUR", Name: "Euro"}, {Code: "USD", Name: "US Dollar"}]
+const companies = [
+  {"id":"1","name":"HSBC","types":["Bank","Stacking"]}, 
+  {"id":"2","name":"Kraken","types":["Exchange"]},
+  {"id":"3","name":"Binance","types":["Exchange","Stacking"]}
+]
 
 export default describe("BalanceTable", () => {
 
@@ -22,6 +25,20 @@ export default describe("BalanceTable", () => {
         body:balance
       }
     ).as("getBalance")
+
+    cy.intercept("GET", "/api/currencies", 
+    {
+      statusCode: 200,
+      body:currencies
+    }
+    )//.as("getCurrencies")
+
+    cy.intercept("GET", "/api/companies", 
+    {
+      statusCode: 200,
+      body:companies
+    }
+    )//.as("getCurrencies")
 
     cy.visit("/")
   })
