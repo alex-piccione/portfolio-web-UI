@@ -2,11 +2,12 @@ import axios from "axios"
 import React, { useState } from "react"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, FundUpdate } from "./entities"
+import { Balance, Fund, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
 import { Table } from "react-bootstrap"
-import AddFundDialog from "./dialogs/AddFundDialog"
+import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import { useMountEffect } from "../common/hooks"
+import TextButton from "./controls/TextButton"
 
 const baseCurrency = "EUR"
 
@@ -24,9 +25,32 @@ const View = (props:TableProps) => {
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
 
+  const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
+  const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
+
+  const openUpdateFundDialog = (fund:Fund) => {
+    setUpdateFundDialogProps(
+      {
+        initialDate: new Date(),
+        fund,
+        save: (fundUpdate) => {
+          setUpdateFundDialogIsOpen(false)
+          updateFund(fundUpdate)
+        },
+        close: () => setUpdateFundDialogIsOpen(false)
+      }
+    )
+    
+    setUpdateFundDialogIsOpen(true)
+  }
+
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
-    <Table striped bordered hover id="balanceTable">
+    <>
+    <div style={{width: "100%", display: "flex", flexDirection: "row-reverse" }}>
+      <TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton>
+    </div>
+    <Table striped bordered id="balanceTable">
       <thead>
         <tr>
           <th>Currency</th>
@@ -41,13 +65,13 @@ const View = (props:TableProps) => {
           <td>{fund.currencyCode}</td>
           <td>{fund.quantity}</td>
           <td>{renderCompanies(fund.companies)}</td>
-          <td>   
-            <AddFundDialog date={balance.date} fund={fund} save={updateFund} />
-          </td>
+          <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
         </tr>
         )}
       </tbody>
     </Table> 
+    { updateFundDialogIsOpen && <UpdateFundDialog {...updateFundDialogProps} /> }
+    </>
 }
 
 const BalanceTable = () => {

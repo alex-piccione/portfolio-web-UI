@@ -1,29 +1,37 @@
-import React, { useEffect, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
+
+import { Company, Currency, Fund, FundUpdate } from "../entities"
+import Spinner from "../Spinner"
+import { getCurrencies } from "../../api interfaces/CurrenciesApi"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
 
-import { Company, Fund, FundUpdate } from "../entities"
-import Spinner from "../Spinner"
-import TextButton from "../controls/TextButton"
+export interface UpdateFundDialogProps {
+  initialDate?: Date | undefined,
+  fund:Fund | undefined,
+  save:(update:FundUpdate) => void,
+  close:() => void
+}
 
-const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) => void}) => {
-  const {date, fund, save} = props
-  const [isOpen, setIsOpen] = useState(false)
-  const open = () => setIsOpen(true)
-  const close = () => setIsOpen(false)
-  const [newDate, setNewDate] = useState(date||new Date())
-  const [companies, setCompanies] = useState<Company[]>()
-  
-  useEffect(() => {getCompanies().then(setCompanies)}, [])
+const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
+  const {initialDate, fund, save, close} = props
+  const [date, setDate] = useState(initialDate||new Date())
+  const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
+  const [quantity, setQuantity] = useState(fund && fund.quantity || 0)
+  const [companyId, setCompanyId] = useState(fund && fund.companies[0].id || undefined)
 
-  const [quantity, setQuantity] = useState(fund.quantity)
-  const [companyId, setCompanyId] = useState(fund.companies[0].id)
+  const [currencies, setCurrencies] = useState<Currency[]>()  
+  const [companies, setCompanies] = useState<Company[]>()  
+  useEffect(() => {
+    getCurrencies().then(setCurrencies)
+    getCompanies().then(setCompanies)
+  }, [])
 
   const saveClick = () => {
     const update:FundUpdate = {
-      date: newDate,
-      currencyCode: fund.currencyCode,
+      date: date,
+      currencyCode: currency,
       quantity: quantity,
       companyId: companyId
      }
@@ -32,26 +40,32 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     close()
   }
 
-  return <>
-    <TextButton onClick={open} variant="alternative" >Add</TextButton>  
-    <Modal show={isOpen} onHide={close}>
+  return <>     
+    <Modal show onHide={close}>
       <Modal.Header>
-        <Modal.Title>Add fund for <strong>{fund.currencyCode}</strong></Modal.Title>
+        <Modal.Title>Update fund {fund && (<>for <strong>{currency}</strong></>)}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
             <Col sm="7">             
-              <DatePicker onChange={setNewDate} className="form-control" />
+              <DatePicker onChange={setDate} className="form-control" />
             </Col>
           </Form.Group>
+          {!fund &&
           <Form.Group as={Row}>
             <Form.Label column sm="5">Currency</Form.Label>
             <Col sm="7">
-              <Form.Control readOnly className="form-control" defaultValue={fund.currencyCode} />
+              { currencies ?
+              <Form.Select className="form-select-sm" onChange={(ev) => setCurrency(ev.target.value)} >
+                {currencies.map(currency => <option key={currency.Code} value={currency.Code}>{currency.Code} - {currency.Name}</option>)}                
+              </Form.Select>
+              : <Spinner small />
+              }
             </Col>
           </Form.Group>
+          }
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
@@ -83,4 +97,4 @@ const AddFundDialog = (props:{date: Date, fund:Fund, save:(update:FundUpdate) =>
     </>
 }
 
-export default AddFundDialog
+export default UpdateFundDialog
