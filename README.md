@@ -102,9 +102,8 @@ and _Gherkin_.
 Gherkin link 1: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor  
 Gherkin link 2: https://wanago.io/2020/01/13/javascript-testing-cypress-cucumber/
 
-In order to use TypeScript for Ghrkin I followed the instruction here:
+In order to use TypeScript for Gherkin I followed the instruction here:
 https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescript-407c612d2f34
-
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
 
