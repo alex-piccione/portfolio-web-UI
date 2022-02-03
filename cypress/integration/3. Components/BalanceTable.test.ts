@@ -8,9 +8,13 @@ const balance:Balance = {
     companies: [{id: "c1", name: "Company 1"}]}]
 }
 
+//const interceptGetBalance = (cy:any) => {
+
+// })
+
 export default describe("BalanceTable", () => {
 
-  before("Open home page", () => {
+  beforeEach("Open home page", () => {
     //https://docs.cypress.io/api/commands/intercept#Syntax
     cy.intercept("GET", "/api/balance?base-currency=EUR", 
       {
@@ -32,13 +36,15 @@ export default describe("BalanceTable", () => {
   it("has data rows", () => {
     cy.get("table > tbody > tr").should("have.length.gt", 0)
   })
-
+  
   describe("rows have an 'Update' button", () => {    
-    it("that opens a modal", () => {
-      const addButton = cy.get("table > tbody > tr").first().find("button:Contains(Update)")
-      addButton.click().then(() => {
-        cy.get("[class*='modal-dialog']").should("exist").and("be.visible")
-      })
+    it("that opens a modal", () => { 
+      cy.wait("@getBalance").then( () => {     
+        const addButton = cy.get("table > tbody > tr").first().find("button:Contains(Update)")
+        addButton.click().then(() => {
+          cy.get("[class*='modal-dialog']").should("exist").and("be.visible")
+        })      
+      })  
     })
   })
 
