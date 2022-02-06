@@ -9,13 +9,3 @@ const secondaryColor = "#04273B"
 const alternativeColor = "#FF4141"
 const lightColor = "#F9F9F9"
 const darkColor = "#333333"
-
-
-
-const styles = {
-  button: {
-    text: {
-
-    }
-  }
-}

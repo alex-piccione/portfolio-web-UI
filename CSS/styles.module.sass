@@ -15,41 +15,10 @@
   border-right-color: $border-dark
   border-bottom-color: $border-dark
 
-
-.button 
-  @include button-padding
-  @include button-border
-
-  color: $primary-text-on-background
-  background-color: $primary
-
-  &:hover
-    background-color: $primary-hover
-  
-
-  &.text
-    border: 0
-    background-color: transparent
-    color: $primary
-
-    &:hover 
-      color: $primary-hover
-      @include button-border
-    
-  
-
-
-/*&.alternative 
-  color: $alternative;
-  &:hover {
-    color: $alternative-hover; 
-  }
- */
-
-
 @mixin button() 
   @include button-padding
   @include button-border
+  border-radius: 4px
 
   text-transform: uppercase
   font-weight: bold
@@ -58,27 +27,31 @@
   background-color: $primary
 
   &:hover
-    background-color: $primary-hover
-  
+    background-color: $primary-hover  
 
 .button_text 
-  @include button() 
+  @include button
   border: 0
-  background-color: transparent
   color: $primary
+  background-color: transparent  
 
   &:hover
-    color: $primary-hover
-    background-color: transparent  
+    color: $primary
+    background-color: $primary-text-on-background  
 
-  &:focus
-    background-color: transparent
-    box-shadow: 0 0 2px 0.25rem $primary-shadow
+  &:active
+    color: $primary-active
   
+  &:focus
+    // after clicked a button remain with :focus
+  
+  &:active:focus 
+    //color: $alternative
+    //box-shadow: 0 0 0.25rem $alternative-shadow
 
 
 .button_text_alternative 
-  @include button()
+  @include button
   border: 0
   color: $alternative
   background-color: transparent
@@ -88,13 +61,5 @@
     background-color: $alternative-text-on-background
   
   &:active
-    color: $alternative-active
-    
-    //box-shadow: 0 2px 0.25rem $alternative-shadow
-  
-  &:focus
-    // after clicked a button remain with :focus
+    color: $alternative-active    
 
-  &:active:focus 
-    //color: $alternative
-    //box-shadow: 0 0 0.25rem $alternative-shadow

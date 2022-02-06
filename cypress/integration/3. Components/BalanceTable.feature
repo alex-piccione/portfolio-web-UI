@@ -13,6 +13,9 @@ Scenario: Open portfolio page
       | Quantity  |
       | Companies |
 
+Scenario: Rows have an "Update" button
+  Then I should see a row with an "Update" button
+
 # TODO: https://github.com/alex-piccione/portfolio-web-UI/issues/32
 #Scenario: Open dialog to add new asset
 #  And a record with:

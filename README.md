@@ -102,9 +102,8 @@ and _Gherkin_.
 Gherkin link 1: https://github.com/TheBrainFamily/cypress-cucumber-preprocessor  
 Gherkin link 2: https://wanago.io/2020/01/13/javascript-testing-cypress-cucumber/
 
-In order to use TypeScript for Ghrkin I followed the instruction here:
+In order to use TypeScript for Gherkin I followed the instruction here:
 https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescript-407c612d2f34
-
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
 
@@ -114,6 +113,17 @@ To add a package use ``yarn add package@version``.
 ``yarn help  upgrade`` does not explain if and how a single package can be updated.  
 ``yarn upgrade [package]`` does not work (it does not upgrade the package to the latest, like next 12.0.1 to 12.0.7).  
 You have to specify the version yourself.
+
+### yarn.lock
+This file can change.   
+It should be part of the repositories: https://github.com/yarnpkg/yarn/issues/1776  
+
+When there are conflicts,  
+get the latest version from the repository and run ``yarn install``.  
+In this way it will take the old yarn.lock but it will update the packages changed in the current _package.json_.     
+``git checkout -- yarn.lock`` or ``git checkout origin/main -- yarn.lock`` if we are merging from master.  
+``yarn install`` will update the yarn.lock (based on the changes in the current package.json).    
+
 
 ## Issues
 
