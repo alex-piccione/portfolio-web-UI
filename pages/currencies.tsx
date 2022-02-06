@@ -4,6 +4,7 @@ import { Currency } from "../components/entities"
 import { DefaultPage } from "../components/layouts"
 import Spinner from "../components/Spinner"
 import { useMountEffect } from "../common/hooks"
+import styles from "../CSS/styles.module.sass"
 
 export default function Page() {
   const [currencies, setCurrencies] = useState<Currency[]>()
@@ -32,9 +33,11 @@ export default function Page() {
   useMountEffect(loadCurrencies)
 
   return <DefaultPage title="Currencies">
-    <p>Fiat and Crypto currencies.</p>    
-    { error ? <div className="error-on-load" onClick={loadCurrencies}>Failed to load currencies.<br/>{error}</div> :
-    currencies ? <CurrenciesTable currencies={currencies} /> : <Spinner/>}
-    
+    <p>Fiat and Crypto currencies.</p>   
+    <div className={styles.section}>
+      { error ? <div className="error-on-load" onClick={loadCurrencies}>Failed to load currencies.<br/>{error}</div> :
+      currencies ? <CurrenciesTable currencies={currencies} /> : <Spinner/>}
+    </div>
+
   </DefaultPage> 
 }
