@@ -20,9 +20,9 @@ class CurrenciesTable extends React.Component<Props> {
       </thead>
       <tbody>
         {currencies && currencies.map(currency => 
-        <tr key={currency.Code}>
-            <td>{currency.Code}</td>
-            <td>{currency.Name}</td>
+        <tr key={currency.code}>
+            <td>{currency.code}</td>
+            <td>{currency.name}</td>
             <td></td>
         </tr>
         )}
