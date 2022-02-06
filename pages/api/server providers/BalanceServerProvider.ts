@@ -32,6 +32,7 @@ const parser = {
   parseBalance: (data:any, companies:Company[]):Balance => {
     try {      
       const date = new Date(data.Date)
+      const lastUpdate = new Date(data.LastUpdateDate)
       const getCompanies = (ids:string[]) => ids.map(id => { 
         return {id:id, name:companies.filter(c => c.id == id)[0]?.name || "unknown"} 
       })                
@@ -41,10 +42,10 @@ const parser = {
           quantity: fund.Quantity, 
           companies: getCompanies(fund.CompaniesIds) }
       })
-      return {date:date, fundsByCurrency:funds}
+      return {date, fundsByCurrency:funds, lastUpdate}
     }
     catch (error) {
-      // todo: log with Sentry or similar
+      // TODO: log with Sentry or similar
       throw Error(`Failed to parse Balance. ${error}`)
     }
   },

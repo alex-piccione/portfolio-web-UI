@@ -1,13 +1,14 @@
 import axios from "axios"
 import React, { useState } from "react"
+import { Table } from "react-bootstrap"
+import styles from  "../CSS/styles.module.sass"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
 import { Balance, Fund, FundUpdate } from "./entities"
 import Spinner from "./Spinner"
-import { Table } from "react-bootstrap"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
-import { useMountEffect } from "../common/hooks"
 import TextButton from "./controls/TextButton"
+import { useMountEffect } from "../common/hooks"
 
 const baseCurrency = "EUR"
 
@@ -24,6 +25,13 @@ const View = (props:TableProps) => {
   const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
+
+  console.log("balance.lastUpdate", balance ? 
+    balance.lastUpdate.toLocaleDateString ? balance.lastUpdate.toLocaleDateString() 
+    : typeof  balance.lastUpdate
+    : "no balance")
+  // TODO: despite the type is Date, at runtime, the typof returns "string"
+  const lastUpdate = balance ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."
 
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
   const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
@@ -44,10 +52,12 @@ const View = (props:TableProps) => {
     setUpdateFundDialogIsOpen(true)
   }
 
+  return isLoading ? <Spinner id="balanceTable-spinner"  /> :
     error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
-    <div style={{width: "100%", display: "flex", flexDirection: "row-reverse" }}>
-      <TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton>
+    <div className={styles.section} style={{display: "flex", width: "100%"}}>
+      <div style={{flex: "50%" }}><span className={styles.fieldLabel}>Last update:</span> <span className={styles.fieldValue}>{lastUpdate}</span></div>
+      <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
     </div>
     <Table striped bordered id="balanceTable">
       <thead>

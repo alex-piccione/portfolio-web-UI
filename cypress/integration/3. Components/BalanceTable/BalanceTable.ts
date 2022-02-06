@@ -1,6 +1,5 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import { RouteHandler } from "cypress/types/net-stubbing"
-import { getYear } from "date-fns"
 import { Balance } from "../../../../components/entities"
 
 const balance:Balance = {
@@ -8,7 +7,8 @@ const balance:Balance = {
     fundsByCurrency: [{
       currencyCode: "EUR", 
       quantity: 100, 
-      companies: [{id: "c1", name: "Company 1"}]}]
+      companies: [{id: "c1", name: "Company 1"}]}],
+    lastUpdate: new Date()
   }
 
 const url = "/" // portfolio is the home page
@@ -23,6 +23,10 @@ Given("I visit the portfolio page", () => {
 
 Then('I should see {string} in the header', (header) => {
     cy.get('h1').should('contain', header)
+})
+
+Then('I should see the {string} label', (label) => {
+    cy.contains(label)
 })
 
 Then('I should see a table with the following headers', (dataTable) => {    

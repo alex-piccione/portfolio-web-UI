@@ -6,7 +6,7 @@ Background:
 
 Scenario: Open portfolio page
   Then I should see "Portfolio" in the header
-  Then I should see the "last update: " label
+  Then I should see the "Last update:" label
   Then I should see a table with the following headers
       | Header    |
       | Currency  |
