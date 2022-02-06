@@ -12,7 +12,7 @@ const parser = {
   parseCurrencies: (data):Currency[] => {
     try{
       return (data as Array<any>).map(item => {
-        return { Code:item.Code, Name:item.Name }
+        return { code:item.Code, name:item.Name }
       })
     }
     catch (error) {

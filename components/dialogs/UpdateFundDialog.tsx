@@ -59,7 +59,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
             <Col sm="7">
               { currencies ?
               <Form.Select className="form-select-sm" onChange={(ev) => setCurrency(ev.target.value)} >
-                {currencies.map(currency => <option key={currency.Code} value={currency.Code}>{currency.Code} - {currency.Name}</option>)}                
+                {currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>)}                
               </Form.Select>
               : <Spinner small />
               }

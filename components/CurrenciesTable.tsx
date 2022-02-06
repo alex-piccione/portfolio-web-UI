@@ -1,4 +1,5 @@
 import React from "react"
+import { Table } from "react-bootstrap"
 import { Currency } from "./entities"
 
 type Props = {
@@ -10,7 +11,7 @@ class CurrenciesTable extends React.Component<Props> {
   render() {
     const {currencies} = this.props
 
-    return <table className="table table-striped">
+    return <Table striped>
       <thead>
         <tr>
             <td>Code</td>
@@ -20,14 +21,14 @@ class CurrenciesTable extends React.Component<Props> {
       </thead>
       <tbody>
         {currencies && currencies.map(currency => 
-        <tr key={currency.Code}>
-            <td>{currency.Code}</td>
-            <td>{currency.Name}</td>
+        <tr key={currency.code}>
+            <td>{currency.code}</td>
+            <td>{currency.name}</td>
             <td></td>
         </tr>
         )}
       </tbody>
-    </table>
+    </Table>
   }
 }
 

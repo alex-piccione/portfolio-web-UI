@@ -26,12 +26,7 @@ const View = (props:TableProps) => {
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
 
-  console.log("balance.lastUpdate", balance ? 
-    balance.lastUpdate.toLocaleDateString ? balance.lastUpdate.toLocaleDateString() 
-    : typeof  balance.lastUpdate
-    : "no balance")
-  // TODO: despite the type is Date, at runtime, the typof returns "string"
-  const lastUpdate = balance ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."
+  const lastUpdate = balance && balance.lastUpdate ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."
 
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
   const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
