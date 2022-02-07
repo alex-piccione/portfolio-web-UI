@@ -1,11 +1,12 @@
-import { Balance/*, FundAtDateSaveRequest*/ } from "../../../components/entities"
+import { Balance/*, FundAtDateSaveRequest*/ } from "../../../../components/entities"
 
 const balance:Balance = {
   date: new Date(),
   fundsByCurrency: [{
     currencyCode: "EUR", 
     quantity: 100, 
-    companies: [{id: "c1", name: "Company 1"}]}]
+    companies: [{id: "c1", name: "Company 1"}]}],
+    lastUpdate: new Date()
 }
 
 const currencies = [{Code: "EUR", Name: "Euro"}, {Code: "USD", Name: "US Dollar"}]

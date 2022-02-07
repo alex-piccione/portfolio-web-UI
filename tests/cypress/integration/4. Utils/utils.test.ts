@@ -1,4 +1,4 @@
-import { getLocale } from "../../../common/utils"
+import { getLocale } from "../../../../common/utils"
 
 const test =
   describe(getLocale.name, () => {
