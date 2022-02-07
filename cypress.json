@@ -3,5 +3,13 @@
   "baseUrl": "http://localhost:3000",  
   "screenshots": false,
   "video": true,  
-  "testFiles": ["**/*.{feature,features,spec.ts,test.ts}"]
+  "testFiles": ["**/*.{feature,features,spec.ts,test.ts}"],
+
+  "fixturesFolder": "tests/cypress/fixtures",
+  "integrationFolder": "tests/cypress/integration",
+  "pluginsFile": "tests/cypress/plugins/index.js",
+  "supportFile": "tests/cypress/support/index.js",
+  "screenshotsFolder": "tests/cypress/screenshots",
+  "videosFolder": "tests/cypress/videos",
+  "downloadsFolder": "tests/cypress/downloads" 
 }
