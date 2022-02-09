@@ -1,12 +1,12 @@
 import BalanceProvider from "../server providers/BalanceServerProvider"
 import helper from "../helper"
 
-const balanceProivier = new BalanceProvider()
+const balanceProvider = new BalanceProvider()
 
 export default async function handler (req, res) {
   try {
     const body = req.body // null if not found
-    return balanceProivier.updateFund(body).then(result => {
+    return balanceProvider.updateFund(body).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {
