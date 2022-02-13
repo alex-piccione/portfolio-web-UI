@@ -13,8 +13,8 @@ const DatePicker = (props:{
   const initialDate = props.initialDate === "today" ? new Date() : props.initialDate
   const [date, setDate] = useState(initialDate)
 
-  const handleChange = (date:Date) => { 
-    setDate(date)
+  const handleChange = (date:Date|null) => { 
+    setDate(date||undefined)
   }
 
   const modifiers = {
@@ -24,7 +24,7 @@ const DatePicker = (props:{
   return <Picker locale={locale} onDateChange={handleChange} modifiers={modifiers} >
     {({ inputProps, focused }) => (
         <input className={'input' + (focused ? ' -focused' : '')}
-          {...inputProps} value={date.toLocaleDateString()}
+          {...inputProps} value={date?.toLocaleDateString()||""}
         />
       )}
   </Picker>

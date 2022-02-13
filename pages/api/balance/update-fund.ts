@@ -1,12 +1,15 @@
 import BalanceProvider from "../server providers/BalanceServerProvider"
 import helper from "../helper"
+import { FundUpdate } from "../../../components/entities"
+import { NextApiRequest, NextApiResponse } from "next"
 
-const balanceProvider = new BalanceProvider()
+const provider = new BalanceProvider()
 
-export default async function handler (req, res) {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
   try {
-    const body = req.body // null if not found
-    return balanceProvider.updateFund(body).then(result => {
+    const body:FundUpdate = req.body // null if not found
+
+    return provider.updateFund(body).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {

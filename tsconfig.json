@@ -11,7 +11,15 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false,
+    //"strict reference": "https://betterprogramming.pub/getting-strict-with-typescript-2e906b48c0a",
+    "strict": true,
+    /*"noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,*/
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "incremental": true,
@@ -21,7 +29,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "types": ["cypress"]
+    "types": [
+      "cypress"
+    ]
   },
   "exclude": [
     "node_modules"

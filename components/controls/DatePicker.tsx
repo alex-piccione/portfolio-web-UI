@@ -1,23 +1,22 @@
 import React, { useState } from "react"
-import { useRouter } from "next/router"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import { getUserLocale } from "../../common/locale"
+import { getUserCulture, getUserLocale } from "../../common/locale"
 
 export default function _(props:{initialDate?:Date, className?:string, onChange:(date:Date) => void}) {
   const [date, setDate] = useState(props.initialDate||new Date());
   const locale = getUserLocale()
+  const culture = getUserCulture()
 
-  let dateFormat = locale.formatLong.date({ width: "short" })
-  console.log("dateFormat: " + dateFormat)
-
-  const handleChange = (date) => {
+  let dateFormat = culture.ShortDatePattern //locale.formatLong.date({ width: "short" })
+ 
+  const handleChange = (date:Date) => {
     setDate(date) 
     props.onChange(date)
   }
 
   return <DatePicker
-    locale={locale} // it expects a Locale type or a string
+    locale={locale}
     dateFormat={dateFormat}
     selected={date}
     onChange={handleChange}

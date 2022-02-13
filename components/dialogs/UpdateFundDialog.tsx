@@ -6,6 +6,7 @@ import { Company, Currency, Fund, FundUpdate } from "../entities"
 import Spinner from "../Spinner"
 import { getCurrencies } from "../../api interfaces/CurrenciesApi"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
+import Alert from "../Alert"
 
 export interface UpdateFundDialogProps {
   initialDate?: Date | undefined,
@@ -19,7 +20,8 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const [date, setDate] = useState(initialDate||new Date())
   const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
   const [quantity, setQuantity] = useState(fund && fund.quantity || 0)
-  const [companyId, setCompanyId] = useState(fund && fund.companies[0].id || undefined)
+  const [companyId, setCompanyId] = useState( (fund && fund.companies[0].id) || undefined)
+  const [validationError, setValidationError] = useState<string|undefined>(undefined)
 
   const [currencies, setCurrencies] = useState<Currency[]>()  
   const [companies, setCompanies] = useState<Company[]>()  
@@ -28,7 +30,12 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     getCompanies().then(setCompanies)
   }, [])
 
+  const showValidationError = (message:string) => setValidationError(message)
+
   const saveClick = () => {
+    if (!currency) return showValidationError("Currency is required")
+    if (!companyId) return showValidationError("Company is required")
+
     const update:FundUpdate = {
       date: date,
       currencyCode: currency,
@@ -40,7 +47,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     close()
   }
 
-  return <>     
+  return <>   
     <Modal show onHide={close}>
       <Modal.Header>
         <Modal.Title>Update fund {fund && (<>for <strong>{currency}</strong></>)}</Modal.Title>
@@ -57,24 +64,22 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           <Form.Group as={Row}>
             <Form.Label column sm="5">Currency</Form.Label>
             <Col sm="7">
-              { currencies ?
               <Form.Select className="form-select-sm" onChange={(ev) => setCurrency(ev.target.value)} >
-                {currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>)}                
+                {currencies ? 
+                currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>) :
+                <option>Loading currencies...</option>}                
               </Form.Select>
-              : <Spinner small />
-              }
             </Col>
           </Form.Group>
           }
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
-              { companies ? 
               <Form.Select className="form-select-sm" onChange={(ev) => setCompanyId(ev.target.value)} >
-                {companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>)}                
-              </Form.Select>
-              : <Spinner small />
-              }              
+                {companies ? 
+                companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>) :
+                <option>Loading companies...</option>}
+              </Form.Select>         
             </Col>
           </Form.Group>
         </Form>
@@ -86,6 +91,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           </Form.Group>
       </Modal.Body>
       <Modal.Footer>
+        { validationError && <Alert error={validationError} />}
         <Button variant="secondary" onClick={close}>
           Close
         </Button>
