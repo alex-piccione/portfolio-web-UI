@@ -90,7 +90,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
         <Form.Group as={Row}>
             <Form.Label column sm="5">Quantity</Form.Label>
             <Col sm="7">
-              <Form.Control type="number" defaultValue={quantity} onChange={e => { setQuantity(Number.parseFloat(e.target.value)); hideValidationError}} />
+              <Form.Control type="number" defaultValue={quantity} onChange={e => { setQuantity(Number.parseFloat(e.target.value)); hideValidationError()}} />
             </Col>
           </Form.Group>
       </Modal.Body>
