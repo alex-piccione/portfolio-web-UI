@@ -48,7 +48,7 @@ const View = (props:TableProps) => {
   }
 
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
-    error ? <><Alert type="error" children={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
+    error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
       <div style={{flex: "50%" }}><span className={styles.fieldLabel}>Last update:</span> <span className={styles.fieldValue}>{lastUpdate}</span></div>
