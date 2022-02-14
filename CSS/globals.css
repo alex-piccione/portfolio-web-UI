@@ -59,3 +59,7 @@ h1.title {
 .form-control {
   padding: 2px 4px !important;
 }
+
+.alert {
+  padding: .5rem;
+}

@@ -31,6 +31,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   }, [])
 
   const showValidationError = (message:string) => setValidationError(message)
+  const hideValidationError = () => setValidationError(undefined)
 
   const saveClick = () => {
     if (!currency) return showValidationError("Currency is required")
@@ -55,16 +56,19 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
       <Modal.Body>
         <Form>
           <Form.Group as={Row}>
+            {validationError && <Alert type="warning">{validationError}</Alert>}
+          </Form.Group>
+          <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
             <Col sm="7">             
-              <DatePicker onChange={setDate} className="form-control" />
+              <DatePicker onChange={(date) => {setDate(date); hideValidationError()}} className="form-control" />
             </Col>
           </Form.Group>
           {!fund &&
           <Form.Group as={Row}>
             <Form.Label column sm="5">Currency</Form.Label>
             <Col sm="7">
-              <Form.Select className="form-select-sm" onChange={(ev) => setCurrency(ev.target.value)} >
+              <Form.Select className="form-select-sm" onChange={e => {setCurrency(e.target.value); hideValidationError()}} >
                 {currencies ? 
                 currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>) :
                 <option>Loading currencies...</option>}                
@@ -75,7 +79,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           <Form.Group as={Row}>
             <Form.Label column sm="5">Companies</Form.Label>
             <Col sm="7">
-              <Form.Select className="form-select-sm" onChange={(ev) => setCompanyId(ev.target.value)} >
+              <Form.Select className="form-select-sm" onChange={e => { setCompanyId(e.target.value); hideValidationError()}} >
                 {companies ? 
                 companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>) :
                 <option>Loading companies...</option>}
@@ -86,12 +90,11 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
         <Form.Group as={Row}>
             <Form.Label column sm="5">Quantity</Form.Label>
             <Col sm="7">
-              <Form.Control type="number" defaultValue={quantity} onChange={e => setQuantity(Number.parseFloat(e.target.value))} />
+              <Form.Control type="number" defaultValue={quantity} onChange={e => { setQuantity(Number.parseFloat(e.target.value)); hideValidationError}} />
             </Col>
           </Form.Group>
       </Modal.Body>
       <Modal.Footer>
-        { validationError && <Alert error={validationError} />}
         <Button variant="secondary" onClick={close}>
           Close
         </Button>
