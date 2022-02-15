@@ -31,7 +31,7 @@ Scenario: Add new Fund
   Then I should see a dialog with title "Update fund"
   And it has a form with these values
     | Date       | Currency | Company | Quantity |
-    | 01/01/2000 | USD      | c1      | 100      |
+    | 01/01/2000 | USD      | c1      | 123      |
   #Then I should see a form with the following fields
   #  | Name | Symbol |
   #  | USD  | $      |

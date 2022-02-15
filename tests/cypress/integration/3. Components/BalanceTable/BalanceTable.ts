@@ -71,6 +71,7 @@ Then("I should see a dialog with title {string}", (title:string) => {
 })
 
 Then("it has a form with these values", (dataTable) => {
+    const values = dataTable.hashes()[0]
     cy.get("@dialog").find("div.modal-body form").as("form")
     cy.get("@form").should("exist")
     cy.get("@form").find("label:Contains(Date)").as("label-Date").should("exist")
@@ -81,6 +82,6 @@ Then("it has a form with these values", (dataTable) => {
     cy.get("@label-Date").parent().find("input").as("input-Date").should("exist")
     cy.get("@label-Quantity").parent().find("input").as("input-Quantity").should("exist").and("have.value", "0")
 
-    cy.get("@input-Quantity").type("100")
-    //const title = 
+    cy.get("@input-Date").invoke("val", values.Date)
+    cy.get("@input-Quantity").invoke("val", values.Quantity)
 })
