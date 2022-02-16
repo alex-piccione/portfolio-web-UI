@@ -24,25 +24,15 @@ Scenario: Add new Fund
     | EUR  | Euro      |
     | GBP  | UK Pound  |
   And these Companies:
-    | Code | Name       | Types    |
+    | Id   | Name       | Types    |
     | c1   | Bank 1     | Bank     | 
     | c2   | Exchange 1 | Exchange |
   When I click the "Add Fund" button
   Then I should see a dialog with title "Update fund"
   And it has a form with these values
     | Date       | Currency | Company | Quantity |
-    | 01/01/2000 | USD      | c1      | 123      |
-  #Then I should see a form with the following fields
-  #  | Name | Symbol |
-  #  | USD  | $      |
-  #  | EUR  | €      |
-  #  | GBP  | £      |
-  #When I fill in the form with the following values
-  #  | Name | Symbol |
-  #  | USD  | $      |
-  #  | EUR  | €      |
-  #  | GBP  | £      |
-  #Given I click on the "Add Fund" button
+    | 01/01/2000 | EUR      | c2      | 123      |
+When I click the "Save Changes" button
 #  And a record with:
 #    | Currency | Quantity |
 #    | Quantity | 1        |
