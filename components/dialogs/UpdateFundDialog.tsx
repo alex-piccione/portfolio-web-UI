@@ -60,7 +60,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           </Form.Group>
           <Form.Group as={Row}>
             <Form.Label column sm="5">Date</Form.Label>
-            <Col sm="7">             
+            <Col sm="7">
               <DatePicker onChange={(date) => {setDate(date); hideValidationError()}} className="form-control" />
             </Col>
           </Form.Group>
@@ -89,7 +89,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           <Form.Group as={Row}>
             <Form.Label column sm="5">Quantity</Form.Label>
             <Col sm="7">
-              <Form.Control type="number" defaultValue={quantity} onChange={e => {setQuantity(Number.parseFloat(e.target.value)); hideValidationError()}} />
+              <Form.Control type="number" defaultValue={quantity} onChange={e => {alert(e.target.value);  setQuantity(parseFloat(e.target.value)); hideValidationError()}} />
             </Col>
           </Form.Group>
         </Form>

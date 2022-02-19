@@ -32,7 +32,7 @@
     "@types/react": "^17.0.33",
     "@types/react-datepicker": "^4.3.4",
     "@types/react-dom": "^17.0.10",
-    "cypress": "8.5",
+    "cypress": "9.5.0",
     "cypress-cucumber-preprocessor": "^4.3.1",
     "eslint": "7",
     "eslint-config-next": "12.0.1",
