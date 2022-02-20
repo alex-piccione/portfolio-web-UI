@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react"
-
 import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/CompaniesTable"
 import { Company } from "../components/entities"
 import Spinner from "../components/Spinner"
+import { NextPageContext } from "next"
+import { parseApiError } from "../common/pages"
 
 // todo: use axios instead of fetch to avoid checking .ok and have a better management of timeout ?
 const fetchCompanies = () => fetch("/api/companies")
 
-const parseApiError = (response, setError) => {
-  response.json()
-    .then(msg => setError(`${response.statusText} - ${msg.error??String(msg)}`))
-    .catch(err => setError(`${response.statusText} - Failed to parse error. ${err}`))
-}
-   
-export default function Page(props) {
+export default function Page(props:NextPageContext) {
 
   const [companies, setCompanies] = useState<Company[]>()
   const [error, setError] = useState<string>()
@@ -30,7 +25,7 @@ export default function Page(props) {
           .catch(error => setError(`${error}`))
       }
       else
-        parseApiError(res, setError) //`${res.statusText} - ${res.text().}`)         
+        parseApiError(res, setError)       
     })
     .catch(error => setError(`Oh My God! ${error}`))
   }

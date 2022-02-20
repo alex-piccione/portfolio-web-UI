@@ -9,7 +9,7 @@ class CurrenciesServerProvider extends BaseProvider {
 
 const parser = {
 
-  parseCurrencies: (data):Currency[] => {
+  parseCurrencies: (data:any):Currency[] => {
     try{
       return (data as Array<any>).map(item => {
         return { code:item.Code, name:item.Name }

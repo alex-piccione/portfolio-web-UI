@@ -5,16 +5,11 @@ import { DefaultPage } from "../components/layouts"
 import Spinner from "../components/Spinner"
 import { useMountEffect } from "../common/hooks"
 import styles from "../CSS/styles.module.sass"
+import { parseApiError } from "../common/pages"
 
 export default function Page() {
   const [currencies, setCurrencies] = useState<Currency[]>()
   const [error, setError] = useState<string>()
-
-  const parseApiError = (response, setError) => {
-    response.json()
-      .then(msg => setError(`${response.statusText} - ${msg.error??String(msg)}`))
-      .catch(err => setError(`${response.statusText} - Failed to parse error. ${err}`))
-  }
 
   function loadCurrencies () {
     setError(undefined)

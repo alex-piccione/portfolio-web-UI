@@ -14,6 +14,6 @@ Then("I should see {string} in the header", (header) => {
 
 Then("I see a table with the following headers:", (data) => {
     cy.get("table#balanceTable").as("table").should("exist")
-    data.rows().forEach(row => 
+    data.rows().forEach((row:string[]) => 
       cy.get("@table").find(`thead > tr > th:Contains(${row[0]})`).should("exist"))
 })
