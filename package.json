@@ -27,13 +27,14 @@
     "react-nice-dates": "^3.1.0",
     "swr": "^1.0.1"
   },
-  "devDependencies": {
+  "devDependencies": {    
     "@types/node": "^16.11.6",
     "@types/react": "^17.0.33",
     "@types/react-datepicker": "^4.3.4",
     "@types/react-dom": "^17.0.10",
+    "@cypress/react": "^5.12.3",
     "cypress": "9.5.0",
-    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-cucumber-preprocessor": "^4.3.1",    
     "eslint": "7",
     "eslint-config-next": "12.0.1",
     "sass": "^1.49.7",

@@ -1,4 +1,3 @@
-import { Assertion } from "chai"
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import { RouteHandler } from "cypress/types/net-stubbing"
 import { Balance, Company, Currency } from "../../../../../components/entities"
