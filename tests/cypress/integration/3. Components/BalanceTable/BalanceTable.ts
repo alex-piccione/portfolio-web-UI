@@ -97,7 +97,8 @@ Then("a POST request with this payload is sent:", (dataTable) => {
 
     cy.wait("@postUpdateFund").then(x => {        
         expect(x.request.method).to.equal("POST")
-        expect(x.request.body.date).to.beToday()
+        // TODO: to be enabled: https://github.com/alex-piccione/portfolio-web-UI/issues/60
+        //expect(x.request.body.date).to.beToday()
         expect(x.request.body.currencyCode).to.equal(Currency)
         expect(x.request.body.companyId).to.equal(Company)
         expect(x.request.body.quantity).to.equal(parseFloat(Quantity))
