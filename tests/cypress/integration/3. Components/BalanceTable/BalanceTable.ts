@@ -81,44 +81,6 @@ Then("it has a form with these values:", (dataTable) => {
     cy.get("@label-Company").parent().find("select").as("select-Company").should("exist")
     cy.get("@label-Quantity").parent().find("input").as("input-Quantity").should("exist").and("have.value", "0")    
 
-    // .should("not.be.empty" on the input does not work
-        //cy.contains('#output', '"value": "example post"').should('be.visible')
-    //cy.get("@input-Date").invoke("val").should("not.be.empty", {timeout: 5000})   //.spy("onChange").as("input-Date-val").then
-    
-    //cy.wait(1000)
-    //cy.get("@input-Date").type(values.Date) 
-    //cy.get("@input-Date").no ("", { timeout: 3000})
-
-    //cy.spy(cy.get("@input-Date").intercept(), "change").as("input-Date-onChange");
-    //cy.wait("@input-Date-onChange").then(() => { cy.get("@input-Date").invoke("val", values.Date) })
-
-    /*cy.get("@input-Date").spy((...args) => { args })).as("input-Date-val").then( () => {
-
-    })*/
-
-    //cy.wait(4000)
-    // Date is taken from change event but the event cannot be raised within Cypress.
-    // selecting the date is too difficult
-    // just use the date set in the input by default
-/*
-    cy.get("@input-Date").then( el => {
-        console.log("inject on ");
-        //debugger;
-        console.log(el[0]);
-        const a = el[0] as HTMLInputElement;
-        a.addEventListener("change", () => {  })
-        cy.stub(el[0] as HTMLInputElement, "value").callsFake(input => { console.log("value"); input.val(values.Date); return values.Date})
-        //cy.stub(el[0] as HTMLInputElement, "value").callsFake(() => { console.log("value"); el.val(values.Date); return values.Date})
-        //cy.stub(el[0] as HTMLInputElement, "value").callsFake(() => values.Date)
-        // = values.Date
-        a.addEventListener("change", (ev) => { console.log("change"); ev.preventDefault(); el.val(values.Date);  })
-        el[0].addEventListener("click", (ev) => { console.log("click"); ev.preventDefault(); el.val(values.Date);  })
-
-    })*/
-
-    //cy.get("@input-Date").click() // open the calendar
-    //cy.get<HTMLInputElement>("@input-Date").type(values.Date) // change the value
-
     //cy.get("@input-Date").invoke("val", values.Date)
     cy.get("@select-Currency").select(values.Currency)
     cy.get("@select-Company").select(values.Company)  
@@ -139,15 +101,6 @@ Then("a POST request with this payload is sent:", (dataTable) => {
         expect(x.request.body.currencyCode).to.equal(Currency)
         expect(x.request.body.companyId).to.equal(Company)
         expect(x.request.body.quantity).to.equal(parseFloat(Quantity))
-
-        // to.deep.equal does not provide a good error description when failing
-        /*expect(x.request.body).to.deep.equal({
-            date: Date,
-            currencyCode: Currency,
-            companyId: Company,
-            quantity: Quantity
-        })*/
-        //x.response?.statusCode = 200
     })
 })
 
