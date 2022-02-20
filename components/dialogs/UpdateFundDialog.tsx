@@ -79,7 +79,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
           <Form.Group as={Row}>
             <Form.Label column sm="5">Company</Form.Label>
             <Col sm="7">
-              <Form.Select className="form-select-sm" onChange={e => {setCompanyId(e.target.value); hideValidationError()}} >
+              <Form.Select className="form-select-sm" onChange={e => { setCompanyId(e.target.value); hideValidationError()}} >
                 {companies ? 
                 companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>) :
                 <option>Loading companies...</option>}
