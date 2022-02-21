@@ -107,6 +107,14 @@ https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescri
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
 
+### Jest
+yarn add jest -D
+yarn add @types/jest -D
+yarn add ts-jest -D
+
+jest.config.js
+
+
 ## Yarn
 Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
 To add a package use ``yarn add package@version``.
