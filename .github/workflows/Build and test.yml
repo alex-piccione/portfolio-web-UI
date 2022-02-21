@@ -20,7 +20,8 @@ jobs:
         with:
           #start: yarn dev
           start: yarn start
-          record: true
+          record: false
         env:         
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
+          # build launched by dependabot does not have access to secrets
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key of project created in cypress.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
