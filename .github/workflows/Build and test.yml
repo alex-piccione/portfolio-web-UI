@@ -20,15 +20,3 @@ jobs:
 
       - name: Run Cypress
         run: yarn start & yarn test:ui:run
-
-      #- name: Run Cypress (old)
-      #  uses: cypress-io/github-action@v2
-      #  with:
-      #    #start: yarn dev
-      #    start: yarn start
-      #    record: false
-      #  env:
-      #    # build launched by dependabot does not have access to secrets
-      #    # resulting in the run fails because the record Id is not passed...
-      #    CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # key of project created in cypress.io
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
