@@ -19,7 +19,7 @@ jobs:
         run: yarn start & yarn test:unit
 
       - name: Run Cypress (experimental)
-        run: yarn test:ui:run
+        run: yarn start & yarn test:ui:run
 
       - name: Run Cypress
         uses: cypress-io/github-action@v2
