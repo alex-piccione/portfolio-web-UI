@@ -18,7 +18,7 @@ jobs:
       - name: Run Jest
         run: yarn start & yarn test:unit
 
-      - name: Run Cypress (experimental)
+      - name: Run Cypress
         run: yarn start & yarn test:ui:run
 
       #- name: Run Cypress (old)
