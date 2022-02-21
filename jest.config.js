@@ -14,18 +14,3 @@ module.exports = {
     "json"
   ]
 }
-
-//chai.use(chaiAsPromised);
-
-  /*"jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ]
-  }*/
