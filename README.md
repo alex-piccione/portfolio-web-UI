@@ -107,6 +107,19 @@ https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescri
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
 
+### Jest
+yarn add jest -D
+yarn add @types/jest -D
+yarn add ts-jest -D
+
+jest.config.js
+
+Error: expect(value).toBe(0) // Property 'toBe' does not exist on type 'Assertion'.
+This (or similar) is due to clash between Jest and Typescript.
+Maybe a ts.config.json file stored in different places (for cypress) is a solution.
+In my case I just switched the "jest" and "cypress" _types_ in ts.config.json, putting the _jest_ first, ant it works.
+
+
 ## Yarn
 Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
 To add a package use ``yarn add package@version``.

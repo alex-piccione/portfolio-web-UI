@@ -3,6 +3,7 @@ on: push
 
 jobs:
   build_and_test:
+    name: "Build & Test"
     runs-on: ubuntu-latest
     #strategy:
     #  fail-fast: true
@@ -15,13 +16,8 @@ jobs:
       - name: Build
         run: yarn install; yarn build
 
+      - name: Run Jest
+        run: yarn start & yarn test:unit
+
       - name: Run Cypress
-        uses: cypress-io/github-action@v2
-        with:
-          #start: yarn dev
-          start: yarn start
-          record: false
-        env:         
-          # build launched by dependabot does not have access to secrets
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key of project created in cypress.io
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
+        run: yarn start & yarn test:ui:run
