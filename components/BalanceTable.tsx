@@ -14,8 +14,8 @@ const baseCurrency = "EUR"
 
 interface TableProps {
   isLoading:boolean,
-  error:string,
-  balance:Balance,
+  error:string|undefined,
+  balance:Balance|undefined,
   reload: () => void,
   updateFund: (update:FundUpdate) => void
 }
@@ -31,12 +31,12 @@ const View = (props:TableProps) => {
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
   const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
 
-  const openUpdateFundDialog = (fund:Fund) => {
+  const openUpdateFundDialog = (fund:Fund|undefined) => {
     setUpdateFundDialogProps(
       {
         initialDate: new Date(),
         fund,
-        save: (fundUpdate) => {
+        save: (fundUpdate:FundUpdate) => {
           setUpdateFundDialogIsOpen(false)
           updateFund(fundUpdate)
         },
@@ -48,7 +48,7 @@ const View = (props:TableProps) => {
   }
 
   return isLoading ? <Spinner id="balanceTable-spinner"  /> :
-    error ? <><Alert error={error} /><div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
+    error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
       <div style={{flex: "50%" }}><span className={styles.fieldLabel}>Last update:</span> <span className={styles.fieldValue}>{lastUpdate}</span></div>
@@ -74,7 +74,7 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
-    { updateFundDialogIsOpen && <UpdateFundDialog {...updateFundDialogProps} /> }
+    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> }    
     </>
 }
 
@@ -100,7 +100,7 @@ const BalanceTable = () => {
 
   useMountEffect(loadBalance)
 
-  const getBalance = async (setBalance, setError) => {
+  const getBalance = async (setBalance: (b:Balance) => void, setError: (s:string) => void) => {
     await axios.get(`/api/balance?base-currency=${baseCurrency}`)
       .then(response => setBalance(response.data))
       .catch(error => {
@@ -108,7 +108,7 @@ const BalanceTable = () => {
     });
   }
 
-  const updateBalance = async (update, setError) => {    
+  const updateBalance = async (update:FundUpdate, setError: (s:string) => void) => {   
     await axios.post(`/api/balance/update-fund`, update)
       .then(response => alert("fund updated"))
       .catch(error => {

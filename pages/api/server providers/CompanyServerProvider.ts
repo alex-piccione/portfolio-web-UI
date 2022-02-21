@@ -24,8 +24,8 @@ const CompanyServerProvider = {
 }
 
 const parser = {
-  parseCompanies: (data) => {
-    try{
+  parseCompanies: (data:any) => {
+    try {
       const companies = (data as Array<any>).map(item => {
         const types = item.Types.map((t: any) => t) 
         return {id: item.Id, name: item.Name, types: types} as Company

@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { EffectCallback, useEffect, useState } from "react"
 import { Company } from "../components/entities"
 import { getLocale } from "./utils"
 
@@ -9,7 +9,7 @@ const defaultLocale = "it"
  * useMountEffect
  * hook to run a function when component mount
  */
-export const useMountEffect = handler => useEffect(handler, [])
+export const useMountEffect = (handler:EffectCallback) => useEffect(handler, [])
 
 /**
  * useLocale

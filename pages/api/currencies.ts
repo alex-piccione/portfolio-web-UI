@@ -1,9 +1,10 @@
 import CurrenciesProvider from "./server providers/CurrencyServerProvider"
 import helper from "./helper"
+import { NextApiRequest, NextApiResponse } from "next"
 
 const currencyProvider = new CurrenciesProvider()
 
-export default async function handler (req, res) {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
   try {
     await currencyProvider.getCurrencies().then(result => {
       return res.status(200).json(result)

@@ -36,6 +36,5 @@ yarn-error.log*
 # vercel
 .vercel
 debug.log
-cypress/videos/
-cypress/screenshots/
-yarn.lock
+tests/cypress/videos/
+tests/cypress/screenshots/

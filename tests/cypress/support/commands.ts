@@ -40,6 +40,39 @@ export function createFund(record:FundAtDate) {
   // TODO: create a record on DB or cache
 }
 
+export function waitUntil(checkFunction:Function) {
+
+  //const result = checkFunction()
+  //cy.waitFor()
+  while(!checkFunction()) {
+    cy.wait(250)
+  }
+/*
+  const checkResult = (result:Boolean) => {
+    if (result) {
+      return result
+    }
+
+    cy.wait(250)
+
+    return resolveValue()
+  }
+
+  const resolveValue = () => {
+    const result = checkFunction()
+
+    const isAPromise = Boolean(result && result.then)
+    if (isAPromise) {
+      return result.then(check)
+    } else {
+      return check(result)
+    }
+  }
+  */
+
+  //cy.waitUntil(checkFunction)
+}
+
 Cypress.Commands.add("createFund", createFund)
 
 
