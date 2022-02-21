@@ -16,7 +16,7 @@ jobs:
         run: yarn install; yarn build
 
       - name: Run Jest
-        run: yarn test:unit
+        run: yarn start & yarn test:unit
 
       - name: Run Cypress (experimental)
         run: yarn test:ui:run
