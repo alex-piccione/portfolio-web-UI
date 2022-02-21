@@ -15,6 +15,9 @@ jobs:
       - name: Build
         run: yarn install; yarn build
 
+      - name: Run Jest
+        run: yarn test:unit
+
       - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
@@ -22,5 +25,7 @@ jobs:
           start: yarn start
           record: true
         env:         
+          # dependabot run fails because the record Id is not passed...
+          # make this conditional
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
