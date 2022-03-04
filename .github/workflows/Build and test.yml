@@ -22,13 +22,5 @@ jobs:
       - name: Run Cypress
         run: yarn start & yarn test:ui:run
   
-  create_docker_image:
-    name: "Create Docker image"
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: build
-        run: echo "not implemented"
-
       - name: build image
         run: docker image build -t portfolio-web:0.1 -f devops/Dockerfile .
