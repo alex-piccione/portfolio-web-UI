@@ -32,23 +32,23 @@ jobs:
         run: |
           echo build the image using the Dockerfile in devops folder
           docker image build -t $REPO:0 -f devops/Dockerfile .    
-          echo ---
+          echo -----
 
-          echo Canister Login and Push
-          echo docker login on Canister          
-          echo ${{secrets.CANISTER_PWD}}| docker login -u ${{secrets.CANISTER_USERID}} $CANISTER_URL --password-stdin 
-          echo re-tag and push the image $REPO:$VERSION               
-          docker image tag $REPO:0 $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION   
-          docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION 
-          echo re-tag and push the image $REPO:latest   
-          docker image tag $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest   
-          docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest 
-          echo ---
+          #echo ### Canister Login and Push ###
+          #echo docker login on Canister          
+          #echo ${{secrets.CANISTER_PWD}}| docker login -u ${{secrets.CANISTER_USERID}} $CANISTER_URL --password-stdin 
+          #echo re-tag and push the image $REPO:$VERSION               
+          #docker image tag $REPO:0 $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION   
+          #docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION 
+          #echo re-tag and push the image $REPO:latest   
+          #docker image tag $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest   
+          #docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest 
+          #echo -----
 
-          echo Container Registry Login and Push
+          echo ### Container Registry Login and Push ###
           echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin     
           echo re-tag and push the image $REPO:0 
           docker image tag $REPO:$VERSION $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION 
-          echo ---
+          echo -----
 
