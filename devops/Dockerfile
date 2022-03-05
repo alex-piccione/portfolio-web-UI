@@ -37,8 +37,10 @@ RUN yarn build
 #RUN yarn prune --production # error, it says that it's not necessary
 # it seems like it removes 200MB
 RUN npm prune --production
+RUN npm ci --only=production
 
 #RUN rm -rf node_modules  ## errror: next not found
+#RUN rm -rf node_modules/*.d.ts
 
 FROM node:current-alpine as main
 COPY --from=BUILD /usr/src/app .
