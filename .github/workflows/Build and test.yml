@@ -48,7 +48,9 @@ jobs:
           echo ### Container Registry Login and Push ###
           echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin     
           echo re-tag and push the image $REPO:0 
-          docker image tag $REPO:$VERSION $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION 
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
           echo -----
 
