@@ -30,6 +30,7 @@ RUN yarn --frozen-lockfile
 #RUN yarn prune --production
 #RUN yarn cache clean --force   # 16 seconds and does not change the size
 
+RUN yarn lint
 
 # build the Next app
 RUN yarn build
