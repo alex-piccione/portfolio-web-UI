@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "cypress run",
+    "test": "cypress run && jest",
     "test:unit": "jest",
     "test:ui:run": "cypress run",
     "test:ui:run-feature": "cypress run --spec **/*.{feature,features}",
