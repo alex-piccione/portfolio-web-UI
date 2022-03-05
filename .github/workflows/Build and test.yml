@@ -1,6 +1,12 @@
 name: Build and test
 on: push
 
+env:  
+  VERSION: 0.1.${{github.run_number}}
+  CANISTER_URL: cloud.canister.io:5000
+  CR_URL: c8n.io
+  REPO: portfolio
+
 jobs:
   build_and_test:
     name: "Build & Test"
@@ -23,4 +29,20 @@ jobs:
         run: yarn start & yarn test:ui:run
   
       - name: Build Docker image
-        run: docker image build -t portfolio-web:0.1 -f devops/Dockerfile .
+        run: |
+          echo build the image using the Dockerfile in devops folder
+          docker image build -t $REPO:0 -f devops/Dockerfile .    
+          echo ---
+
+          echo Canister login and Push
+          echo docker login on Canister          
+          echo ${{secrets.CANISTER_PWD}}| docker login -u ${{secrets.CANISTER_USERID}} $CANISTER_URL --password-stdin 
+          echo re-tag and push the image $REPO:$VERSION               
+          docker image tag $REPO:0 $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION   
+          docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION 
+          echo re-tag and push the image $REPO:latest   
+          docker image tag $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:$VERSION $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest   
+          docker image push $CANISTER_URL/${{secrets.CANISTER_USERID}}/$REPO:latest 
+
+      #- name: Publish Docker image
+      #  run: docker image push
