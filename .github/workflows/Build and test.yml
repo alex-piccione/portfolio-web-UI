@@ -31,7 +31,7 @@ jobs:
       - name: Build Docker image
         run: |
           echo build the image using the Dockerfile in devops folder
-          docker image build -t $REPO:0 -f devops/Dockerfile .    
+          docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
           echo -----
 
           #echo ### Canister Login and Push ###

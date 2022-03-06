@@ -4,7 +4,7 @@
 
 docker image build -t portfolio-app:2 -f Dockerfile ..
 docker image build -t portfolio-app:0.18 -f devops/Dockerfile .
-docker image build -t portfolio-app:2.18 -f devops/Dockerfile.2 .
+docker image build -t portfolio-app:2.20 -f devops/Dockerfile.2 .
 echo "Docker image created"
 
 echo "Docker images:"
@@ -15,7 +15,7 @@ docker image ls
 
 docker container run -p 8080:3000 portfolio-web:0.4
 docker container run -p 8080:3000 --name portfolio-app portfolio-app:5 
-docker container run -it --entrypoint sh portfolio-app:1
+docker container run -it --entrypoint sh portfolio-app:2.18
 
 docker container run -p 8080:3000 --name portfolio-app-0.18 --env-file .env.local portfolio-app:0.18
 docker container run -p 8080:3000 --name portfolio-app-2.18 --env-file .env.local portfolio-app:2.18

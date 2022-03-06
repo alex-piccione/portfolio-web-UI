@@ -15,7 +15,17 @@ RUN yarn install --frozen-lockfile
 FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY package.json .
+COPY ./CSS ./CSS
+COPY ./pages ./pages
+COPY ./containers ./containers
+COPY ./common ./common
+COPY ./components ./components
+COPY ["./api interfaces/", "./api interfaces/"]
+COPY ./public ./public
+COPY next-env.d.ts .
+COPY next.config.js .
+COPY tsconfig.json .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
