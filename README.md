@@ -26,6 +26,10 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+To create a small and clean Docker image I followed the offcial documentation:  
+https://github.com/vercel/next.js/tree/canary/examples/with-docker  
+Only the ``COPY . .`` was replaced by a precise copy of wanted files to avoid copy unwanted file/folders and replace of node_module.
+
 ### Locale
 
 Next.js detect the locale automatically.  
