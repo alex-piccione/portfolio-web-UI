@@ -1,4 +1,6 @@
+.git
+.github
 .env.local
-tests/
 .vscode/
+tests/
 devops/
