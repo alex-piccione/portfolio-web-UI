@@ -1,1 +1,4 @@
 .env.local
+tests/
+.vscode/
+devops/
