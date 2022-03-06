@@ -8,5 +8,8 @@ module.exports = {
   publicRuntimeConfig: {
     baseLanguage: "Italiano"
   },
-
+  experimental: { 
+    // https://github.com/vercel/next.js/tree/canary/examples/with-docker
+    outputStandalone: true,
+  },
 }

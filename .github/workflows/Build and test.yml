@@ -1,6 +1,11 @@
 name: Build and test
 on: push
 
+env:  
+  VERSION: 0.1.${{github.run_number}}
+  CR_URL: c8n.io
+  REPO: portfolio
+
 jobs:
   build_and_test:
     name: "Build & Test"
@@ -21,3 +26,18 @@ jobs:
 
       - name: Run Cypress
         run: yarn start & yarn test:ui:run
+  
+      - name: Build Docker image
+        run: |
+          echo build the image using the Dockerfile in devops folder
+          docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
+          echo -----
+          echo ### Container Registry Login and Push ###
+          echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo re-tag and push the images
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
+          echo -----
+
