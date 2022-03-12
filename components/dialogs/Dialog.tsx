@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 
-interface DialogProps {
+export interface DialogProps {
   title:string;
   show:boolean;
   
