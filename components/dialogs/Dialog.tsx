@@ -15,7 +15,7 @@ export interface DialogProps {
 const Dialog: FC<DialogProps> = (props) => {
   const {} = props
 
-  return (<Modal show={props.show}>
+  return <Modal show={props.show}>
     <ModalHeader>
       <ModalTitle>{props.title}</ModalTitle>
     </ModalHeader>
@@ -26,7 +26,7 @@ const Dialog: FC<DialogProps> = (props) => {
       <Button variant="secondary" onClick={props.cancelClick} >{props.cancelButtonText || "Cancel"}</Button>
       <Button variant="primary" onClick={props.confirmClick}>{props.confirmButtonText || "Confirm"}</Button>      
     </ModalFooter>
-  </Modal>)
+  </Modal>
 }
 
 export default Dialog;

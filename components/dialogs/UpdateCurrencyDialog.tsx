@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react"
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { Currency } from "../entities"
 import Dialog from "./Dialog"
 import { saveCurrency } from "../../api interfaces/CurrenciesApi"
-import TextBox from "../controls/TextBox"
-import { Button, Col, Form, Row } from "react-bootstrap"
+import { Col, Form, FormControlProps, Row } from "react-bootstrap"
 import Alert from "../Alert"
 
 interface Props {
@@ -12,42 +11,56 @@ interface Props {
   onClose: (addedOrUpdated:boolean) => void
 }
 
+interface FormValues {
+  code: string
+  name:string
+}
+
 const UpdateCurrencyDialog: FC<Props> = props => {
   const isNew = props.currencyToUpdate === undefined
   const title = isNew ? "Add new Currency" : `Update Currency ${props.currencyToUpdate?.code}`
+  const [validationError, setValidationError] = useState("")
 
-  const validationError = ""
-
-  const formData = {
+  const initialData = {
     code: props.currencyToUpdate?.code || "",
     name: props.currencyToUpdate?.name || "",
-  }
+  }  
 
+  const [data, setData] = useState<FormValues>(initialData)
+  
+  const resetForm = () => setData(initialData)
+  const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => setData({...data, [field]: e.target.value})
+  
   const save = () => {
 
-    props.onClose(true)
+    saveCurrency(data).then(() => {
+      resetForm()
+      props.onClose(true)
+    })
+    .catch(error => { setValidationError(`${error}`) })
   }
   
+
   return <>
   <Dialog 
     title={title}
     show={props.show} 
     confirmClick={save}
-    cancelClick={() => props.onClose(false) }>
-    <Form onSubmit={save} >
+    cancelClick={() =>  {props.onClose(false); resetForm() } }>
+    <Form>
       <Form.Group as={Row}>
         {validationError && <Alert type="warning">{validationError}</Alert>}
       </Form.Group>
       <Form.Group as={Row}>
         <Form.Label column sm="5">Code</Form.Label>
         <Col sm="7">
-          <TextBox value={formData.code} onChange={e => formData.code = e.target.value} />
+          <Form.Control type="text" className="form-control" defaultValue={data.code} onChange={e => setValue("code", e)}  />
         </Col>
       </Form.Group>
       <Form.Group as={Row}>
         <Form.Label column sm="5">Name</Form.Label>
         <Col sm="7">
-        <TextBox value={formData.name} onChange={e => formData.name = e.target.value} />
+          <Form.Control type="text" className="form-control" size="sm" defaultValue={data.name} onChange={e => setValue("name", e)} />
         </Col>
       </Form.Group>    
     </Form>

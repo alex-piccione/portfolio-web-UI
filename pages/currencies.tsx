@@ -33,7 +33,6 @@ export default function Page() {
   const updateCurrencyDialogClose = (addedOrUpdated:boolean) => {
     setUpdateCurrencyDialogOpen(false)
     if (addedOrUpdated) {
-      alert("refresh")
       loadCurrencies()
     }
   }
