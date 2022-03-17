@@ -15,22 +15,28 @@ abstract class BaseServerProvider {
 
   get<R>(path:string, parse:(response:AxiosResponse) => R) { 
     return axios.get(`${baseUrl}/${path}`, {headers:headers})
-      .then(response => 
-        //response.status
-        parse(response.data)
-      ) 
+      .then(response => {
+        if (isSuccess(response.status)) return parse(response.data)        
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
+      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+  }
+
+  put<T,R>(path:string, data:T, parse:(response:AxiosResponse) => R) { 
+    return axios.put(`${baseUrl}/${path}`, data, {headers:headers})
+      .then(response => {
+        if(isSuccess(response.status)) return parse(response.data)
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
       .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
   }
 
   post<T, R>(path:string, data:T, parse?:(response:AxiosResponse) => R) { 
     return axios.post(`${baseUrl}/${path}`, data, {headers:headers})
       .then(response => {
-        if (isSuccess(response.status)) {
-          return parse ? parse(response.data) : null
-        }
-        throw Error(`Failed to call API Gateway. ${response.status} ${response.statusText}`)
-      }
-      ) 
+        if (isSuccess(response.status)) return parse ? parse(response.data) : null
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
       .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
   }
 }

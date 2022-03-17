@@ -28,7 +28,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
 
   const [data, setData] = useState<FormValues>(initialData)
   
-  const resetForm = () => setData(initialData)
+  const resetForm = () => { setData(initialData); setValidationError("") }
   const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => setData({...data, [field]: e.target.value})
   
   const save = () => {
