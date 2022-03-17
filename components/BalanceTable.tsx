@@ -110,7 +110,7 @@ const BalanceTable = () => {
 
   const updateBalance = async (update:FundUpdate, setError: (s:string) => void) => {   
     await axios.post(`/api/balance/update-fund`, update)
-      .then(response => alert("fund updated"))
+      .then(response => {})
       .catch(error => {
         setError(error?.response?.data?.error || `${error}`)
     });

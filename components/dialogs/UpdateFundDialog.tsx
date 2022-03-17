@@ -3,7 +3,6 @@ import { Button, Modal, Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
 
 import { Company, Currency, Fund, FundUpdate } from "../entities"
-import Spinner from "../Spinner"
 import { getCurrencies } from "../../api interfaces/CurrenciesApi"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
 import Alert from "../Alert"
