@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { Button, Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
+import { Button, Modal } from "react-bootstrap";
 
 export interface DialogProps {
   title:string;
@@ -15,18 +14,18 @@ export interface DialogProps {
 const Dialog: FC<DialogProps> = (props) => {
   const {} = props
 
-  return <Modal show={props.show}>
-    <ModalHeader>
-      <ModalTitle>{props.title}</ModalTitle>
-    </ModalHeader>
-    <ModalBody>
+  return props.show ? <Modal.Dialog>
+    <Modal.Header closeButton>
+      <Modal.Title>{props.title}</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
       {props.children}
-    </ModalBody>
-    <ModalFooter>
+    </Modal.Body>
+    <Modal.Footer>
       <Button variant="secondary" onClick={props.cancelClick} >{props.cancelButtonText || "Cancel"}</Button>
       <Button variant="primary" onClick={props.confirmClick}>{props.confirmButtonText || "Confirm"}</Button>      
-    </ModalFooter>
-  </Modal>
+    </Modal.Footer>
+  </Modal.Dialog> : null
 }
 
 export default Dialog;
