@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
+import { ChangeEvent, FC, useState } from "react"
 import { Currency } from "../entities"
 import Dialog from "./Dialog"
 import { saveCurrency } from "../../api interfaces/CurrenciesApi"
-import { Col, Form, FormControlProps, Row } from "react-bootstrap"
-import Alert from "../Alert"
+import { Col, Form, Row } from "react-bootstrap"
+import { ValidationRow } from "../forms/utils"
 
 interface Props {
   show: boolean
@@ -18,7 +18,8 @@ interface FormValues {
 
 const UpdateCurrencyDialog: FC<Props> = props => {
   const isNew = props.currencyToUpdate === undefined
-  const title = isNew ? "Add new Currency" : `Update Currency ${props.currencyToUpdate?.code}`
+  const title = isNew ? "Create Currency" : `Update Currency ${props.currencyToUpdate?.code}`
+  const confirmButtonText = isNew ? "Create new Currency" : "Update Currency"
   const [validationError, setValidationError] = useState("")
 
   const initialData = {
@@ -32,7 +33,9 @@ const UpdateCurrencyDialog: FC<Props> = props => {
   const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => setData({...data, [field]: e.target.value})
   
   const save = () => {
-
+    if (data.code.trim() === "") return setValidationError("Code is mandatory")
+    if (data.name.trim() === "") return setValidationError("Name is mandatory")
+    
     saveCurrency(data).then(() => {
       resetForm()
       props.onClose(true)
@@ -40,17 +43,13 @@ const UpdateCurrencyDialog: FC<Props> = props => {
     .catch(error => { setValidationError(`${error}`) })
   }
   
-
-  return <>
-  <Dialog 
+  return props.show ? <Dialog 
     title={title}
-    show={props.show} 
+    confirmButtonText={confirmButtonText}
     confirmClick={save}
     cancelClick={() =>  {props.onClose(false); resetForm() } }>
     <Form>
-      <Form.Group as={Row}>
-        {validationError && <Alert type="warning">{validationError}</Alert>}
-      </Form.Group>
+      <ValidationRow validationError={validationError} />
       <Form.Group as={Row}>
         <Form.Label column sm="5">Code</Form.Label>
         <Col sm="7">
@@ -64,7 +63,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
         </Col>
       </Form.Group>    
     </Form>
-  </Dialog></>
+  </Dialog> : null
 }
 
 export default UpdateCurrencyDialog
