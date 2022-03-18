@@ -9,24 +9,34 @@ const host = `${serverConfig.AWS.apiGatewayId}.execute-api.${serverConfig.AWS.re
 const baseUrl = `https://${host}/${serverConfig.AWS.apiStage}`
 const headers = {Host: host} // what is this for???
 
+const isSuccess = (status:number) => Math.floor(status / 100) === 2
 
 abstract class BaseServerProvider {
 
-  get<T>(path:string, parse:(response:AxiosResponse) => T) { 
+  get<R>(path:string, parse:(response:AxiosResponse) => R) { 
     return axios.get(`${baseUrl}/${path}`, {headers:headers})
-      .then(response => 
-        //response.status
-        parse(response.data)
-        ) 
+      .then(response => {
+        if (isSuccess(response.status)) return parse(response.data)        
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
       .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
   }
 
   put<T,R>(path:string, data:T, parse:(response:AxiosResponse) => R) { 
     return axios.put(`${baseUrl}/${path}`, data, {headers:headers})
-      .then(response => 
-        //response.status
-        parse(response.data)
-        ) 
+      .then(response => {
+        if(isSuccess(response.status)) return parse(response.data)
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
+      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+  }
+
+  post<T, R>(path:string, data:T, parse?:(response:AxiosResponse) => R) { 
+    return axios.post(`${baseUrl}/${path}`, data, {headers:headers})
+      .then(response => {
+        if (isSuccess(response.status)) return parse ? parse(response.data) : null
+        else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
+      }) 
       .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
   }
 }

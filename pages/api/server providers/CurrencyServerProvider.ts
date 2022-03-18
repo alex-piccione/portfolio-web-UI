@@ -5,6 +5,10 @@ class CurrenciesServerProvider extends BaseProvider {
   getCurrencies() {
     return super.get("currency", parser.parseCurrencies)
   }
+
+  createCurrency(currency:Currency) {
+    return super.post("currency", currency)
+  }
 }
 
 const parser = {

@@ -6,3 +6,9 @@ export const getCurrencies = async () => {
   console.log("API getCurrencies", response)
   return response.data as Currency[]
 }
+
+export const saveCurrency = async (currency: Currency) => {
+  const response = await axios.post(`/api/currencies`, currency)
+  console.log("API saveCurrency", response)
+  return response.data as Currency
+}
