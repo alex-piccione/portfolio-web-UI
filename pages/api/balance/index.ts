@@ -9,7 +9,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   try {
     // TODO: create a util
     if ("base-currency" in req.query == false) throw Error("base-currency is required")
-    const baseCurrency = req.query["base-currency"] as string // (when strinct = false) undefined if not found
+    const baseCurrency = req.query["base-currency"] as string // (when string = false) undefined if not found
     return balanceProvider.getBalance(baseCurrency).then(result => {
       return res.status(200).json(result)
     })

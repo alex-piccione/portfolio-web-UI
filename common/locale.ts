@@ -1,4 +1,5 @@
-// import {Locale} from "date-fns" undefined properties and not usefull properties
+// This locale (en-US) is used only to avoid having undefined properties, something is better than nothing.
+// import {Locale} from "date-fns" gives an useless object with undefined properties.
 import baseLocale from "date-fns/locale/en-US"
 import { useLocale } from "./hooks"
 import locales, { L10N } from "./locales"
@@ -35,12 +36,11 @@ export const getUserLocale = ():Locale => {
     formatLong: {
       date: (args:any[]) => culture.ShortDatePattern,
       time: (args:any[]) => culture.ShortDatePattern,
-      dateTime: (args:any[]) => culture.ShortDatePattern + " " + culture.ShortTimePattern, // mmmhhh
+      dateTime: (args:any[]) => culture.ShortDatePattern + " " + culture.ShortTimePattern, // little bit hacky and not really culture specific
     },    
     localize: {
       ...baseLocale.localize!,
       month: (index) => culture.MonthNames[index],
-      //month: (...args:any[]) => culture.MonthNames[args[0]],
       day: (index) => culture.AbbreviatedDayNames[index],   
 
     },
