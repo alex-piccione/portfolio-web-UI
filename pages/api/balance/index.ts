@@ -7,7 +7,7 @@ const balanceProvider = new BalanceServerProvider()
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
 
   try {
-    // TODO: create a util
+    // TODO: create a util to extract querystring values
     if ("base-currency" in req.query == false) throw Error("base-currency is required")
     const baseCurrency = req.query["base-currency"] as string // (when string = false) undefined if not found
     return balanceProvider.getBalance(baseCurrency).then(result => {

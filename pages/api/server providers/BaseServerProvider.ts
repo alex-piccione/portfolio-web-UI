@@ -19,7 +19,7 @@ abstract class BaseServerProvider {
         if (isSuccess(response.status)) return parse(response.data)        
         else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
       }) 
-      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+      .catch(error => {throw Error(getError(error))})
   }
 
   put<T,R>(path:string, data:T, parse:(response:AxiosResponse) => R) { 
@@ -28,7 +28,7 @@ abstract class BaseServerProvider {
         if(isSuccess(response.status)) return parse(response.data)
         else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
       }) 
-      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+      .catch(error => {throw Error(getError(error))})
   }
 
   post<T, R>(path:string, data:T, parse?:(response:AxiosResponse) => R) { 
@@ -37,50 +37,13 @@ abstract class BaseServerProvider {
         if (isSuccess(response.status)) return parse ? parse(response.data) : null
         else throw Error(`API Gateway returned error. ${response.status} ${response.statusText}`)
       }) 
-      .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)}) 
+      .catch(error => {throw Error(getError(error))})
   }
 }
 
+const getError = (error: any) => 
+  error.response ? error.response.data.message as string :
+  error.request ? `An error occurred, please retry. ${error.request}` :
+  `Failed to call API Gateway. ${error.message}`
+
 export default BaseServerProvider
-
-
-/*
-const ProviderBase = {
-
-  getCompanies: () => {
-
-      //const client = new LambdaClient({ region: "REGION" });
-
-      let companies:Company[] = []
-      companies.push({Id:"", Name: "Fineco", Types: ["Bank"]})
-      return companies
-  }
-
-  def post(self, path, data):
-      try:
-          response = callApi("POST", path, data, None)
-          if int(response.status_code/100) == 2: return response.text
-          else: raise Exception(f"Failed to call API. {response.status_code}{response.text}")
-      except Exception as e:
-          raise Exception(f"Failed to call API. {e}")
-
-  def get_(self, path, data, queryString):
-      try:
-          response = callApi("GET", path, None, queryString)
-          if int(response.status_code/100) == 2: return response.text
-          else: raise Exception(f"Failed to call API. {response.status_code}{response.text}")
-      except Exception as e:
-          raise Exception(f"Failed to call API. {e}")
-
-  def get(self, path, **kwargs):
-
-      data = kwargs.get("data", None)
-      queryString = kwargs.get("queryString", None)
-
-      try:
-          response = callApi("GET", path, data, queryString)
-          if int(response.status_code/100) == 2: return response.text
-          else: raise Exception(f"Failed to call API. ({response.status_code}) {response.text}")
-      except Exception as e:
-          raise Exception(f"Failed to call API. {e}")
-*/

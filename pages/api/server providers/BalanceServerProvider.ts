@@ -18,12 +18,6 @@ class BalanceServerProvider extends BaseServerProvider {
     }
 
     return super.put(`balance/update`, payload, (data) => parser.parseResponse(data))
-    /* {
-    "Date": "2020-01-01T00:00:00",
-    "CurrencyCode": "DOT",
-    "Quantity": 700,
-    "CompanyId": "132aa1fa-85d9-45e4-ade7-45203022d01b"
-    } */
   }
 }
 
