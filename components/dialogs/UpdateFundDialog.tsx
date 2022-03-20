@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from "react"
 import { Button, Modal, Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
-
 import { Company, Currency, Fund, FundUpdate } from "../entities"
-import { getCurrencies } from "../../api interfaces/CurrenciesApi"
+import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
-import Alert from "../Alert"
+import Dialog from "./Dialog"
+import { ValidationRow } from "../forms/utils"
 
 export interface UpdateFundDialogProps {
   initialDate?: Date | undefined,
@@ -21,11 +21,12 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const [quantity, setQuantity] = useState(fund && fund.quantity || 0)
   const [companyId, setCompanyId] = useState( (fund && fund.companies[0].id) || undefined)
   const [validationError, setValidationError] = useState<string|undefined>(undefined)
+  const title = `Update fund ${fund && `for ${currency}`}`
 
   const [currencies, setCurrencies] = useState<Currency[]>()  
   const [companies, setCompanies] = useState<Company[]>()  
   useEffect(() => {
-    getCurrencies().then(setCurrencies)
+    currenciesApi.getCurrencies().then(result => setCurrencies(result.data))
     getCompanies().then(setCompanies)
   }, [])
 
@@ -48,61 +49,51 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   }
 
   return <>   
-    <Modal show onHide={close}>
-      <Modal.Header>
-        <Modal.Title>Update fund {fund && (<>for <strong>{currency}</strong></>)}</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Form>
-          <Form.Group as={Row}>
-            {validationError && <Alert type="warning">{validationError}</Alert>}
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Form.Label column sm="5">Date</Form.Label>
-            <Col sm="7">
-              <DatePicker onChange={(date) => {setDate(date); hideValidationError()}} className="form-control" />
-            </Col>
-          </Form.Group>
-          {!fund &&
-          <Form.Group as={Row}>
-            <Form.Label column sm="5">Currency</Form.Label>
-            <Col sm="7">
-              <Form.Select className="form-select-sm" onChange={e => {setCurrency(e.target.value); hideValidationError()}} >
-                {currencies ? 
-                currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>) :
-                <option>Loading currencies...</option>}                
-              </Form.Select>
-            </Col>
-          </Form.Group>
-          }
-          <Form.Group as={Row}>
-            <Form.Label column sm="5">Company</Form.Label>
-            <Col sm="7">
-              <Form.Select className="form-select-sm" onChange={e => { setCompanyId(e.target.value); hideValidationError()}} >
-                {companies ? 
-                companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>) :
-                <option>Loading companies...</option>}
-              </Form.Select>         
-            </Col>
-          </Form.Group>        
-          <Form.Group as={Row}>
-            <Form.Label column sm="5">Quantity</Form.Label>
-            <Col sm="7">
-              <Form.Control type="number" defaultValue={quantity} onChange={e => {setQuantity(parseFloat(e.target.value)); hideValidationError()}} />
-            </Col>
-          </Form.Group>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={close}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={saveClick}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
-    </>
+  <Dialog
+    title={title}
+    confirmButtonText="Update fund"
+    confirmClick={saveClick}
+    cancelClick={close}
+  >
+    <Form>
+      <ValidationRow validationError={validationError} />
+      <Form.Group as={Row}>
+        <Form.Label column sm="5">Date</Form.Label>
+        <Col sm="7">
+          <DatePicker onChange={(date) => {setDate(date); hideValidationError()}} className="form-control" />
+        </Col>
+      </Form.Group>
+      {!fund &&
+      <Form.Group as={Row}>
+        <Form.Label column sm="5">Currency</Form.Label>
+        <Col sm="7">
+          <Form.Select className="form-select-sm" onChange={e => {setCurrency(e.target.value); hideValidationError()}} >
+            {currencies ? 
+            currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>) :
+            <option>Loading currencies...</option>}                
+          </Form.Select>
+        </Col>
+      </Form.Group>
+      }
+      <Form.Group as={Row}>
+        <Form.Label column sm="5">Company</Form.Label>
+        <Col sm="7">
+          <Form.Select className="form-select-sm" onChange={e => { setCompanyId(e.target.value); hideValidationError()}} >
+            {companies ? 
+            companies.map(company => <option key={company.id} value={company.id}>{company.name}</option>) :
+            <option>Loading companies...</option>}
+          </Form.Select>         
+        </Col>
+      </Form.Group>        
+      <Form.Group as={Row}>
+        <Form.Label column sm="5">Quantity</Form.Label>
+        <Col sm="7">
+          <Form.Control type="number" defaultValue={quantity} onChange={e => {setQuantity(parseFloat(e.target.value)); hideValidationError()}} />
+        </Col>
+      </Form.Group>
+    </Form>    
+  </Dialog>
+  </>
 }
 
 export default UpdateFundDialog
