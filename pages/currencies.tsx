@@ -5,29 +5,22 @@ import { DefaultPage } from "../components/layouts"
 import Spinner from "../components/Spinner"
 import { useMountEffect } from "../common/hooks"
 import styles from "../CSS/styles.module.sass"
-import { parseApiError } from "../common/pages"
 import UpdateCurrencyDialog from "../components/dialogs/UpdateCurrencyDialog"
 import TextButton from "../components/controls/TextButton"
+import api from "../api interfaces/CurrenciesApi"
 
 export default function Page() {
   const [currencies, setCurrencies] = useState<Currency[]>()
   const [error, setError] = useState<string>()
+  //const [isLoading, setIsLoading] = useState(false) ]
 
-  function loadCurrencies () {
+  const loadCurrencies = async () => {
     setError(undefined)
-    fetch("/api/currencies").then(res => {
-      if (res.ok) {
-        res.json()
-          .then(data => setCurrencies(data))
-          .catch(error => setError(`${error}`))
-      }
-      else
-        parseApiError(res, setError)        
-    })
-    .catch(error => setError(`Oh My God! ${error}`))
+    const result = await api.getCurrencies()
+    result.isSuccess ? setCurrencies(result.data) : setError(result.error)
   }
-
-  useMountEffect(loadCurrencies)
+  
+  useMountEffect(() => { loadCurrencies() })
   const [updateCurrencyDialogOpen, setUpdateCurrencyDialogOpen] = useState(false)
 
   const updateCurrencyDialogClose = (addedOrUpdated:boolean) => {
