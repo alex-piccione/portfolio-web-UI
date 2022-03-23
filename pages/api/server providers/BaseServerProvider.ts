@@ -41,10 +41,10 @@ abstract class BaseServerProvider {
 }
 
 // Get the server response error message
-// `${error.response.statusText} - ${error.response.data} `
+// TODO: log error`${error.response.statusText} - ${error.response.data} `
 const getError = (error: any) => 
   error.response ? getData(error.response):
-  error.request ? `An error occurred, please retry. ${error.request}` :
+  error.request ? `API Gateway call response not received, please retry. ${error.request}` :
   `Failed to call API Gateway. ${error.message}`
 
 const getData = (response:any) => response.headers["Content-Type"] === "application/json" ? response.data.message : response.data

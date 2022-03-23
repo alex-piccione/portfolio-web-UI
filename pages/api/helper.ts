@@ -3,11 +3,11 @@ const helper = {
   Error_500: (response:any, error:string) => response.status(500).json({message:error}),
   Error_409: (response:any, error:string) => response.status(409).json({message:error}),
 
-  // .stats, .statusText, .data
+
   getErrorString: (error: any) => 
     error.response ? error.response.data.message as string :
-    error.request ? `An error occurred, please retry. ${error.request}` :
-    `Failed to call API Gateway. ${error.message}`
+    error.request ? `Server API call response not received, please retry. ${error.request}` :
+    `Failed to call server API. ${error.message}`
   /*
   if (error.response) {
     // The request was made and the server responded with a status code
