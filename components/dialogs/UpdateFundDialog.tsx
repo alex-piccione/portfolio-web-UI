@@ -21,7 +21,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const [quantity, setQuantity] = useState(fund && fund.quantity || 0)
   const [companyId, setCompanyId] = useState( (fund && fund.companies[0].id) || undefined)
   const [validationError, setValidationError] = useState<string|undefined>(undefined)
-  const title = `Update fund ${fund && `for ${currency}`}`
+  const title = `Update fund ${fund ? `for ${currency}` : ""}`
 
   const [currencies, setCurrencies] = useState<Currency[]>()  
   const [companies, setCompanies] = useState<Company[]>()  
@@ -69,7 +69,9 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
         <Col sm="7">
           <Form.Select className="form-select-sm" onChange={e => {setCurrency(e.target.value); hideValidationError()}} >
             {currencies ? 
-            currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>) :
+            [
+              <option key="0" value="">Select currency</option>,
+            ...currencies.map(currency => <option key={currency.code} value={currency.code}>{currency.code} - {currency.name}</option>)] :
             <option>Loading currencies...</option>}                
           </Form.Select>
         </Col>

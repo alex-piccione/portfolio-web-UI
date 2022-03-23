@@ -4,7 +4,10 @@ const helper = {
   Error_409: (response:any, error:string) => response.status(409).json({message:error}),
 
   // .stats, .statusText, .data
-  getErrorString: (error:any) => error.response.data.message  
+  getErrorString: (error: any) => 
+    error.response ? error.response.data.message as string :
+    error.request ? `An error occurred, please retry. ${error.request}` :
+    `Failed to call API Gateway. ${error.message}`
   /*
   if (error.response) {
     // The request was made and the server responded with a status code

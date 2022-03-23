@@ -1,7 +1,6 @@
 import getConfig from "next/config"
 import { getConfiguration } from "./configuration"
 import axios, { AxiosResponse } from "axios"
-
 const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
 const serverConfig = getConfiguration(serverRuntimeConfig)
 
@@ -41,9 +40,13 @@ abstract class BaseServerProvider {
   }
 }
 
+// Get the server response error message
+// `${error.response.statusText} - ${error.response.data} `
 const getError = (error: any) => 
-  error.response ? error.response.data.message as string :
+  error.response ? getData(error.response):
   error.request ? `An error occurred, please retry. ${error.request}` :
   `Failed to call API Gateway. ${error.message}`
+
+const getData = (response:any) => response.headers["Content-Type"] === "application/json" ? response.data.message : response.data
 
 export default BaseServerProvider
