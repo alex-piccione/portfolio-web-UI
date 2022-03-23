@@ -9,6 +9,8 @@ import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
+import helper from "../pages/api/helper"
+import balanceApi from "../api interfaces/BalanceApi"
 
 const baseCurrency = "EUR"
 
@@ -47,7 +49,8 @@ const View = (props:TableProps) => {
     setUpdateFundDialogIsOpen(true)
   }
 
-  return isLoading ? <Spinner id="balanceTable-spinner"  /> :
+  // TODO: the id is still needed for tests?
+  return isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -83,14 +86,16 @@ const BalanceTable = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
 
-  const loadBalance = () => {    
+  const loadBalance = async () => {    
     setLoading(true)       
-    getBalance(setBalance, setError).then(_ => setLoading(false))
+    const result = await balanceApi.getBalance(baseCurrency)
+    result.isSuccess ? setBalance(result.data) : setError(result.error)
+    setLoading(false)
   }
 
   const updateFund = async (update:FundUpdate) => {
-    await updateBalance(update, setError);
-    loadBalance();
+    const result = await balanceApi.updateBalance(update)
+    result.isSuccess ? await loadBalance() : setError(result.error)
   }
 
   const reload = () => {
@@ -98,24 +103,8 @@ const BalanceTable = () => {
     loadBalance()
   }
 
-  useMountEffect(loadBalance)
-
-  const getBalance = async (setBalance: (b:Balance) => void, setError: (s:string) => void) => {
-    await axios.get(`/api/balance?base-currency=${baseCurrency}`)
-      .then(response => setBalance(response.data))
-      .catch(error => {
-        setError(error?.response?.data?.error || `${error}`)
-    });
-  }
-
-  const updateBalance = async (update:FundUpdate, setError: (s:string) => void) => {   
-    await axios.post(`/api/balance/update-fund`, update)
-      .then(response => {})
-      .catch(error => {
-        setError(error?.response?.data?.error || `${error}`)
-    });
-  }
-  
+  useMountEffect(() => { loadBalance() })
+ 
   return <View isLoading={loading} error={error} balance={balance} reload={reload} updateFund={updateFund} />
 }
 

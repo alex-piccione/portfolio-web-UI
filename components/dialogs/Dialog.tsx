@@ -5,6 +5,7 @@ export interface DialogProps {
   title:string;
   confirmButtonText?:string;
   cancelButtonText?:string;
+  confirmDisabled?:boolean;
   confirmClick: () => void;
   cancelClick: () => void;
 }
@@ -20,7 +21,7 @@ const Dialog: FC<DialogProps> = (props) => {
     </Modal.Body>
     <Modal.Footer>
       { props.cancelButtonText && <Button variant="secondary" onClick={props.cancelClick} >{props.cancelButtonText}</Button>}
-      <Button variant="primary" onClick={props.confirmClick}>{props.confirmButtonText || "Confirm"}</Button>      
+      <Button variant="primary" disabled={props.confirmDisabled} onClick={props.confirmClick}>{props.confirmButtonText || "Confirm"}</Button>      
     </Modal.Footer>
   </Modal>
 }

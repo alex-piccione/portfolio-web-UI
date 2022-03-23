@@ -18,7 +18,7 @@ const companies = [
 
 export default describe("BalanceTable", () => {
 
-  beforeEach("Open home page", () => {
+  beforeEach(() => {
     //https://docs.cypress.io/api/commands/intercept#Syntax
     cy.intercept("GET", "/api/balance?base-currency=EUR", 
       {

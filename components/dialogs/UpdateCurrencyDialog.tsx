@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from "react"
 import { Currency } from "../entities"
 import Dialog from "./Dialog"
-import { saveCurrency } from "../../api interfaces/CurrenciesApi"
+import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
 import Spinner from "../Spinner"
@@ -34,25 +34,29 @@ const UpdateCurrencyDialog: FC<Props> = props => {
   const resetForm = () => { setData(initialData); setValidationError("") }
   const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => setData({...data, [field]: e.target.value})
   
-  const save = () => {
+  const save = async () => {
     if (data.code.trim() === "") return setValidationError("Code is mandatory")
     if (data.name.trim() === "") return setValidationError("Name is mandatory")
-    
-    saveCurrency(data).then(() => {
-      setIsSaving(true)
+
+    setIsSaving(true)
+    setValidationError("")
+    const result = await currenciesApi.saveCurrency(data)
+    setIsSaving(false)
+
+    if(result.isSuccess) {
       resetForm()
       props.onClose(true)
-    })
-    .catch(error => { setValidationError(`${error}`) })
-    .finally(() => setIsSaving(false))
+    } else setValidationError(result.error)
   }
   
   return props.show ? <Dialog 
     title={title}
     confirmButtonText={confirmButtonText}
+    confirmDisabled={isSaving}
     confirmClick={save}
     cancelClick={() => {props.onClose(false); resetForm() } }>
       {isSaving ? <Spinner type="Spin" /> :
+    
     <Form>
       <ValidationRow validationError={validationError} />
       <Form.Group as={Row}>
