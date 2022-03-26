@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
+import NotificationBar from '../components/NotificationBar'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
@@ -39,6 +40,8 @@ export default function Home() {
 
         </div>
       </main>
+
+      <NotificationBar message='aaaa'></NotificationBar>
 
       <footer className={styles.footer}>
         <a
