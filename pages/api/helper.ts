@@ -3,7 +3,6 @@ const helper = {
   Error_500: (response:any, error:string) => response.status(500).json({message:error}),
   Error_409: (response:any, error:string) => response.status(409).json({message:error}),
 
-
   getErrorString: (error: any) => 
     error.response ? error.response.data.message as string :
     error.request ? `Server API call response not received, please retry. ${error.request}` :

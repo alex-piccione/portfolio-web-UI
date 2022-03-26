@@ -1,4 +1,3 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Table } from "react-bootstrap"
 import styles from  "../CSS/styles.module.sass"
@@ -9,7 +8,6 @@ import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
-import helper from "../pages/api/helper"
 import balanceApi from "../api interfaces/BalanceApi"
 
 const baseCurrency = "EUR"
@@ -19,11 +17,10 @@ interface TableProps {
   error:string|undefined,
   balance:Balance|undefined,
   reload: () => void,
-  updateFund: (update:FundUpdate) => void
 }
 
 const View = (props:TableProps) => {
-  const {isLoading, error, balance, reload, updateFund} = props
+  const {isLoading, error, balance, reload} = props
   const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
@@ -38,11 +35,10 @@ const View = (props:TableProps) => {
       {
         initialDate: new Date(),
         fund,
-        save: (fundUpdate:FundUpdate) => {
+        close: (shouldReload:boolean) => {
           setUpdateFundDialogIsOpen(false)
-          updateFund(fundUpdate)
-        },
-        close: () => setUpdateFundDialogIsOpen(false)
+          shouldReload && reload()
+        }
       }
     )
     
@@ -93,11 +89,6 @@ const BalanceTable = () => {
     setLoading(false)
   }
 
-  const updateFund = async (update:FundUpdate) => {
-    const result = await balanceApi.updateBalance(update)
-    result.isSuccess ? await loadBalance() : setError(result.error)
-  }
-
   const reload = () => {
     setError(undefined)
     loadBalance()
@@ -105,7 +96,7 @@ const BalanceTable = () => {
 
   useMountEffect(() => { loadBalance() })
  
-  return <View isLoading={loading} error={error} balance={balance} reload={reload} updateFund={updateFund} />
+  return <View isLoading={loading} error={error} balance={balance} reload={reload} />
 }
 
 export default BalanceTable
