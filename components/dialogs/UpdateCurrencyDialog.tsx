@@ -58,7 +58,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
       {isSaving ? <Spinner type="Spin" /> :
     
     <Form>
-      <ValidationRow validationError={validationError} />
+      <ValidationRow validationError={validationError} error={undefined} />
       <Form.Group as={Row}>
         <Form.Label column sm="5">Code</Form.Label>
         <Col sm="7">
