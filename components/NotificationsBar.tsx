@@ -3,10 +3,15 @@ import { Alert } from "react-bootstrap"
 import { useNotifications, Notification } from "../containers/Notifications"
 import styles from  "../CSS/styles.module.sass"
 
-const NotificationAlert: FC<Notification> = (notification) => {
+interface AlertProps {
+  notification:Notification
+  onClose:() => void
+}
 
+const NotificationAlert: FC<AlertProps> = props => {
+  const { notification, onClose } = props
   const [show, setShow] = useState(true);
-  const style = show ? styles.notification_bar_open : styles.notification_bar_close
+  const containerStyle = show ? styles.notification_bar_open : styles.notification_bar_close
   const variant = 
     notification.type === "info" ? "primary" :
     notification.type === "success" ? "success" :
@@ -14,37 +19,22 @@ const NotificationAlert: FC<Notification> = (notification) => {
     notification.type === "danger" ? "danger" :
      "primary"
 
-  return <div className={style}>
-    <Alert dismissible variant={variant} onClose={() => {setShow(false);} } className={styles.alert}>{notification.message}</Alert>
+  const close = () => {
+    setShow(false)    
+    onClose()
+  }
+
+  return <div className={containerStyle}>
+    <Alert dismissible variant={variant} onClose={close} className={styles.alert}>{notification.message}</Alert>
   </div>
 }
 
 const NotificationsBar: FC = () => {
-  const {notifications } = useNotifications()
+  const {notifications, removeNotification } = useNotifications()
 
-/*
-  const [message, setMessage] = useState<string>()
-  const [type, setType] = useState<MessageType>("info")
-
-  useEffect(() => {
-    console.log ("bar container useEffect")
-    setMessage(Notifier.getInfo())
-
-  }, [notifier])
-
-  const showMessageInternal = (message:string, type:MessageType) => {
-    setMessage(message)
-    setType(type)
-  
-  return <>
-    {children({showMessage:showMessageInternal, hideMessage:() => setMessage(undefined)})}
-    {message && <NotificationBar message={message} type={type} onClose={() => setTimeout(() => setMessage(undefined), 500)}></NotificationBar>}
-  </>
-*/
-  //return <div>notifications: {notifications.length}</div>
-  return <>{ notifications.map( (notification:Notification, x:number) => 
-    <NotificationAlert key={x} {...notification} />
-    )}</>  
+  return <>{notifications.map( (notification:Notification, x:number) => 
+    <NotificationAlert key={x} notification={notification} onClose={() => removeNotification(notification.id)} />
+    )}</>
 }
 
 export default NotificationsBar

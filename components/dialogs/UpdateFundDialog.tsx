@@ -16,9 +16,8 @@ export interface UpdateFundDialogProps {
 }
 
 const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
-  const {initialDate, fund, close} = props
-  const { addNotification } = useNotifications()
-  
+  const {initialDate, fund, close} = props  
+  const { showNotification } = useNotifications()
   const [date, setDate] = useState(initialDate||new Date())
   const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
   const [quantity, setQuantity] = useState<number>(0)
@@ -53,7 +52,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     setError(result.isSuccess ? undefined : result.error)
     if (result.isSuccess) { 
       close(true)
-      addNotification(`Fund ${currency} updated`, "success")
+      showNotification(`Fund ${currency} updated`, "success")
     }
   }
 

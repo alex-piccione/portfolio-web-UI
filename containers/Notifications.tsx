@@ -4,32 +4,37 @@ import NotificationsBar from "../components/NotificationsBar"
 export type MessageType = "info" | "success" | "warning" | "danger"
 
 export interface Notification {
+  id: number
   message:string
   type: MessageType
 }
 
-interface NotificationsState {
+interface Notifier {
   notifications:Notification[],
-  addNotification: (message:string, type:MessageType) => void
+  showNotification: (message:string, type:MessageType) => void
+  removeNotification: (id:number) => void
 }
 
-const defaultValues:NotificationsState = {notifications:[], addNotification:() => { alert("Error. Are you using the context inside its Provider?")}}
-const MessagesContext = createContext<NotificationsState>(defaultValues);
+const defaultValues:Notifier = {notifications:[], 
+  showNotification:() => { alert("Error. Are you using the context inside its Provider?")},
+  removeNotification:() => { alert("Error. Are you using the context inside its Provider?")}
+}
+const MessagesContext = createContext<Notifier>(defaultValues);
 
 const NotificationProvider:FC = ({children}) => {
   const [notifications, setNotifications] = useState([] as Notification[]);
-  const addNotification = (message:string, type:MessageType) => setNotifications([...notifications, {message, type}])
+  const addNotification = (message:string, type:MessageType) => setNotifications([...notifications, { id:Math.random(), message, type}])
+  const removeNotification = (id:number) => setNotifications(notifications.filter(n => n.id !== id))
 
-  return <MessagesContext.Provider value={{notifications, addNotification: addNotification}}>
+  return <MessagesContext.Provider value={{notifications, showNotification: addNotification, removeNotification}}>
     {children}
     <NotificationsBar />
-    <div>notifications: {notifications.length}</div>
-    <div>
-      {notifications.map( (n, x) => <div key={x}> {n.type} - {n.message}</div>)}      
-    </div>
   </MessagesContext.Provider>
 }
 
 const useNotifications = () => useContext(MessagesContext);
+// Error at runtime: "Hooks can only be called inside of the body of a function component"
+const showInfo = (message:string) => useContext(MessagesContext).showNotification(message, "info");
+const showSuccess = (message:string) => useContext(MessagesContext).showNotification(message, "success");
 
-export {NotificationProvider, useNotifications}
+export {NotificationProvider, useNotifications, showInfo, showSuccess}

@@ -4,11 +4,11 @@ import Link from "next/link"
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import BalanceTable from '../components/BalanceTable'
-import { useNotifications } from '../containers/Notifications'
+import { showSuccess, useNotifications } from '../containers/Notifications'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
-  const { addNotification } = useNotifications()
+  const { showNotification } = useNotifications()
 
   return (<>
     <div className={styles.container}>
@@ -25,8 +25,8 @@ export default function Home() {
 
         <BalanceTable />
 
-        <Button onClick={() => addNotification("click", "info")}>Click</Button>
-        <Button onClick={() => addNotification("click", "success")}>Click</Button>
+        <Button onClick={() => showNotification("click", "info")}>Click</Button>
+        <Button onClick={() => showSuccess("click")}>Click</Button>
 
         <div className={styles.grid}>
           
