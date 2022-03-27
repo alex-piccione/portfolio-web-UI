@@ -39,10 +39,7 @@ const View = (props:TableProps) => {
         close: (shouldReload:boolean) => {
           setUpdateFundDialogIsOpen(false)
           shouldReload && reload()
-        },
-        showMessage: (message:string, type:string) => {} /* {
-          NotificationBarContainer.showMessage(message, type)
-        }*/
+        }
       }
     )
     
