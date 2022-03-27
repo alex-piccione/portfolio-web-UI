@@ -3,11 +3,13 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
-import NotificationBar from '../components/NotificationBar'
+import NotificationBarContainer from '../containers/NotificationBarContainer'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
+
   return (
+    <NotificationBarContainer>{ ({showMessage}) =>
     <div className={styles.container}>
       <Head>
         <title>Portfolio</title>
@@ -41,8 +43,6 @@ export default function Home() {
         </div>
       </main>
 
-      <NotificationBar message='aaaa'></NotificationBar>
-
       <footer className={styles.footer}>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -56,5 +56,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
+  }</NotificationBarContainer>
   )
 }

@@ -3,12 +3,13 @@ import { Table } from "react-bootstrap"
 import styles from  "../CSS/styles.module.sass"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, Fund, FundUpdate } from "./entities"
+import { Balance, Fund } from "./entities"
 import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
 import balanceApi from "../api interfaces/BalanceApi"
+import NotificationBarContainer from "../containers/NotificationBarContainer"
 
 const baseCurrency = "EUR"
 
@@ -38,7 +39,10 @@ const View = (props:TableProps) => {
         close: (shouldReload:boolean) => {
           setUpdateFundDialogIsOpen(false)
           shouldReload && reload()
-        }
+        },
+        showMessage: (message:string, type:string) => {} /* {
+          NotificationBarContainer.showMessage(message, type)
+        }*/
       }
     )
     
@@ -46,7 +50,8 @@ const View = (props:TableProps) => {
   }
 
   // TODO: the id is still needed for tests?
-  return isLoading ? <Spinner id="balanceTable-spinner" /> :
+  return <NotificationBarContainer>{({showMessage}) => 
+  isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -73,8 +78,9 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
-    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> }    
+    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} showMessage={showMessage} /> } 
     </>
+    }</NotificationBarContainer>
 }
 
 const BalanceTable = () => {
