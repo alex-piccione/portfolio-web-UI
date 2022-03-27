@@ -5,7 +5,7 @@ import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
 import Spinner from "../Spinner"
-import Notifier from "../../containers/Notifier"
+import { useNotifications } from "../../containers/Notifications"
 
 interface Props {
   show: boolean
@@ -20,6 +20,7 @@ interface FormValues {
 
 const UpdateCurrencyDialog: FC<Props> = props => {
   const isNew = props.currencyToUpdate === undefined
+  const {showNotification } = useNotifications()
   const title = isNew ? "Create Currency" : `Update Currency ${props.currencyToUpdate?.code}`
   const confirmButtonText = isNew ? "Create new Currency" : "Update Currency"
   const [validationError, setValidationError] = useState("")
@@ -47,7 +48,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
     if(result.isSuccess) {
       resetForm()
       props.onClose(true)
-      Notifier.showSuccess("Currency saved")
+      showNotification("Currency saved", "success")
     } else setValidationError(result.error)
   }
   
