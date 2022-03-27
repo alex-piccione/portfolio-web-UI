@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
+import NotificationBarContainer from '../containers/NotificationBarContainer'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {

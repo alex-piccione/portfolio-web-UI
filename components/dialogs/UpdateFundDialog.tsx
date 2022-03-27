@@ -18,6 +18,7 @@ export interface UpdateFundDialogProps {
 const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const {initialDate, fund, close} = props  
   const { showNotification } = useNotifications()
+
   const [date, setDate] = useState(initialDate||new Date())
   const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
   const [quantity, setQuantity] = useState<number>(0)
