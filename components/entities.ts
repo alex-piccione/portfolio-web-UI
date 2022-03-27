@@ -4,7 +4,8 @@ export type Company = {
     types: string[]
 }
 
-//export CompanyType = "Bank" | "Exchange" | "Stacking"
+// these values MUST match the database ones
+export type CompanyType = "Bank" | "Exchange" | "Stacking"
 
 export type Currency = {
   code: string,

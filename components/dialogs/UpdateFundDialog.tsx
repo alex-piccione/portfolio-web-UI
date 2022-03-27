@@ -3,10 +3,10 @@ import { Form, Row, Col } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
 import Dialog from "./Dialog"
 import { ValidationRow } from "../forms/utils"
-import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { Company, Currency, Fund, FundUpdate } from "../entities"
-import { getCompanies } from "../../api interfaces/CompaniesApi"
+import companiesApi from "../../api interfaces/CompaniesApi"
 import balanceApi from "../../api interfaces/BalanceApi"
+import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { useNotifications } from "../../containers/Notifications"
 
 export interface UpdateFundDialogProps {
@@ -31,7 +31,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
   const [companies, setCompanies] = useState<Company[]>()  
   useEffect(() => {
     currenciesApi.getCurrencies().then(result => setCurrencies(result.data))
-    getCompanies().then(setCompanies)
+    companiesApi.getCompanies().then(result => setCompanies(result.data))
   }, [])
 
   const hideValidationError = () => setValidationError(undefined)
