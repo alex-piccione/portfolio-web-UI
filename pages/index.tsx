@@ -2,13 +2,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
-import { Button } from 'react-bootstrap'
 import BalanceTable from '../components/BalanceTable'
-import { showSuccess, useNotifications } from '../containers/Notifications'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
-  const { showNotification } = useNotifications()
 
   return (<>
     <div className={styles.container}>
@@ -24,9 +21,6 @@ export default function Home() {
         </h1>
 
         <BalanceTable />
-
-        <Button onClick={() => showNotification("click", "info")}>Click</Button>
-        <Button onClick={() => showSuccess("click")}>Click</Button>
 
         <div className={styles.grid}>
           
