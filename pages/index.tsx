@@ -3,10 +3,13 @@ import Image from 'next/image'
 import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
+import NotificationBarContainer from '../containers/NotificationBarContainer'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
+
   return (
+    <NotificationBarContainer>{ ({showMessage}) =>
     <div className={styles.container}>
       <Head>
         <title>Portfolio</title>
@@ -53,5 +56,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
+  }</NotificationBarContainer>
   )
 }

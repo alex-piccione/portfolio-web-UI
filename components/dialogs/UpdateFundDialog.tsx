@@ -7,15 +7,17 @@ import currenciesApi from "../../api interfaces/CurrenciesApi"
 import { Company, Currency, Fund, FundUpdate } from "../entities"
 import { getCompanies } from "../../api interfaces/CompaniesApi"
 import balanceApi from "../../api interfaces/BalanceApi"
+import { MessageType } from "../NotificationBar"
 
 export interface UpdateFundDialogProps {
   initialDate?: Date | undefined,
   fund:Fund | undefined,
   close:(shouldReload:boolean) => void  
+  showMessage: (message:string, type:MessageType) => void
 }
 
 const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
-  const {initialDate, fund, close} = props
+  const {initialDate, fund, close, showMessage} = props
   const [date, setDate] = useState(initialDate||new Date())
   const [currency, setCurrency] = useState( (fund && fund.currencyCode) || undefined)
   const [quantity, setQuantity] = useState<number>(0)
@@ -48,10 +50,13 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
 
     const result = await balanceApi.updateBalance(update)
     setError(result.isSuccess ? undefined : result.error)
-    if (result.isSuccess) close(true)
+    if (result.isSuccess) { 
+      close(true)
+      showMessage(`Fund ${currency} updated`, "success")
+    }
   }
 
-  return <>   
+  return <>     
   <Dialog
     title={title}
     confirmButtonText="Update fund"
