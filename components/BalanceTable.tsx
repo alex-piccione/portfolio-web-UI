@@ -9,7 +9,6 @@ import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDia
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
 import balanceApi from "../api interfaces/BalanceApi"
-import NotificationBarContainer from "../containers/NotificationBarContainer"
 
 const baseCurrency = "EUR"
 
@@ -39,10 +38,7 @@ const View = (props:TableProps) => {
         close: (shouldReload:boolean) => {
           setUpdateFundDialogIsOpen(false)
           shouldReload && reload()
-        },
-        showMessage: (message:string, type:string) => {} /* {
-          NotificationBarContainer.showMessage(message, type)
-        }*/
+        }
       }
     )
     
@@ -50,8 +46,7 @@ const View = (props:TableProps) => {
   }
 
   // TODO: the id is still needed for tests?
-  return <NotificationBarContainer>{({showMessage}) => 
-  isLoading ? <Spinner id="balanceTable-spinner" /> :
+  return isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -78,9 +73,8 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
-    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} showMessage={showMessage} /> } 
+    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
     </>
-    }</NotificationBarContainer>
 }
 
 const BalanceTable = () => {

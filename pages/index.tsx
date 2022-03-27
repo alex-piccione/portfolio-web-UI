@@ -1,27 +1,16 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from "next/link"
-import React, { useContext } from 'react'
+import React from 'react'
 import { Button } from 'react-bootstrap'
 import BalanceTable from '../components/BalanceTable'
-import NotificationBar, { NotifierBar } from '../components/NotificationBar'
-import NotificationBarContainer from '../containers/NotificationBarContainer'
-import Notifier, {NotificationProvider, NotifierContext, useNotifications} from "../containers/Notifier"
+import { useNotifications } from '../containers/Notifications'
 import styles from '../CSS/Home.module.css'
 
 export default function Home() {
- 
-  
-  const notifier = useContext(NotifierContext)
+  const { addNotification } = useNotifications()
 
-  const notifications = useNotifications()
-
-  return (
-    <NotifierContext.Provider value={Notifier}>
-      <NotifierBar _notifier={Notifier} />
-      <NotificationBarContainer notifier={notifier}>{ ({showMessage}) => <>
-
-      <NotificationProvider>
+  return (<>
     <div className={styles.container}>
       <Head>
         <title>Portfolio</title>
@@ -36,10 +25,8 @@ export default function Home() {
 
         <BalanceTable />
 
-        <Button onClick={() => notifier.showInfo("click")}>Click</Button>
-        <Button onClick={() => notifications.addNotification("click", "success")}>Click</Button>
-        <div>Click: {Notifier.counter}</div>
-        <div>notifications: {notifications.notifications.length}</div>
+        <Button onClick={() => addNotification("click", "info")}>Click</Button>
+        <Button onClick={() => addNotification("click", "success")}>Click</Button>
 
         <div className={styles.grid}>
           
@@ -72,11 +59,6 @@ export default function Home() {
           </span>
         </a>
       </footer>
-    </div>
-
-    </NotificationProvider>
-
-    </>}</NotificationBarContainer>
-    </NotifierContext.Provider>
+    </div></>
   )
 }
