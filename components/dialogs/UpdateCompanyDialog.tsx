@@ -1,10 +1,10 @@
 import { ChangeEvent, FC, useState } from "react"
-import { Company, CompanyType } from "../entities"
 import Dialog from "./Dialog"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
 import Spinner from "../Spinner"
-import companiesApi from "../../api interfaces/CompaniesApi"
+import { Company, CompanyTypes } from "../../Entities.d"
+import { Api } from "../../api interfaces/Api"
 import { useNotifications } from "../../containers/Notifications"
 
 interface Props {
@@ -27,7 +27,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
   const [operationError, setOperationError] = useState<string>()
 
   const initialData = {
-    //id: props.companyToUpdate?.code || "",
+    id: props.companyToUpdate?.id,
     name: props.companyToUpdate?.name || "",
     types: props.companyToUpdate?.types || [],
   }  
@@ -36,18 +36,23 @@ const UpdateCurrencyDialog: FC<Props> = props => {
   const [isSaving, setIsSaving] = useState(false)
   
   const resetForm = () => { setData(initialData); setValidationError(undefined); setOperationError(undefined) }
-  const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => setData({...data, [field]: e.target.value})
+  const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => { setData({...data, [field]: e.target.value}), cleanErrors() }
   const cleanErrors = () => { setValidationError(undefined); setOperationError(undefined) }
 
-  const types = CompanyType.
-  
+ 
   const save = async () => {   
     cleanErrors() 
     if (data.name.trim() === "") return setValidationError("Name is mandatory")
     if (data.types.length == 0) return setValidationError("At  least a Type is required")
 
+    const company:Company = {
+      id: props.companyToUpdate?.id || "",
+      name: data.name,
+      types: data.types,
+    }
+
     setIsSaving(true)
-    const result = await companiesApi.saveCompany(data)
+    const result = await Api.Company.saveCompany(company)
     setIsSaving(false)
 
     if(result.isSuccess) {
@@ -76,9 +81,9 @@ const UpdateCurrencyDialog: FC<Props> = props => {
       <Form.Group as={Row}>
         <Form.Label column sm="5">Types</Form.Label>
         <Col sm="7">          
-          <Form.Select className="form-select-sm" onChange={e => { setCompanyType(e.target.value); cleanErrors()}} >
+          <Form.Select className="form-select-sm" multiple onChange={e => setValue("types", e)} >
             <option key="0" value="">Select a company</option>
-            {CompanyType.values().map(type => <option key={type} value={type}>{type}</option>)}
+            {CompanyTypes.map(type => <option key={type} value={type}>{type}</option>)}
           </Form.Select>  
         </Col>
       </Form.Group>    </Form>}

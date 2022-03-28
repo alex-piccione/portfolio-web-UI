@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/CompaniesTable"
-import { Company } from "../components/entities"
+import { Company } from "../Entities"
 import Spinner from "../components/Spinner"
 import { NextPageContext } from "next"
 import { parseApiError } from "../common/pages"

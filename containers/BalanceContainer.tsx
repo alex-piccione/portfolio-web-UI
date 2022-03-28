@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { Children } from "react"
-import { Balance } from "../components/entities"
+import { Balance } from "../Entities"
 
 export interface FundUpdate {
   date: Date,

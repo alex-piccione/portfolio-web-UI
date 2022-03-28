@@ -1,4 +1,4 @@
-import { Balance/*, FundAtDateSaveRequest*/ } from "../../../../components/entities"
+import { Balance/*, FundAtDateSaveRequest*/ } from "../../../../Entities"
 
 const balance:Balance = {
   date: new Date(),

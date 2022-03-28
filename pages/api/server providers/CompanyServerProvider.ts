@@ -1,5 +1,5 @@
 import getConfig from "next/config"
-import { Company } from "../../../components/entities"
+import { Company } from "../../../Entities"
 import { getConfiguration } from "./configuration"
 import axios from "axios"
 

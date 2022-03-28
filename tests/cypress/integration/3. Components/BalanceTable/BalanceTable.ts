@@ -1,6 +1,6 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps"
 import { RouteHandler } from "cypress/types/net-stubbing"
-import { Balance } from "../../../../../components/entities"
+import { Balance } from "../../../../../Entities"
 
 const balance:Balance = {
     date: new Date(),

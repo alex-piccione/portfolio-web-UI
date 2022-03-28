@@ -3,12 +3,12 @@ import { Table } from "react-bootstrap"
 import styles from  "../CSS/styles.module.sass"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, Fund } from "./entities"
+import { Balance, Fund } from "../Entities.d"
 import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
-import balanceApi from "../api interfaces/BalanceApi"
+import { Api } from "../api interfaces/Api"
 import NotificationBarContainer from "../containers/NotificationBarContainer"
 
 const baseCurrency = "EUR"
@@ -86,8 +86,10 @@ const BalanceTable = () => {
   const [error, setError] = useState<string>()
 
   const loadBalance = async () => {    
-    setLoading(true)       
-    const result = await balanceApi.getBalance(baseCurrency)
+    setLoading(true)   
+    debugger;    
+    const a = await Api.Currency.getCurrencies()
+    const result = await Api.Balance.getBalance(baseCurrency)
     result.isSuccess ? setBalance(result.data) : setError(result.error)
     setLoading(false)
   }

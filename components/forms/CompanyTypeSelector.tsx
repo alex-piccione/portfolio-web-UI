@@ -1,13 +1,21 @@
-import { FC } from "react"
-import {CompanyType} from "../../entities"
+import { FC, useState } from "react"
+import { Form } from "react-bootstrap"
+import {CompanyTypes} from "../../Entities"
 
 const CompanyTypeSelector:FC = () => {
   
-  
+  //const values = keyof<CompanyType>
+  //const values = [k in CompanyType]
+
+  //useState()
 
   return <>
-  <Form.Control typ></Form.Control>
-  CompanyType.values().map(type => <option key={type} value={type}>{type}</option>)
+  <Form.Select>
+{
+  CompanyTypes.map(type => <option key={type} value={type}>{type}</option>)
+}
+  </Form.Select>
+  
   </>
 }
 

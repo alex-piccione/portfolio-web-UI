@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from "react"
-import { Form, Row, Col } from "react-bootstrap"
+import { Form, Row, Col, Button } from "react-bootstrap"
 import DatePicker from "../controls/DatePicker"
 import Dialog from "./Dialog"
 import { ValidationRow } from "../forms/utils"
-import { Company, Currency, Fund, FundUpdate } from "../entities"
-import companiesApi from "../../api interfaces/CompaniesApi"
-import balanceApi from "../../api interfaces/BalanceApi"
-import currenciesApi from "../../api interfaces/CurrenciesApi"
+import { Company, Currency, Fund, FundUpdate } from "../../Entities"
+import UpdateCompanyDialog from "./UpdateCompanyDialog"
+import { Api } from "../../api interfaces/Api"
 import { useNotifications } from "../../containers/Notifications"
+
 
 export interface UpdateFundDialogProps {
   initialDate?: Date | undefined,
@@ -29,9 +29,12 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
 
   const [currencies, setCurrencies] = useState<Currency[]>()  
   const [companies, setCompanies] = useState<Company[]>()  
+
+  const [updateCompanyyDialogOpen, setUpdateCompanyyDialogOpen] = useState(false)
+
   useEffect(() => {
-    currenciesApi.getCurrencies().then(result => setCurrencies(result.data))
-    companiesApi.getCompanies().then(result => setCompanies(result.data))
+    Api.Currency.getCurrencies().then(result => setCurrencies(result.data))
+    Api.Company.getCompanies().then(result => setCompanies(result.data))
   }, [])
 
   const hideValidationError = () => setValidationError(undefined)
@@ -49,12 +52,24 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
       companyId: companyId
     }
 
-    const result = await balanceApi.updateBalance(update)
+    const result = await Api.Balance.updateBalance(update)
     setError(result.isSuccess ? undefined : result.error)
     if (result.isSuccess) { 
       close(true)
       showNotification(`Fund ${currency} updated`, "success")
     }
+  }
+
+  const updateCompanyDialogClose = (addedOrUpdated:boolean) => {
+    if (addedOrUpdated) {
+      Api.Company.getCompanies().then(result => setCompanies(result.data))
+    }
+    setUpdateCompanyyDialogOpen(false)
+  }
+
+  const renderAddCompanyButton = () => {
+
+    return <></>
   }
 
   return <>     
@@ -84,7 +99,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
       </Form.Group>
       }
       <Form.Group as={Row}>
-        <Form.Label column sm="5">Company</Form.Label>
+        <Form.Label column sm="5">Company {renderAddCompanyButton()}</Form.Label>
         <Col sm="7">
           <Form.Select className="form-select-sm" onChange={e => { setCompanyId(e.target.value); hideValidationError()}} >
             <option key="0" value="">Select a company</option>
@@ -100,6 +115,13 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
       </Form.Group>
     </Form>    
   </Dialog>
+
+ 
+  <UpdateCompanyDialog   
+    show={updateCompanyyDialogOpen}   
+    companyToUpdate={undefined}
+    onClose={updateCompanyDialogClose}
+  />
   </>
 }
 

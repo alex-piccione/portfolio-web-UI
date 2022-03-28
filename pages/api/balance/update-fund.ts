@@ -1,6 +1,6 @@
 import BalanceProvider from "../server providers/BalanceServerProvider"
 import helper from "../helper"
-import { FundUpdate } from "../../../components/entities"
+import { FundUpdate } from "../../../Entities"
 import { NextApiRequest, NextApiResponse } from "next"
 
 const provider = new BalanceProvider()
