@@ -21,6 +21,11 @@ const CompanyServerProvider = {
     .then(result =>  parser.parseCompanies(result.data))
     .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
   },
+  createCompany: async (company:Company) =>  {
+    return axios.post(`${baseUrl}/company`, company, {headers:headers})
+    .then(result => company) // parser.parseCompanies(result.data))
+    .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
+  },
 }
 
 const parser = {

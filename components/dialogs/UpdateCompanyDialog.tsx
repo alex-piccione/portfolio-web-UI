@@ -35,14 +35,18 @@ const UpdateCurrencyDialog: FC<Props> = props => {
   const [isSaving, setIsSaving] = useState(false)
   
   const resetForm = () => { setData(initialData); setValidationError(undefined); setOperationError(undefined) }
-  const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => { setData({...data, [field]: e.target.value}), cleanErrors() }
+  const setValue = (field: keyof FormValues, e: ChangeEvent<any>) => { setData({...data, [field]: e.target.value}) }
+  const setValues = (field: keyof FormValues, e: ChangeEvent<HTMLSelectElement>) => { 
+    setData({...data, 
+      [field]: Array.from(e.target.selectedOptions).map(o => o.value)})
+    }
   const cleanErrors = () => { setValidationError(undefined); setOperationError(undefined) }
 
  
   const save = async () => {   
     cleanErrors() 
     if (data.name.trim() === "") return setValidationError("Name is mandatory")
-    if (data.types.length == 0) return setValidationError("At  least a Type is required")
+    if (data.types.length == 0) return setValidationError("At least a Type is required")
 
     const company:Company = {
       id: props.companyToUpdate?.id || "",
@@ -79,7 +83,8 @@ const UpdateCurrencyDialog: FC<Props> = props => {
         <Form.Group as={Row}>
           <Form.Label column sm="5">Types</Form.Label>
           <Col sm="7">          
-            <Form.Select className="form-select-sm" multiple onChange={e => setValue("types", e)} >
+            <Form.Select className="form-select-sm" multiple
+              onChange={e => setValues("types", e)}>         
               {CompanyTypes.map(type => <option key={type} value={type}>{type}</option>)}
             </Form.Select>  
           </Col>
