@@ -18,5 +18,3 @@ export namespace Api {
     updateBalance: (fundUpdate:FundUpdate) => post<FundUpdate>("/api/balance/update-fund", fundUpdate)
   }
 }
-
-//export default Api

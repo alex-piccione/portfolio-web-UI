@@ -37,12 +37,12 @@ export default function Page() {
       currencies ? <CurrenciesTable currencies={currencies} /> : <Spinner/>}
     </div>
       
-      <TextButton onClick={() => {setUpdateCurrencyDialogOpen(true)}}>Add a currency</TextButton>
-      <UpdateCurrencyDialog   
-        show={updateCurrencyDialogOpen}   
-        currencyToUpdate={undefined}
-        onClose={updateCurrencyDialogClose}
-      ></UpdateCurrencyDialog>
+    <TextButton onClick={() => {setUpdateCurrencyDialogOpen(true)}}>Add a currency</TextButton>
+    <UpdateCurrencyDialog   
+      show={updateCurrencyDialogOpen}   
+      currencyToUpdate={undefined}
+      onClose={updateCurrencyDialogClose}
+    ></UpdateCurrencyDialog>
 
   </DefaultPage> 
 }

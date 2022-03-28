@@ -9,7 +9,6 @@ import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDia
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
 import { Api } from "../api interfaces/Api"
-import NotificationBarContainer from "../containers/NotificationBarContainer"
 
 const baseCurrency = "EUR"
 
@@ -47,8 +46,7 @@ const View = (props:TableProps) => {
   }
 
   // TODO: the id is still needed for tests?
-  return <NotificationBarContainer>{({showMessage}) => 
-  isLoading ? <Spinner id="balanceTable-spinner" /> :
+  return isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -77,7 +75,6 @@ const View = (props:TableProps) => {
     </Table> 
     { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
     </>
-    }</NotificationBarContainer>
 }
 
 const BalanceTable = () => {
@@ -86,9 +83,7 @@ const BalanceTable = () => {
   const [error, setError] = useState<string>()
 
   const loadBalance = async () => {    
-    setLoading(true)   
-    debugger;    
-    const a = await Api.Currency.getCurrencies()
+    setLoading(true)
     const result = await Api.Balance.getBalance(baseCurrency)
     result.isSuccess ? setBalance(result.data) : setError(result.error)
     setLoading(false)

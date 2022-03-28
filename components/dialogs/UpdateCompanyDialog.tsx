@@ -2,7 +2,6 @@ import { ChangeEvent, FC, useState } from "react"
 import Dialog from "./Dialog"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
-import Spinner from "../Spinner"
 import { Company, CompanyTypes } from "../../Entities.d"
 import { Api } from "../../api interfaces/Api"
 import { useNotifications } from "../../containers/Notifications"
@@ -58,7 +57,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
     if(result.isSuccess) {
       resetForm()
       props.onClose(true)
-      showNotification(isNew ? "Company saved" : "Company updated", "success")
+      showNotification(isNew ? `Company "${company.name}" created` : `Company "${company.name}" updated`, "success")
     } else setOperationError(result.error)
   }
   
@@ -67,26 +66,25 @@ const UpdateCurrencyDialog: FC<Props> = props => {
     confirmButtonText={confirmButtonText}
     confirmDisabled={isSaving}
     confirmClick={save}
-    cancelClick={() => {props.onClose(false); resetForm() } }>
-      {isSaving ? <Spinner type="Spin" /> :
-    
-    <Form onChange={() => cleanErrors()}>
-      <ValidationRow validationError={validationError} error={operationError} />
-      <Form.Group as={Row}>
-        <Form.Label column sm="5">Name</Form.Label>
-        <Col sm="7">
-          <Form.Control type="text" className="form-control" size="sm" defaultValue={data.name} onChange={e => setValue("name", e)} />
-        </Col>
-      </Form.Group>    
-      <Form.Group as={Row}>
-        <Form.Label column sm="5">Types</Form.Label>
-        <Col sm="7">          
-          <Form.Select className="form-select-sm" multiple onChange={e => setValue("types", e)} >
-            <option key="0" value="">Select a company</option>
-            {CompanyTypes.map(type => <option key={type} value={type}>{type}</option>)}
-          </Form.Select>  
-        </Col>
-      </Form.Group>    </Form>}
+    cancelClick={() => {props.onClose(false); resetForm() } }
+    isBusy={isSaving}> 
+      <Form onChange={() => cleanErrors()}>
+        <ValidationRow validationError={validationError} error={operationError} />
+        <Form.Group as={Row}>
+          <Form.Label column sm="5">Name</Form.Label>
+          <Col sm="7">
+            <Form.Control type="text" className="form-control" size="sm" defaultValue={data.name} onChange={e => setValue("name", e)} />
+          </Col>
+        </Form.Group>    
+        <Form.Group as={Row}>
+          <Form.Label column sm="5">Types</Form.Label>
+          <Col sm="7">          
+            <Form.Select className="form-select-sm" multiple onChange={e => setValue("types", e)} >
+              {CompanyTypes.map(type => <option key={type} value={type}>{type}</option>)}
+            </Form.Select>  
+          </Col>
+        </Form.Group>
+      </Form>
   </Dialog> : null
 }
 

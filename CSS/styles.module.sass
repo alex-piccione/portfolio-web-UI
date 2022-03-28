@@ -120,3 +120,32 @@
     transform: translateY(0)
   100%
     transform: translateY(calc(100% + 10px))
+
+
+.loader_overlay
+  position: absolute
+  width: 100%
+  height: 100%
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color: rgba(250,250,250,0.7)
+  animation: start-loading 1s ease forwards
+
+  & .loader_spinner
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    transform: -webkit-translate(-50%, -50%)
+    transform: -moz-translate(-50%, -50%)
+    transform: -ms-translate(-50%, -50%)
+    transform: scale(1.5)
+    animation: start-loading 2s ease forwards
+    
+@keyframes start-loading
+  0%
+    opacity: 0
+  100%
+    opacity: 1 
