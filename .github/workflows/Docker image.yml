@@ -1,0 +1,36 @@
+
+name: Create Docker image
+on: 
+  pull_request: 
+  #  types: [labeled]    
+
+env:  
+  VERSION: 0.1.${{github.run_number}}
+  CR_URL: c8n.io
+  REPO: portfolio
+
+jobs:  
+  build_docker_image:
+    name: Build Docker image
+    runs-on: ubuntu-latest
+    needs: [build, tests_jest, tests_cypress]
+    steps:
+      # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build Docker image
+        if: github.event.action == 'labeled' && github.event.label.name == 'docker:image'
+        run: |
+          echo build the image using the Dockerfile in devops folder
+          docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
+          echo -----
+          echo ### Container Registry Login and Push ###
+          echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo re-tag and push the images
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
+          echo -----
+
+
