@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from "react"
-import { Currency } from "../entities"
+import { Currency } from "../../Entities"
 import Dialog from "./Dialog"
-import currenciesApi from "../../api interfaces/CurrenciesApi"
+import { Api } from "../../api interfaces/Api"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
 import Spinner from "../Spinner"
@@ -42,7 +42,7 @@ const UpdateCurrencyDialog: FC<Props> = props => {
 
     setIsSaving(true)
     setValidationError("")
-    const result = await currenciesApi.saveCurrency(data)
+    const result = await Api.Currency.saveCurrency(data)
     setIsSaving(false)
 
     if(result.isSuccess) {

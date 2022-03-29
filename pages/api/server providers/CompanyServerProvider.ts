@@ -1,5 +1,5 @@
 import getConfig from "next/config"
-import { Company } from "../../../components/entities"
+import { Company } from "../../../Entities"
 import { getConfiguration } from "./configuration"
 import axios from "axios"
 
@@ -19,6 +19,11 @@ const CompanyServerProvider = {
   getCompanies: async () =>  {
     return axios.get(`${baseUrl}/company`, {headers:headers})
     .then(result =>  parser.parseCompanies(result.data))
+    .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
+  },
+  createCompany: async (company:Company) =>  {
+    return axios.post(`${baseUrl}/company`, company, {headers:headers})
+    .then(result => company) // parser.parseCompanies(result.data))
     .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
   },
 }

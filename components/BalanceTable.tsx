@@ -3,13 +3,12 @@ import { Table } from "react-bootstrap"
 import styles from  "../CSS/styles.module.sass"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, Fund } from "./entities"
+import { Balance, Fund } from "../Entities.d"
 import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
-import balanceApi from "../api interfaces/BalanceApi"
-import NotificationBarContainer from "../containers/NotificationBarContainer"
+import { Api } from "../api interfaces/Api"
 
 const baseCurrency = "EUR"
 
@@ -47,8 +46,7 @@ const View = (props:TableProps) => {
   }
 
   // TODO: the id is still needed for tests?
-  return <NotificationBarContainer>{({showMessage}) => 
-  isLoading ? <Spinner id="balanceTable-spinner" /> :
+  return isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -77,7 +75,6 @@ const View = (props:TableProps) => {
     </Table> 
     { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
     </>
-    }</NotificationBarContainer>
 }
 
 const BalanceTable = () => {
@@ -86,8 +83,8 @@ const BalanceTable = () => {
   const [error, setError] = useState<string>()
 
   const loadBalance = async () => {    
-    setLoading(true)       
-    const result = await balanceApi.getBalance(baseCurrency)
+    setLoading(true)
+    const result = await Api.Balance.getBalance(baseCurrency)
     result.isSuccess ? setBalance(result.data) : setError(result.error)
     setLoading(false)
   }
