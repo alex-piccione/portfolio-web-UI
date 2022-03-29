@@ -41,7 +41,8 @@ jobs:
       - name: Install packages
         run: yarn install
       - name: Run Cypress
-        run: yarn start & yarn test:ui:run
+        #run: yarn start & yarn test:ui:run
+        run: yarn dev & yarn test:ui:run
   
   build_docker_image:
     name: Build Docker image
