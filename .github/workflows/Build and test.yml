@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build_artifact
-          path: .
+          path: ./.next/
 
   tests_jest:
     name: Run Tests
