@@ -61,7 +61,7 @@ jobs:
   label_success:
     runs-on: ubuntu-latest
     if: github.event.action != 'labeled'
-    needs: [build, tests_jest, tests_cypress, remove_build_success_label]
+    needs: [build, tests_jest, tests_cypress]
     steps:
       - uses: actions-ecosystem/action-add-labels@v1
         #if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
