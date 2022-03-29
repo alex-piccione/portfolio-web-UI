@@ -1,8 +1,8 @@
 name: Build and test
 on: 
-  #push:
   pull_request:
-    types: [opened, synchronize, reopened, labeled]
+    types: [opened, synchronize, reopened, labeled]  
+  #push:
 
 env:  
   VERSION: 0.1.${{github.run_number}}
