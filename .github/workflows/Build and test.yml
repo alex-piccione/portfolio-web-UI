@@ -26,8 +26,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install packages
+        run: yarn install
       - name: Run Jest
-        run: yarn start & yarn test:unit
+        run: yarn test:unit
 
   tests_cypress:
     name: Run Cypress Tests
@@ -36,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install packages
+        run: yarn install
       - name: Run Cypress
         run: yarn start & yarn test:ui:run
   
