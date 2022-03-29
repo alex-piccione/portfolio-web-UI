@@ -47,32 +47,32 @@ jobs:
         #run: yarn start & yarn test:ui:run  # yarn start requires next build
         run: yarn dev & yarn test:ui:run
 
-  remove_build_success_label:
+  remove_labels:
     runs-on: ubuntu-latest
     if: github.event.action != 'labeled'
     steps:
-      #- uses: actions/checkout@v2
       - uses: actions-ecosystem/action-remove-labels@v1
         #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
         with:
-          labels: build/success
+          labels: |
+            build:success
+            docker:image
 
   label_success:
     runs-on: ubuntu-latest
     if: github.event.action != 'labeled'
     needs: [build, tests_jest, tests_cypress, remove_build_success_label]
     steps:
-      #- uses: actions/checkout@v2
       - uses: actions-ecosystem/action-add-labels@v1
         #if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
         with:
-          labels: build/success
+          labels: build:success
   
   build_docker_image:
     name: Build Docker image
     if: >-
       github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
-      && contains( github.event.pull_request.labels.*.name, 'build/success')
+      && contains( github.event.pull_request.labels.*.name, 'build:success')
     runs-on: ubuntu-latest
     #needs: [build, tests_jest, tests_cypress]    
     steps:
