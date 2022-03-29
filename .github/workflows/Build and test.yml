@@ -21,9 +21,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Build
         run: yarn install; yarn build
+      - name: Upload Build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build_artifact
+          path: /
 
   tests_jest:
     name: Run Tests
@@ -32,10 +36,12 @@ jobs:
     steps:
       #- name: Checkout
       #  uses: actions/checkout@v2
-
+      - name: Download Build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build_artifact
       - name: Run Jest
         run: yarn start & yarn test:unit
-
       - name: Run Cypress
         run: yarn start & yarn test:ui:run
   
