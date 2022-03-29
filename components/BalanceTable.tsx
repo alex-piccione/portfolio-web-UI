@@ -1,14 +1,15 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Table } from "react-bootstrap"
 import styles from  "../CSS/styles.module.sass"
 import Alert from "./Alert"
 import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, Fund, FundUpdate } from "./entities"
+import { Balance, Fund } from "./entities"
 import Spinner from "./Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
 import TextButton from "./controls/TextButton"
 import { useMountEffect } from "../common/hooks"
+import balanceApi from "../api interfaces/BalanceApi"
+import NotificationBarContainer from "../containers/NotificationBarContainer"
 
 const baseCurrency = "EUR"
 
@@ -17,11 +18,10 @@ interface TableProps {
   error:string|undefined,
   balance:Balance|undefined,
   reload: () => void,
-  updateFund: (update:FundUpdate) => void
 }
 
 const View = (props:TableProps) => {
-  const {isLoading, error, balance, reload, updateFund} = props
+  const {isLoading, error, balance, reload} = props
   const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
@@ -36,18 +36,19 @@ const View = (props:TableProps) => {
       {
         initialDate: new Date(),
         fund,
-        save: (fundUpdate:FundUpdate) => {
+        close: (shouldReload:boolean) => {
           setUpdateFundDialogIsOpen(false)
-          updateFund(fundUpdate)
-        },
-        close: () => setUpdateFundDialogIsOpen(false)
+          shouldReload && reload()
+        }
       }
     )
     
     setUpdateFundDialogIsOpen(true)
   }
 
-  return isLoading ? <Spinner id="balanceTable-spinner"  /> :
+  // TODO: the id is still needed for tests?
+  return <NotificationBarContainer>{({showMessage}) => 
+  isLoading ? <Spinner id="balanceTable-spinner" /> :
     error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
     <div className={styles.section} style={{display: "flex", width: "100%"}}>
@@ -74,8 +75,9 @@ const View = (props:TableProps) => {
         )}
       </tbody>
     </Table> 
-    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> }    
+    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
     </>
+    }</NotificationBarContainer>
 }
 
 const BalanceTable = () => {
@@ -83,14 +85,11 @@ const BalanceTable = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>()
 
-  const loadBalance = () => {    
+  const loadBalance = async () => {    
     setLoading(true)       
-    getBalance(setBalance, setError).then(_ => setLoading(false))
-  }
-
-  const updateFund = async (update:FundUpdate) => {
-    await updateBalance(update, setError);
-    loadBalance();
+    const result = await balanceApi.getBalance(baseCurrency)
+    result.isSuccess ? setBalance(result.data) : setError(result.error)
+    setLoading(false)
   }
 
   const reload = () => {
@@ -98,25 +97,9 @@ const BalanceTable = () => {
     loadBalance()
   }
 
-  useMountEffect(loadBalance)
-
-  const getBalance = async (setBalance: (b:Balance) => void, setError: (s:string) => void) => {
-    await axios.get(`/api/balance?base-currency=${baseCurrency}`)
-      .then(response => setBalance(response.data))
-      .catch(error => {
-        setError(error?.response?.data?.error || `${error}`)
-    });
-  }
-
-  const updateBalance = async (update:FundUpdate, setError: (s:string) => void) => {   
-    await axios.post(`/api/balance/update-fund`, update)
-      .then(response => alert("fund updated"))
-      .catch(error => {
-        setError(error?.response?.data?.error || `${error}`)
-    });
-  }
-  
-  return <View isLoading={loading} error={error} balance={balance} reload={reload} updateFund={updateFund} />
+  useMountEffect(() => { loadBalance() })
+ 
+  return <View isLoading={loading} error={error} balance={balance} reload={reload} />
 }
 
 export default BalanceTable

@@ -1,8 +1,14 @@
 name: Build and test
 on: push
 
+env:  
+  VERSION: 0.1.${{github.run_number}}
+  CR_URL: c8n.io
+  REPO: portfolio
+
 jobs:
   build_and_test:
+    name: "Build & Test"
     runs-on: ubuntu-latest
     #strategy:
     #  fail-fast: true
@@ -15,12 +21,23 @@ jobs:
       - name: Build
         run: yarn install; yarn build
 
+      - name: Run Jest
+        run: yarn start & yarn test:unit
+
       - name: Run Cypress
-        uses: cypress-io/github-action@v2
-        with:
-          #start: yarn dev
-          start: yarn start
-          record: true
-        env:         
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY}} # key od project created in cypress.io
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # automatically provided
+        run: yarn start & yarn test:ui:run
+  
+      - name: Build Docker image
+        run: |
+          echo build the image using the Dockerfile in devops folder
+          docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
+          echo -----
+          echo ### Container Registry Login and Push ###
+          echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo re-tag and push the images
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
+          echo -----
+

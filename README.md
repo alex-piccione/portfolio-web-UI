@@ -26,6 +26,10 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+To create a small and clean Docker image I followed the offcial documentation:  
+https://github.com/vercel/next.js/tree/canary/examples/with-docker  
+Only the ``COPY . .`` was replaced by a precise copy of wanted files to avoid copy unwanted file/folders and replace of node_module.
+
 ### Locale
 
 Next.js detect the locale automatically.  
@@ -106,6 +110,19 @@ In order to use TypeScript for Gherkin I followed the instruction here:
 https://betterprogramming.pub/migrate-a-cypress-cucumber-project-to-use-typescript-407c612d2f34
 
 Error: SyntaxError: 'import' and 'export' may appear only with 'sourceType: module'
+
+### Jest
+yarn add jest -D
+yarn add @types/jest -D
+yarn add ts-jest -D
+
+jest.config.js
+
+Error: expect(value).toBe(0) // Property 'toBe' does not exist on type 'Assertion'.
+This (or similar) is due to clash between Jest and Typescript.
+Maybe a ts.config.json file stored in different places (for cypress) is a solution.
+In my case I just switched the "jest" and "cypress" _types_ in ts.config.json, putting the _jest_ first, ant it works.
+
 
 ## Yarn
 Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
