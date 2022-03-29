@@ -10,4 +10,4 @@ const Spinner = (props:{id?:string, small?:boolean, type?:SpinnerType}) =>
     role="status">
   </div>
 
-export default Spinner 
+export default Spinner

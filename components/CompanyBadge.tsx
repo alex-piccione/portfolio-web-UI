@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Company } from "./entities"
+import { Company } from "../Entities"
 
 export const CompanyNameBadge1:FC<string> = (company) =>
   <span className="badge rounded-pill" style={{marginRight:".5em"}}>{company}</span>

@@ -1,38 +1,32 @@
 import React, { useEffect, useState } from "react"
 import { DefaultPage } from "../components/layouts"
 import CompaniesTable from "../components/CompaniesTable"
-import { Company } from "../components/entities"
+import { Company } from "../Entities"
 import Spinner from "../components/Spinner"
 import { NextPageContext } from "next"
-import { parseApiError } from "../common/pages"
-
-// todo: use axios instead of fetch to avoid checking .ok and have a better management of timeout ?
-const fetchCompanies = () => fetch("/api/companies")
+import { Api} from "../api interfaces/Api"
+import TextButton from "../components/controls/TextButton"
+import UpdateCurrencyDialog from "../components/dialogs/UpdateCompanyDialog"
 
 export default function Page(props:NextPageContext) {
-
   const [companies, setCompanies] = useState<Company[]>()
   const [error, setError] = useState<string>()
+  const [updateCompanyDialogOpen, setUpdateCompanyDialogOpen] = useState(false)
 
-  const reload = () => {
-    console.log(`reload`)
-
+  const reload = async () => {
     setError(undefined)
-    fetchCompanies().then(res => {
-      if (res.ok) {
-        res.json()
-          .then(data => setCompanies(data))
-          .catch(error => setError(`${error}`))
-      }
-      else
-        parseApiError(res, setError)       
-    })
-    .catch(error => setError(`Oh My God! ${error}`))
+    const result = await Api.Company.getCompanies()    
+    result.isSuccess ? setCompanies(result.data) : setError(result.error)
   }
 
   useEffect(() => {
     reload()
   }, [])
+
+  const updateCompanyDialogClose = (addedOrUpdated:boolean) => {
+    addedOrUpdated && reload()
+    setUpdateCompanyDialogOpen(false)
+  }
 
   return <DefaultPage title="Companies">
     <p>
@@ -42,16 +36,13 @@ export default function Page(props:NextPageContext) {
     { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
       companies ? <CompaniesTable companies={companies} /> :
       <Spinner />}
+
+    <TextButton onClick={() => {setUpdateCompanyDialogOpen(true)}}>Add a Company</TextButton>
+    <UpdateCurrencyDialog   
+      show={updateCompanyDialogOpen}   
+      companyToUpdate={undefined}
+      onClose={updateCompanyDialogClose}
+    />
     
   </DefaultPage>  
 }
-
-/*Page.getInitialProps = async () => {    
-  const {data} = await axios.get("/api/companies")
-  return {props: data}
-}*/
-
-/*export const getServerSideProps:GetServerSideProps = async () => {  
-  const {data} = await axios.get("/api/companies")
-  return {props: data}
-}*/

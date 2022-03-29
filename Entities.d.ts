@@ -1,15 +1,17 @@
-export type Company = {
+export interface Company {
     id:string,
     name: string,
     types: string[]
 }
 
-//export CompanyType = "Bank" | "Exchange" | "Stacking"
+// these values MUST match the database ones
+export const CompanyTypes = ["Bank", "Exchange", "Stacking"]
 
-export type Currency = {
+export interface Currency {
   code: string,
   name: string
 }
+
 
 export interface Fund {
   currencyCode:string, quantity:number, companies:{ id:string, name:string }[]

@@ -1,4 +1,4 @@
-import { Balance, Company, Fund, FundUpdate } from "../../../components/entities"
+import { Balance, Company, Fund, FundUpdate } from "../../../Entities"
 import BaseServerProvider from "./BaseServerProvider"
 import CompanyProvider from "./CompanyServerProvider";
 

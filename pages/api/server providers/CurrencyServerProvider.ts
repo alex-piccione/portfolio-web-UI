@@ -1,5 +1,5 @@
 import BaseProvider from "./BaseServerProvider"
-import { Currency } from "../../../components/entities"
+import { Currency } from "../../../Entities"
 
 class CurrenciesServerProvider extends BaseProvider {  
   getCurrencies() {

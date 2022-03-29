@@ -1,6 +1,6 @@
 import React from "react"
 import CompanyTypeBadge from "./CompanyTypeBadge"
-import { Company } from "./entities"
+import { Company } from "../Entities"
 
 type Props = {
   companies: Company[]

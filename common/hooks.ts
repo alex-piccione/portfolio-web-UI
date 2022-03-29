@@ -1,6 +1,6 @@
 import axios from "axios"
 import { EffectCallback, useEffect, useState } from "react"
-import { Company } from "../components/entities"
+import { Company } from "../Entities"
 import { getLocale } from "./utils"
 
 const defaultLocale = "it"
