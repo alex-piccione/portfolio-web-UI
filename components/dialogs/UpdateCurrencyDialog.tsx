@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from "react"
 import { Currency } from "../../Entities"
 import Dialog from "./Dialog"
-import Api from "../../api interfaces/Api"
+import { Api } from "../../api interfaces/Api"
 import { Col, Form, Row } from "react-bootstrap"
 import { ValidationRow } from "../forms/utils"
 import Spinner from "../Spinner"
