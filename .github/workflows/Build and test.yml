@@ -55,17 +55,6 @@ jobs:
         #run: yarn start & yarn test:ui:run  # yarn start requires next build
         run: yarn dev & yarn test:ui:run
 
-  #remove_labels:
-  #  runs-on: ubuntu-latest
-  #  if: github.event.action != 'labeled'
-  #  steps:
-  #    - uses: actions-ecosystem/action-remove-labels@v1
-  #      #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
-  #      with:
-  #        labels: |
-  #          build:success
-  #          docker:image
-
   label_success:
     runs-on: ubuntu-latest
     if: github.event.action != 'labeled'
@@ -85,13 +74,13 @@ jobs:
     #needs: [build, tests_jest, tests_cypress]    
     steps:
       # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
-      - name: Checkout
-        uses: actions/checkout@v2
       - name: remove label
         uses: actions-ecosystem/action-remove-labels@v1
         #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
         with:
           labels: docker:image
+      - name: Checkout
+        uses: actions/checkout@v2      
       - name: Build Docker image        
         run: |
           echo build the image using the Dockerfile in devops folder
