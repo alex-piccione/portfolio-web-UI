@@ -44,8 +44,19 @@ jobs:
       - name: Install packages
         run: yarn install
       - name: Run Cypress
-        #run: yarn start & yarn test:ui:run
+        #run: yarn start & yarn test:ui:run  # yarn start requires next build
         run: yarn dev & yarn test:ui:run
+
+  label_success:
+    runs-on: ubuntu-latest
+    if: github.event.action != 'labeled'
+    needs: [build, tests_jest, tests_cypress]
+    steps:
+      #- uses: actions/checkout@v2
+      - uses: actions-ecosystem/action-add-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
+        with:
+          labels: build/success
   
   build_docker_image:
     name: Build Docker image
