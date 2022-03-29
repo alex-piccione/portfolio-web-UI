@@ -1,6 +1,6 @@
 name: Build and test
 on: 
-  push:
+  #push:
   pull_request:
     types: [labeled]
 
@@ -10,8 +10,8 @@ env:
   REPO: portfolio
 
 jobs:
-  build_and_test:
-    name: "Build & Test"
+  build:
+    name: "Build"
     runs-on: ubuntu-latest
     #strategy:
     #  fail-fast: true
@@ -23,6 +23,14 @@ jobs:
 
       - name: Build
         run: yarn install; yarn build
+
+  tests_jest:
+    name: Run Tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      #- name: Checkout
+      #  uses: actions/checkout@v2
 
       - name: Run Jest
         run: yarn start & yarn test:unit
