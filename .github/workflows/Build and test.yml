@@ -2,7 +2,7 @@ name: Build and test
 on: 
   #push:
   pull_request:
-    types: [labeled]
+    types: [opened, synchronize, reopened, labeled]
 
 env:  
   VERSION: 0.1.${{github.run_number}}
