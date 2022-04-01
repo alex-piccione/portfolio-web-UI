@@ -1,6 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import styles from "../CSS/styles.module.sass"
+import aaa from "../CSS/aaa.module.sass"
 
 type DefaultPageProps = {
     title?:string | undefined,
@@ -16,6 +17,7 @@ export function DefaultPage(props:DefaultPageProps) {
         </div>
         {title && <h1 className={styles.page_title}>{title}</h1>}
         {description && <div className={styles.page_description}>{description}</div>}
+        <div className={aaa.title}>AAA</div>
         <div className="content">
             {props.children}
         </div>            
