@@ -1,8 +1,8 @@
 name: Build and test
 on: 
-  push:
+  #push:  
   pull_request:
-    types: [labeled]
+    types: [opened, synchronize, reopened, labeled]
 
 env:  
   VERSION: 0.1.${{github.run_number}}
@@ -10,49 +10,78 @@ env:
   REPO: portfolio
 
 jobs:
-  build_and_test:
-    name: "Build & Test"
+  build:
+    name: "Build"
+    if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
-    #strategy:
-    #  fail-fast: true
-    #  matrix:
-    #    machines: [1,2,3]
+    steps:
+      - name: remove labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: |
+            build:success
+            docker:image
+
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: yarn install; yarn build
+  
+  tests_jest:
+    name: Run Jest tests
+    if: github.event.action != 'labeled'
+    #needs: [build]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Build
-        run: yarn install; yarn build
-
+      - name: Install packages
+        run: yarn install
       - name: Run Jest
-        run: yarn start & yarn test:unit
+        run: yarn test:unit
 
+  tests_cypress:
+    name: Run Cypress Tests
+    if: github.event.action != 'labeled'
+    #needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install packages
+        run: yarn install
       - name: Run Cypress
-        run: yarn start & yarn test:ui:run
-  
-  #    - name: Build Docker image
-  #      run: |
-  #        echo build the image using the Dockerfile in devops folder
-  #        docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
-  #        echo -----
-  #        echo ### Container Registry Login and Push ###
-  #        echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
-  #        echo re-tag and push the images
-  #        docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
-  #        docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
-  #        docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
-  #        docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
-  #        echo -----
+        #run: yarn start & yarn test:ui:run  # yarn start requires next build
+        run: yarn dev & yarn test:ui:run
 
+  label_success:
+    runs-on: ubuntu-latest
+    if: github.event.action != 'labeled'
+    needs: [build, tests_jest, tests_cypress]
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/add-labels') }}
+        with:
+          labels: build:success
+  
   build_docker_image:
     name: Build Docker image
+    if: >-
+      github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
+      && contains( github.event.pull_request.labels.*.name, 'build:success')
     runs-on: ubuntu-latest
-    needs: [build_and_test]
+    #needs: [build, tests_jest, tests_cypress]    
     steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v2
-      - name: Build Docker image
-        if: github.event.action == 'labeled' && github.event.label.name == 'docker:image'
+      # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
+      - name: remove label
+        uses: actions-ecosystem/action-remove-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: docker:image
+      - name: Checkout
+        uses: actions/checkout@v2      
+      - name: Build Docker image        
         run: |
           echo build the image using the Dockerfile in devops folder
           docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
@@ -65,4 +94,3 @@ jobs:
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
           echo -----
-
