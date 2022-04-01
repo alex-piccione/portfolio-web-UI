@@ -7,6 +7,15 @@ If it fixes a bug or resolves a feature request, be sure to link to that issue.
 
 What changes does your code introduce to this project?
 
+### Screenshots
+
+Add some screenshots is possible
+
+<details>
+<summary>Screenshots</summary>
+
+</details>
+
 ## How is it tested
 
 Write here what tests were executed.
