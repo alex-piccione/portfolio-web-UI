@@ -4,6 +4,7 @@ import Link from "next/link"
 import React from 'react'
 import BalanceTable from '../components/BalanceTable'
 import styles from '../CSS/Home.module.css'
+import css from '../CSS/styles.module.sass'
 
 export default function Home() {
 
@@ -16,7 +17,7 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h1 className={css.page_title}>
           Your Portfolio!
         </h1>
 
@@ -25,16 +26,23 @@ export default function Home() {
         <div className={styles.grid}>
           
           <Link href="/currencies">
-            <a className={styles.card}> 
-            <h2>Currencies &rarr;</h2>
-            <p>Fiat and Crypto currencies.</p>
+            <a className={css.card}> 
+              <h2>Currencies &rarr;</h2>
+              <p>Fiat and Crypto currencies.</p>
             </a>
           </Link>
 
           <Link href="/companies">
-            <a className={styles.card}> 
+            <a className={css.card}> 
               <h2>Companies &rarr;</h2>
               <p>Banks, Exchanges and other companies where you can store funds.</p>
+            </a>
+          </Link>
+
+          <Link href="/settings">
+            <a className={css.card}> 
+              <h2>Settings &rarr;</h2>
+              <p>Application and user settings.</p>
             </a>
           </Link>
 

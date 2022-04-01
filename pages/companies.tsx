@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { DefaultPage } from "../components/layouts"
+import { DefaultPage } from "../components/DefaultPage"
 import CompaniesTable from "../components/CompaniesTable"
 import { Company } from "../Entities"
 import Spinner from "../components/Spinner"
@@ -28,10 +28,9 @@ export default function Page(props:NextPageContext) {
     setUpdateCompanyDialogOpen(false)
   }
 
-  return <DefaultPage title="Companies">
-    <p>
-        Banks, Exchanges and other similar entities where you can store funds.
-    </p>    
+  return <DefaultPage 
+    title="Companies" 
+    description="Banks, Exchanges and other similar entities where you can store funds.">
     
     { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
       companies ? <CompaniesTable companies={companies} /> :
