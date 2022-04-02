@@ -15,26 +15,6 @@ a {
   box-sizing: border-box;
 }
 
-
-.default-page 
-{
-  padding: 1rem;
-  
-  background: linear-gradient(to bottom, #fdfbff, #dbe2ff, #fff);
-  padding: .5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.link-to-home {
-  position: fixed;
-  top: 5px;
-  left:5px;
-  font-size: 80%;
-}
-
 .content, .error-on-load  {
   padding: .5rem;
   min-height: 50vh;
@@ -44,9 +24,6 @@ a {
   align-items: center;
 }
 
-h1.title {  
-  color: #0070f3;  
-}
 
 .error-on-load {
   color: red;

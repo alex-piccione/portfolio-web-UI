@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import CurrenciesTable from "../components/CurrenciesTable"
 import { Currency } from "../Entities"
-import { DefaultPage } from "../components/layouts"
+import { DefaultPage } from "../components/DefaultPage"
 import Spinner from "../components/Spinner"
 import { useMountEffect } from "../common/hooks"
 import styles from "../CSS/styles.module.sass"
@@ -30,8 +30,9 @@ export default function Page() {
     }
   }
 
-  return <DefaultPage title="Currencies">
-    <p>Fiat and Crypto currencies.</p>   
+  return <DefaultPage 
+    title="Currencies"
+    description="Fiat and Crypto currencies.">      
     <div className={styles.section}>
       { error ? <div className="error-on-load" onClick={loadCurrencies}>Failed to load currencies.<br/>{error}</div> :
       currencies ? <CurrenciesTable currencies={currencies} /> : <Spinner/>}
@@ -42,7 +43,7 @@ export default function Page() {
       show={updateCurrencyDialogOpen}   
       currencyToUpdate={undefined}
       onClose={updateCurrencyDialogClose}
-    ></UpdateCurrencyDialog>
+    />
 
   </DefaultPage> 
 }

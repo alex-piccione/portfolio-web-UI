@@ -4,6 +4,8 @@ $alternative: #FF4141
 $background: #F9F9F9
 $text: #333
 
+$overlay: rgba(250,250,250,0.7)
+
 @function lighten($color)
   @return scale-color($color, $lightness: +80%)
 
@@ -27,4 +29,11 @@ $background-shadow: scale-color($background, $lightness: -25%, $alpha: +25%)
 // borders
 $border-light: scale-color( mix($primary, $secondary), $lightness: +25%)
 $border-dark: scale-color( mix($primary, $secondary), $lightness: -25%)
+
+:export
+  primary: $primary
+  secondary: $secondary
+  alternative: $alternative
+  background: $background
+  text: $text 
 
