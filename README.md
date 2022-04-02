@@ -37,6 +37,7 @@ https://nextjs.org/docs/advanced-features/i18n-routing#automatic-locale-detectio
 BUT **it forces you to define which locales you want to support** and a default one.  
 
 _next.config.js_
+
 ```json
 module.exports = {
   i18n: {
@@ -46,6 +47,7 @@ module.exports = {
   }
 }
 ```
+
 What if I want to support ALL locales?  
 To generate the locale.js and locale-names.js files I used F#: devops/[generate locale.fsx]("./devops/generate locale.fsx")
 
@@ -97,7 +99,6 @@ Good reference: https://react-icons.github.io
 I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
 ``yarn add react-icons``  
 ``import { IconName } from "react-icons/fi"``
-
 
 ## Tests
 I use [Cypress](https://docs.cypress.io/guides/core-concepts/introduction-to-cypress#Assertions) 
