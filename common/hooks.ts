@@ -41,7 +41,38 @@ export const useLocale = () => {
   }
 }
 
-export const useBaseCurrency = () => {
+export const useCookie = <T>(name:string, initialValue:T) => {
+  const [cookie, setCookie] = useState<T>(initialValue)
+
+  const set = (value:T) => {
+    sessionStorage.setItem(name, JSON.stringify(value))
+    setCookie(value)
+  }
+
+  useEffect(() => {
+    const value = sessionStorage.getItem(name)
+    const tryGetValue = (value:string | null) => {
+      if (value == null) return initialValue
+      try {
+        return JSON.parse(value) as T
+      }
+      catch(e) {
+        throw new Error(`Cannot parse value "${value}" to type ${typeof(initialValue)}`)
+        //return initialValue
+      }
+    }
+  
+    const parsedValue:T = tryGetValue(value)
+    setCookie(parsedValue)
+  }, [])
+
+  return {
+    value: cookie,
+    setValue: set,
+  }
+} 
+/*
+export const _useBaseCurrency = () => {
   const baseCurrency = "EUR"
   const validCurrencies = ["EUR", "USD", "GBP"]
   const [currency, setCurrency] = useState(baseCurrency)
@@ -63,6 +94,7 @@ export const useBaseCurrency = () => {
     setCurrency: setCurrencySecure
   }
 } 
+*/
 
 export const useCompanies = (setCompanies:(companies:Company[]) => void, setError:(error:string) => void) => {
 

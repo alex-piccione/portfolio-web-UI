@@ -7,8 +7,9 @@ import { Balance, Fund } from "../../Entities"
 import Spinner from "../Spinner"
 import UpdateFundDialog, { UpdateFundDialogProps } from "../dialogs/UpdateFundDialog"
 import TextButton from "../controls/TextButton"
-import { useBaseCurrency, useMountEffect } from "../../common/hooks"
+import { useMountEffect } from "../../common/hooks"
 import { Api } from "../../api interfaces/Api"
+import { useBaseCurrency } from "../../containers/BaseCurrencyContainer"
 
 const baseCurrency = "EUR"
 

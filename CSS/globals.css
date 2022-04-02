@@ -40,3 +40,7 @@ a {
 .alert {
   padding: .3rem;
 }
+
+.badge {
+  font-weight: normal;
+}
