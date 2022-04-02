@@ -59,6 +59,7 @@ export const useBaseCurrency = () => {
 
   return {
     currency,
+    validCurrencies,
     setCurrency: setCurrencySecure
   }
 } 
