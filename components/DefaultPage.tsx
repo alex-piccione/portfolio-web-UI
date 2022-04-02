@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
-import styles from "../CSS/styles.module.sass"
-import aaa from "../CSS/aaa.module.sass"
+//import styles from "../CSS/styles.module.sass"
+import pageStyles from "../CSS/page.module.sass"
 
 type DefaultPageProps = {
     title?:string | undefined,
@@ -11,13 +11,12 @@ type DefaultPageProps = {
 
 export function DefaultPage(props:DefaultPageProps) {
     const {title, description} = props
-    return <div className={styles.page_container}>
-        <div className={styles.link_to_home}>
+    return <div className={pageStyles.container}>
+        <div className={pageStyles.link_to_home}>
             <Link href="/"><a>&larr; home</a></Link>
         </div>
-        {title && <h1 className={styles.page_title}>{title}</h1>}
-        {description && <div className={styles.page_description}>{description}</div>}
-        <div className={aaa.title}>AAA</div>
+        {title && <h1 className={pageStyles.title}>{title}</h1>}
+        {description && <div className={pageStyles.description}>{description}</div>}
         <div className="content">
             {props.children}
         </div>            
