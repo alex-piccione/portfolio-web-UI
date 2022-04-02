@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { DefaultPage } from "../components/DefaultPage"
-import CompaniesTable from "../components/CompaniesTable"
+import CompaniesTable from "../components/tables/CompaniesTable"
 import { Company } from "../Entities"
 import Spinner from "../components/Spinner"
 import { NextPageContext } from "next"

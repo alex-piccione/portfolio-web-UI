@@ -3,7 +3,6 @@
 //@import "./colors.sass"  // this is still applied and visible because import makes it global visible
 @use "./colors.module.sass" as colors
 @use "./typography.module.sass" as text
-@import "./card.sass"
 @import "./typography.sass"
 
 @mixin button-padding()
@@ -13,19 +12,17 @@
   border-radius: 2px
   border-width: 1px
   border-style: solid
-  border-top-color: $border-light
-  border-left-color: $border-light
-  border-right-color: $border-dark
-  border-bottom-color: $border-dark
+  border-top-color: colors.$border-light
+  border-left-color: colors.$border-light
+  border-right-color: colors.$border-dark
+  border-bottom-color: colors.$border-dark
 
 @mixin button() 
   @include button-padding
   @include button-border
   border-radius: 4px
-
   text-transform: uppercase
   font-weight: bold
-
   color: colors.$primary-text-on-background
   background-color: colors.$primary
 

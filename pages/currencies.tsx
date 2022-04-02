@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import CurrenciesTable from "../components/CurrenciesTable"
+import CurrenciesTable from "../components/tables/CurrenciesTable"
 import { Currency } from "../Entities"
 import { DefaultPage } from "../components/DefaultPage"
 import Spinner from "../components/Spinner"

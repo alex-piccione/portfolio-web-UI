@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { Table } from "react-bootstrap"
-import styles from  "../CSS/styles.module.sass"
-import Alert from "./Alert"
-import { CompanyNameBadge } from "./CompanyBadge"
-import { Balance, Fund } from "../Entities.d"
-import Spinner from "./Spinner"
-import UpdateFundDialog, { UpdateFundDialogProps } from "./dialogs/UpdateFundDialog"
-import TextButton from "./controls/TextButton"
-import { useMountEffect } from "../common/hooks"
-import { Api } from "../api interfaces/Api"
+import styles from  "../../CSS/styles.module.sass"
+import Alert from "../Alert"
+import { CompanyNameBadge } from "../CompanyBadge"
+import { Balance, Fund } from "../../Entities"
+import Spinner from "../Spinner"
+import UpdateFundDialog, { UpdateFundDialogProps } from "../dialogs/UpdateFundDialog"
+import TextButton from "../controls/TextButton"
+import { useBaseCurrency, useMountEffect } from "../../common/hooks"
+import { Api } from "../../api interfaces/Api"
 
 const baseCurrency = "EUR"
 
@@ -24,11 +24,13 @@ const View = (props:TableProps) => {
   const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
     <CompanyNameBadge key={company.id} company={company.name} />
   )  
-
+  
   const lastUpdate = balance && balance.lastUpdate ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."
 
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
   const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
+
+  const baseCurrency = useBaseCurrency()
 
   const openUpdateFundDialog = (fund:Fund|undefined) => {
     setUpdateFundDialogProps(
@@ -58,6 +60,7 @@ const View = (props:TableProps) => {
         <tr>
           <th>Currency</th>
           <th>Quantity</th>
+          <th>Value (in {baseCurrency.currency})</th>
           <th>Companies</th>
           <th></th>
         </tr>
@@ -67,6 +70,7 @@ const View = (props:TableProps) => {
         <tr key={fund.currencyCode}>
           <td>{fund.currencyCode}</td>
           <td>{fund.quantity}</td>
+          <td>n/a</td>
           <td>{renderCompanies(fund.companies)}</td>
           <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
         </tr>
