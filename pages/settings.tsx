@@ -3,9 +3,11 @@ import { DefaultPage } from "../components/DefaultPage"
 import { NextPageContext } from "next"
 import styles from "../CSS/styles.module.sass"
 import { Table } from "react-bootstrap"
+import { useBaseCurrency } from "../common/hooks"
 
 export default function Page(props:NextPageContext) {
   const [error, setError] = useState<string>()
+  const baseCurrency = useBaseCurrency()
 
   const reload = async () => {
 
@@ -19,9 +21,7 @@ export default function Page(props:NextPageContext) {
     title="Settings" 
     description="Settings of the application and of the user browser">  
 
-    <p>
-    There is no content yet.
-    </p>
+    base currency: {baseCurrency.currency}
 
     <Table>
 

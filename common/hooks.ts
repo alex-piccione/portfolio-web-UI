@@ -16,7 +16,7 @@ export const useMountEffect = (handler:EffectCallback) => useEffect(handler, [])
  * hook to get the locale
  * @method locale: get the locale from browser. Default is "it".
  */
- export const useLocale = () => {
+export const useLocale = () => {
 
   const [locale, setLocale] = useState(defaultLocale)
   const [language, setLanguage] = useState("it") 
@@ -37,6 +37,27 @@ export const useMountEffect = (handler:EffectCallback) => useEffect(handler, [])
   }
 }
 
+export const useBaseCurrency = () => {
+  const baseCurrency = "EUR"
+  const validCurrencies = ["EUR", "USD", "GBP"]
+  const [currency, setCurrency] = useState(baseCurrency)
+
+  useEffect(() => {    
+    setCurrency(sessionStorage.getItem("base-currency") || baseCurrency)
+  }, [])
+
+  const setCurrencySecure = (currency:string) => {
+    if(validCurrencies.includes(currency)) {
+      sessionStorage.setItem("base-currency", currency)
+      setCurrency(currency)
+    }
+  }
+
+  return {
+    currency,
+    setCurrency: setCurrencySecure
+  }
+} 
 
 export const useCompanies = (setCompanies:(companies:Company[]) => void, setError:(error:string) => void) => {
 
@@ -52,3 +73,4 @@ export const useCompanies = (setCompanies:(companies:Company[]) => void, setErro
     companies,
   }*/
 }
+
