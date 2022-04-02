@@ -1,5 +1,18 @@
-.text_small 
-  font-size: 80%
+@use "typography.module.sass" as text
+@use "colors.module.sass"
+  
+.text_small
+  @inlude text.small
 
-@mixin small()
-  font-size: 80%
+//code
+//  @inlude text.code()
+
+.fieldLabel
+  @include text.small
+  color: colors.$secondary
+  white-space: nowrap
+  
+
+.fieldValue
+  color: colors.$primary
+  font-weight: bold    
