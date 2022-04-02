@@ -17,19 +17,23 @@ export const useMountEffect = (handler:EffectCallback) => useEffect(handler, [])
  * @method locale: get the locale from browser. Default is "it".
  */
  export const useLocale = () => {
-
+  const [browserLocale, setBrowserLocale] = useState<string|undefined>(undefined)
   const [locale, setLocale] = useState(defaultLocale)
   const [language, setLanguage] = useState("it") 
 
   useEffect(() => {
-    console.log("useLocale::window.navigator.language", window.navigator.language)
-    const locale = getLocale(window.navigator.language) || defaultLocale
+    // DON'T use window.navigator.language outside useEffect (window is not defined)
+    //console.log("useLocale::window.navigator.language", window.navigator.language)
+    const browserLanguage = window.navigator.language
+    setBrowserLocale(browserLanguage)
+    const locale = getLocale(browserLanguage) || defaultLocale
     const language = locale.substring(0, 2)
     setLocale(locale)
     setLanguage(language)
   }, [])
   
   return {
+    browserLocale: browserLocale,
     locale: locale,
     language: language,
     setLocale,
