@@ -4,6 +4,8 @@ import baseLocale from "date-fns/locale/en-US"
 import { useLocale } from "./hooks"
 import locales, { L10N } from "./locales"
 
+// flags: https://flagsworld.org/
+
 const getCulture = (localeCode:string) => {
   if (!(localeCode in locales)) throw new Error(`Locale ${localeCode} not found`)
   const culture:L10N = locales[localeCode]
