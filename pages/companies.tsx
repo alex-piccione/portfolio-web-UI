@@ -10,8 +10,7 @@ import UpdateCurrencyDialog from "../components/dialogs/UpdateCompanyDialog"
 import { Company } from "../Entities"
 import { Api} from "../api interfaces/Api"
 
-import { Styles } from "../components/styles"
-import homeStyles from '../CSS/Home.module.sass'
+import Styles from "../components/styles"
 
 export default function Page(props:NextPageContext) {
   const [companies, setCompanies] = useState<Company[]>()
@@ -35,27 +34,22 @@ export default function Page(props:NextPageContext) {
 
   return <DefaultPage 
     title="Companies" 
-    description="Banks, Exchanges and other similar entities where you can store funds.">
-    
-    <div className={homeStyles.main}>  
-
+    description="Banks, Exchanges and other similar entities where you can store funds.">    
     <Panel fluid>
-    { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
-    <SpinnerContainer isLoading={companies === undefined}>
-      {companies && <CompaniesTable companies={companies} /> }
-      </SpinnerContainer>}
-
-    <TextButton onClick={() => {setUpdateCompanyDialogOpen(true)}}>Add a Company</TextButton>
-
+      { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
+      <SpinnerContainer isLoading={companies === undefined}>
+        {companies && <>
+          <CompaniesTable companies={companies} />
+          <TextButton onClick={() => {setUpdateCompanyDialogOpen(true)}}>Add a Company</TextButton>
+          </>
+        }
+      </SpinnerContainer>}      
     </Panel>
-
-    </div>
     
     <UpdateCurrencyDialog   
       show={updateCompanyDialogOpen}   
       companyToUpdate={undefined}
       onClose={updateCompanyDialogClose}
-    />
-    
+    />    
   </DefaultPage>  
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Table } from "react-bootstrap"
 import Alert from "../Alert"
+import Field from "../Field"
 import { CompanyNameBadge } from "../CompanyBadge"
 import SpinnerContainer from "../../containers/SpinnerContainer"
 import UpdateFundDialog, { UpdateFundDialogProps } from "../dialogs/UpdateFundDialog"
@@ -11,8 +12,8 @@ import { useBaseCurrency } from "../../containers/BaseCurrencyContainer"
 import { Api } from "../../api interfaces/Api"
 import { Balance, Fund } from "../../Entities"
 
-import styles from  "../../CSS/styles.module.sass"
-import { Styles } from "../styles"
+import Styles from "../styles"
+
 
 interface TableProps {
   isLoading:boolean,
@@ -47,8 +48,10 @@ const View = (props:TableProps) => {
   )  
 
   return <>
-    <div className={Styles.section} style={{display: "flex", width: "100%"}}>
-      <div style={{flex: "50%" }}><span className={Styles.text.fieldLabel}>Last update:</span> <span className={styles.fieldValu_e}>{lastUpdate}</span></div>
+    <div className={Styles.section} style={{display: "flex", width: "100%"}}>      
+      <div style={{flex: "50%" }}>
+        <Field  inline singleRow label="Last update: " value={lastUpdate} />
+      </div>
       <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
     </div>
     <SpinnerContainer isLoading={isLoading}>{balance &&
