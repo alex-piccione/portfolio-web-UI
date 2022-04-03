@@ -28,7 +28,6 @@ Then("I should see {string} in the header", (header) => {
 })
 
 Then("I see a table with the following headers:", (data) => {
-  console.log("check")
     cy.wait("@getBalance").then(() => {   
       cy.get("table#balanceTable").as("table").should("exist")
       const replaceCurrency = (str:string) => str.replace("{baseCurrency}", context.baseCurrency)      
