@@ -15,38 +15,29 @@ export default function Home() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <DefaultPage title="Your Portfolio!">
-    <div className={homeStyles.container}>
-
       <main className={homeStyles.main}>
-
         <BalanceTable />
-
-        <div className={homeStyles.grid}>
-          
+        <div className={homeStyles.grid}>          
           <Link href="/currencies">
             <a className={homeStyles.card}> 
               <h2>Currencies &rarr;</h2>
               <p>Fiat and Crypto currencies.</p>
             </a>
           </Link>
-
           <Link href="/companies">
             <a className={homeStyles.card}> 
               <h2>Companies &rarr;</h2>
               <p>Banks, Exchanges and other companies where you can store funds.</p>
             </a>
           </Link>
-
           <Link href="/settings">
             <a className={homeStyles.card}> 
               <h2>Settings &rarr;</h2>
               <p>Application and user settings.</p>
             </a>
           </Link>
-
         </div>
-      </main>
-    </div>
+    </main>
   </DefaultPage>
   </>
 }
