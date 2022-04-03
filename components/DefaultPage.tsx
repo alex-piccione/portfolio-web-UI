@@ -35,18 +35,12 @@ export function DefaultPage(props:DefaultPageProps) {
           </div>
         </main>
 
-        <footer className={pageStyles.footer} style={{display: "_none"}}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Created by{' '}
-          <span className={pageStyles.logo}>
+        <footer className={pageStyles.footer} style={{display: "none"}}>
+          Created by&nbsp;<strong>Alessandro Piccione</strong>
+          {" - "}
+          Running on{' '}<span className={pageStyles.logo}>
             <img src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
-          Alessandro Piccione
-        </a>
       </footer>
     </div>
 }
