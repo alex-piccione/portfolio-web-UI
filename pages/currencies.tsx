@@ -8,6 +8,8 @@ import styles from "../CSS/styles.module.sass"
 import UpdateCurrencyDialog from "../components/dialogs/UpdateCurrencyDialog"
 import TextButton from "../components/controls/TextButton"
 import { Api } from "../api interfaces/Api"
+import Panel from "../components/Panel"
+import SpinnerContainer from "../containers/SpinnerContainer"
 
 export default function Page() {
   const [currencies, setCurrencies] = useState<Currency[]>()
@@ -32,18 +34,21 @@ export default function Page() {
 
   return <DefaultPage 
     title="Currencies"
-    description="Fiat and Crypto currencies.">      
-    <div className={styles.section}>
+    description="Fiat and Crypto currencies.">  
+    <Panel>
       { error ? <div className="error-on-load" onClick={loadCurrencies}>Failed to load currencies.<br/>{error}</div> :
-      currencies ? <CurrenciesTable currencies={currencies} /> : <Spinner/>}
-    </div>
-      
-    <TextButton onClick={() => {setUpdateCurrencyDialogOpen(true)}}>Add a currency</TextButton>
+      <SpinnerContainer isLoading={currencies === undefined}>
+        {currencies && <>
+          <CurrenciesTable currencies={currencies} />
+          <TextButton onClick={() => {setUpdateCurrencyDialogOpen(true)}}>Add a currency</TextButton>
+          </>}
+      </SpinnerContainer>}
+    </Panel>    
+
     <UpdateCurrencyDialog   
       show={updateCurrencyDialogOpen}   
       currencyToUpdate={undefined}
       onClose={updateCurrencyDialogClose}
     />
-
   </DefaultPage> 
 }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "scripts": "echo available scripts: \n dev, build, start, lint, \n test, test:unit, test:ui:run, test:ui:run-feature, test:ui:open",
     "dev": "yarn install && next dev",
     "build": "next build",
     "start": "next start",

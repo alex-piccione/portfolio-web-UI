@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react"
-import { DefaultPage } from "../components/DefaultPage"
-import CompaniesTable from "../components/tables/CompaniesTable"
-import { Company } from "../Entities"
-import Spinner from "../components/Spinner"
 import { NextPageContext } from "next"
-import { Api} from "../api interfaces/Api"
+import { DefaultPage } from "../components/DefaultPage"
+import SpinnerContainer from "../containers/SpinnerContainer"
+import Panel from "../components/Panel"
 import TextButton from "../components/controls/TextButton"
+import CompaniesTable from "../components/tables/CompaniesTable"
 import UpdateCurrencyDialog from "../components/dialogs/UpdateCompanyDialog"
+
+import { Company } from "../Entities"
+import { Api} from "../api interfaces/Api"
+
+import Styles from "../components/styles"
 
 export default function Page(props:NextPageContext) {
   const [companies, setCompanies] = useState<Company[]>()
@@ -30,18 +34,22 @@ export default function Page(props:NextPageContext) {
 
   return <DefaultPage 
     title="Companies" 
-    description="Banks, Exchanges and other similar entities where you can store funds.">
+    description="Banks, Exchanges and other similar entities where you can store funds.">    
+    <Panel fluid>
+      { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
+      <SpinnerContainer isLoading={companies === undefined}>
+        {companies && <>
+          <CompaniesTable companies={companies} />
+          <TextButton onClick={() => {setUpdateCompanyDialogOpen(true)}}>Add a Company</TextButton>
+          </>
+        }
+      </SpinnerContainer>}      
+    </Panel>
     
-    { error ? <div className="error-on-load" onClick={reload}>Failed to load companies.<br/>{error}</div> :
-      companies ? <CompaniesTable companies={companies} /> :
-      <Spinner />}
-
-    <TextButton onClick={() => {setUpdateCompanyDialogOpen(true)}}>Add a Company</TextButton>
     <UpdateCurrencyDialog   
       show={updateCompanyDialogOpen}   
       companyToUpdate={undefined}
       onClose={updateCompanyDialogClose}
-    />
-    
+    />    
   </DefaultPage>  
 }

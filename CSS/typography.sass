@@ -1,20 +1,14 @@
-//@use "typography.module.sass" as text
+@use "typography.module.sass" as text
 @use "colors.module.sass"
   
 @mixin small
   font-size: 80%
 
 .text_small
-  @inlude small
+  @inlude text.small
 
-.fieldLabel
-  @include small
-  color: colors.$secondary
-  white-space: nowrap  
-
-.fieldValue
-  color: colors.$primary
-  font-weight: bold    
+.align_right
+  @inlude text.alignRight
 
 .code 
   background: colors.$background

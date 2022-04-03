@@ -22,9 +22,11 @@ const updateFund = async (update:FundUpdate) => {
   return await axios.post(`/api/balance/update-fund`, update)
 }
 
-const container = React.createContext({
+const BalanceContainer = React.createContext({
   //balance: Balance
   updateFund: (update:FundUpdate) => {} 
 })
 
-export default container
+// not used
+//export default BalanceContainer
+export {}

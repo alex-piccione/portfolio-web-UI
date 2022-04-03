@@ -1,3 +1,20 @@
+@use "colors.module.sass"
+  
 // this one can be used as: @include text.small
 @mixin small
   font-size: 80%
+
+@mixin alignRight
+  text-align: right
+
+.alignRight
+  @include alignRight
+
+.fieldLabel
+  @include small
+  color: colors.$secondary
+  white-space: nowrap  
+
+.fieldValue
+  color: colors.$primary
+  font-weight: bold  
