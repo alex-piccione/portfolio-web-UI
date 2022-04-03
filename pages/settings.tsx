@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { NextPageContext } from "next"
 import { DefaultPage } from "../components/DefaultPage"
-import styles from "../CSS/styles.module.sass"
-import { Col, Container, Row, Table } from "react-bootstrap"
+import { Col, Container, Row } from "react-bootstrap"
 import { useLocale } from "../common/hooks"
-import { useBaseCurrency } from "../common/hooks"
 import Field from "../components/Field"
+import { useBaseCurrency } from "../containers/BaseCurrencyContainer"
 
 export default function Page(props:NextPageContext) {
-  const [error, setError] = useState<string>()
-  const [browserLanguage] = useState<string>("unknown")
   const baseCurrency = useBaseCurrency()
   const locale = useLocale()
 
@@ -19,8 +16,6 @@ export default function Page(props:NextPageContext) {
 
   useEffect(() => {
     reload()
-    
-    //localStorage.setItem("language", browserLanguage)
   }, [])
 
   return <DefaultPage

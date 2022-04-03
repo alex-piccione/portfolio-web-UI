@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
     <BaseCurrencyProvider>
       <style global jsx>{`
         html, body {
+          min-height: 100vh;
           color: ${global.html_color};
           font-size: ${global.html_font_size};
         }`}
