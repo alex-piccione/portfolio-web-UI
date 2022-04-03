@@ -1,9 +1,15 @@
 import { FC } from "react"
+import { Container } from "react-bootstrap"
 import styles from "../CSS/styles.module.sass"
 
-const Panel:FC = props => {
+interface Props {
+  fluid?: boolean
+}
 
-  return <div className={styles.panel}>{props.children}</div>
+const Panel:FC<Props> = props => {
+  return <Container fluid={props.fluid}>
+    <div className={styles.panel}>{props.children}</div>
+  </Container>
 }
 
 export default Panel

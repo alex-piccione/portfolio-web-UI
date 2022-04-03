@@ -1,9 +1,10 @@
 import React from "react"
 import Link from "next/link"
-import styles from "../CSS/styles.module.sass"
-import pageStyles from "../CSS/page.module.sass"
 import { useRouter } from "next/router"
 import BaseCurrencySelector from "./BaseCurrencySelector"
+import styles from "../CSS/styles.module.sass"
+import pageStyles from "../CSS/page.module.sass"
+import { Styles } from "../components/styles"
 
 type DefaultPageProps = {
     title?:string | undefined,
@@ -29,9 +30,9 @@ export function DefaultPage(props:DefaultPageProps) {
         {description && <div className={pageStyles.description}>{description}</div>}
 
         <main>
-            <div className="content">
-                {props.children}
-            </div>            
+          <div className={pageStyles.content}>  
+            {props.children}        
+          </div>
         </main>
 
         <footer className={styles.footer} style={{display: "none"}}>
