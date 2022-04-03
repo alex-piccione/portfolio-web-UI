@@ -3,7 +3,8 @@ Feature: Portfolio page
   and see the current balance
 
   Background: 
-    Given I visit the "/" page
+    Given baseCurrency is "EUR"
+    And I visit the "/" page
  
   Scenario: I see the page header
     Then I should see "Your Portfolio!" in the header
@@ -13,4 +14,5 @@ Feature: Portfolio page
       | Header    |
       | Currency  |
       | Quantity  |
+      | Value (in {baseCurrency})  |
       | Companies |
