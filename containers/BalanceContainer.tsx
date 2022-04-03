@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { Children } from "react"
+import React from "react"
 import { Balance } from "../Entities"
 
 export interface FundUpdate {
@@ -26,16 +26,5 @@ const container = React.createContext({
   //balance: Balance
   updateFund: (update:FundUpdate) => {} 
 })
-
-/*
-const container = (props) => {
-
-  const name = "aaa"
-
-  return <>
-  {Children({name})}
-  </>
-} */
-
 
 export default container
