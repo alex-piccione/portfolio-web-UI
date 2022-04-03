@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Table } from "react-bootstrap"
 import styles from  "../../CSS/styles.module.sass"
 import Alert from "../Alert"
@@ -10,6 +10,8 @@ import TextButton from "../controls/TextButton"
 import { useMountEffect } from "../../common/hooks"
 import { Api } from "../../api interfaces/Api"
 import { useBaseCurrency } from "../../containers/BaseCurrencyContainer"
+import PageLoader from "next/dist/client/page-loader"
+import SpinnerContainer from "../../containers/SpinnerContainer"
 
 const baseCurrency = "EUR"
 
@@ -21,17 +23,13 @@ interface TableProps {
 }
 
 const View = (props:TableProps) => {
-  const {isLoading, error, balance, reload} = props
-  const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
-    <CompanyNameBadge key={company.id} company={company.name} />
-  )  
-  
-  const lastUpdate = balance && balance.lastUpdate ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."
-
-  const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
-  const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false)
-
+  const {isLoading, error, balance,  reload} = props  
   const baseCurrency = useBaseCurrency()
+  const lastUpdate = balance && balance.lastUpdate ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."  
+  const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
+  const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false) 
+
+  useEffect(reload, [baseCurrency.currency])
 
   const openUpdateFundDialog = (fund:Fund|undefined) => {
     setUpdateFundDialogProps(
@@ -48,38 +46,44 @@ const View = (props:TableProps) => {
     setUpdateFundDialogIsOpen(true)
   }
 
-  // TODO: the id is still needed for tests?
-  return isLoading ? <Spinner id="balanceTable-spinner" /> :
-    error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
+  const renderCompanies = (companies:{id:string, name:string}[]) => companies.map(company => 
+    <CompanyNameBadge key={company.id} company={company.name} />
+  )  
+
+  return <>
+    {error ? <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, reload</div></> :
     <>
-    <div className={styles.section} style={{display: "flex", width: "100%"}}>
-      <div style={{flex: "50%" }}><span className={styles.fieldLabel}>Last update:</span> <span className={styles.fieldValue}>{lastUpdate}</span></div>
-      <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
-    </div>
-    <Table striped bordered id="balanceTable">
-      <thead>
-        <tr>
-          <th>Currency</th>
-          <th>Quantity</th>
-          <th>Value (in {baseCurrency.currency})</th>
-          <th>Companies</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      {balance && balance.fundsByCurrency.map(fund => 
-        <tr key={fund.currencyCode}>
-          <td>{fund.currencyCode}</td>
-          <td>{fund.quantity}</td>
-          <td>n/a</td>
-          <td>{renderCompanies(fund.companies)}</td>
-          <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
-        </tr>
-        )}
-      </tbody>
-    </Table> 
-    { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
-    </>
+      <div className={styles.section} style={{display: "flex", width: "100%"}}>
+        <div style={{flex: "50%" }}><span className={styles.fieldLabel}>Last update:</span> <span className={styles.fieldValue}>{lastUpdate}</span></div>
+        <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
+      </div>
+      <SpinnerContainer isLoading={isLoading}>
+      <Table striped bordered id="balanceTable">
+        <thead>
+          <tr>
+            <th>Currency</th>
+            <th>Quantity</th>
+            <th>Value (in {baseCurrency.currency})</th>
+            <th>Companies</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {balance && balance.fundsByCurrency.map(fund => 
+          <tr key={fund.currencyCode}>
+            <td>{fund.currencyCode}</td>
+            <td>{fund.quantity}</td>
+            <td>n/a</td>
+            <td>{renderCompanies(fund.companies)}</td>
+            <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
+          </tr>
+          )}
+        </tbody>
+      </Table> 
+      </SpinnerContainer>
+      { updateFundDialogIsOpen && updateFundDialogProps && <UpdateFundDialog {...updateFundDialogProps} /> } 
+    </>}
+  </>
 }
 
 const BalanceTable = () => {
@@ -100,6 +104,10 @@ const BalanceTable = () => {
   }
 
   useMountEffect(() => { loadBalance() })
+
+  /*useEffect(() => {
+    reload()
+  }, [baseCurrency.currency])*/
  
   return <View isLoading={loading} error={error} balance={balance} reload={reload} />
 }
