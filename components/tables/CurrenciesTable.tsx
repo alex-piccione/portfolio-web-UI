@@ -1,6 +1,6 @@
 import React from "react"
 import { Table } from "react-bootstrap"
-import { Currency } from "../Entities"
+import { Currency } from "../../Entities"
 
 type Props = {
   currencies: Currency[]

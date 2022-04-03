@@ -1,3 +1,4 @@
+import { defaultCurrency as baseCurrency } from "../../../../containers/BaseCurrencyContainer"
 import { Balance/*, FundAtDateSaveRequest*/ } from "../../../../Entities"
 
 const balance:Balance = {
@@ -20,26 +21,20 @@ export default describe("BalanceTable", () => {
 
   beforeEach(() => {
     //https://docs.cypress.io/api/commands/intercept#Syntax
-    cy.intercept("GET", "/api/balance?base-currency=EUR", 
-      {
-        statusCode: 200,
-        body:balance
-      }
-    ).as("getBalance")
+    cy.intercept("GET", `/api/balance?base-currency=${baseCurrency}`, {      
+      statusCode: 200,
+      body:balance
+    }).as("getBalance")
 
-    cy.intercept("GET", "/api/currencies", 
-    {
+    cy.intercept("GET", "/api/currencies", {
       statusCode: 200,
       body:currencies
-    }
-    )//.as("getCurrencies")
+    })//.as("getCurrencies")
 
-    cy.intercept("GET", "/api/companies", 
-    {
+    cy.intercept("GET", "/api/companies", {
       statusCode: 200,
       body:companies
-    }
-    )//.as("getCurrencies")
+    })//.as("getCurrencies")
 
     cy.visit("/")
   })
@@ -48,6 +43,7 @@ export default describe("BalanceTable", () => {
     cy.get("table > thead > tr > th")      
       .first().should("have.text", "Currency")
       .next().should("have.text", "Quantity")
+      .next().should("have.text", `Value (in ${baseCurrency})`)
       .next().should("have.text", "Companies") 
   })   
 
