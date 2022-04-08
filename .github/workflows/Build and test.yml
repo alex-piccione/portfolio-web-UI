@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
       - name: Install packages
         run: yarn install
@@ -69,7 +69,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+      - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
       - name: Install packages
@@ -92,12 +92,11 @@ jobs:
   build_docker_image:
     name: Build Docker image
     if: >-
-      (github.event.action == 'push' && github.head_ref == 'main') 
-      || 
-      (
+      github.event.action == 'push' && github.head_ref == 'main'
+      ||       
       github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
       && contains( github.event.pull_request.labels.*.name, 'build:success')
-      )
+      
     runs-on: ubuntu-latest  
     steps:
       # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
@@ -107,7 +106,7 @@ jobs:
         with:
           labels: docker:image
       - name: Checkout
-        uses: actions/checkout@v2      
+        uses: actions/checkout@v3
       - name: Build Docker image        
         run: |
           echo build the image using the Dockerfile in devops folder
