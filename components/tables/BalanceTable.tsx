@@ -13,6 +13,7 @@ import { Api } from "../../api interfaces/Api"
 import { Balance, Fund } from "../../Entities"
 
 import Styles from "../styles"
+import Icon from "../Icon"
 
 
 interface TableProps {
@@ -27,6 +28,12 @@ const View = (props:TableProps) => {
   const lastUpdate = balance && balance.lastUpdate ? (new Date(balance.lastUpdate.toString())).toLocaleDateString() : "..."  
   const [updateFundDialogProps, setUpdateFundDialogProps] = useState<UpdateFundDialogProps>()
   const [updateFundDialogIsOpen, setUpdateFundDialogIsOpen] = useState(false) 
+  const [expandedFunds, setExpandedFunds] = useState<string[]>([])
+
+  const toggleExpandedFund = (currencyCode:string) =>     
+    (expandedFunds.includes(currencyCode)) ?    
+    setExpandedFunds(expandedFunds.filter(f => f !== currencyCode)) :
+    setExpandedFunds([...expandedFunds, currencyCode])  
 
   const openUpdateFundDialog = (fund:Fund|undefined) => {
     setUpdateFundDialogProps(
@@ -57,7 +64,8 @@ const View = (props:TableProps) => {
     <SpinnerContainer isLoading={isLoading}>{balance &&
     <Table id="balanceTable">
       <thead>
-        <tr>
+        <tr >
+          <th></th>
           <th>Currency</th>
           <th className={Styles.text.alignRight}>Quantity</th>
           <th className={Styles.text.alignRight}>Value (in {baseCurrency})</th>
@@ -67,13 +75,21 @@ const View = (props:TableProps) => {
       </thead>
       <tbody>
       {balance.fundsByCurrency.map(fund => 
-        <tr key={fund.currencyCode}>
-          <td>{fund.currencyCode}</td>
-          <td className={Styles.text.alignRight}>{fund.quantity}</td>
-          <td className={Styles.text.alignRight}>n/a</td>
-          <td>{renderCompanies(fund.companies)}</td>
-          <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
-        </tr>
+        <React.Fragment key={fund.currencyCode}>
+          <tr onClick={() => toggleExpandedFund(fund.currencyCode)} style={{cursor: "pointer"}}>
+            <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" /> : <Icon icon="expand" /> }</td>
+            <td>{fund.currencyCode}</td>
+            <td className={Styles.text.alignRight}>{fund.quantity}</td>
+            <td className={Styles.text.alignRight}>n/a</td>
+            <td>{renderCompanies(fund.companies)}</td>
+            <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
+          </tr>
+          <tr className={expandedFunds.includes(fund.currencyCode) ? Styles.table.row_expanded : Styles.table.row_collapsed} >
+            <td colSpan={6}>
+              {fund.currencyCode}
+            </td>
+          </tr>
+        </React.Fragment>
         )}
       </tbody>
     </Table> 

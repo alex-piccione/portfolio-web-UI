@@ -14,6 +14,10 @@ const Styles = {
     alignRight: text.alignRight,
     fieldLabel: text.fieldLabel,
     fieldValue: text.fieldValue,
+  },
+  table: {
+    row_expanded: styles.row_expanded,
+    row_collapsed: styles.row_collapsed,
   }
 }
 

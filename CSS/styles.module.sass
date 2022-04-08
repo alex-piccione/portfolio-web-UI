@@ -145,3 +145,37 @@
     opacity: 0
   100%
     opacity: 1 
+
+.row_expanded
+  display: table-row
+  animation: expand-row 0.5s ease forwards
+
+.row_collapsed
+  display: none
+  animation: collapse-row 0.5s ease forwards
+
+@keyframes expand-row
+  0%
+    transform: height(0)
+    opacity: 0
+  100%
+    transform: height(100%)
+    opacity: 1
+
+@keyframes collapse-row
+  0%
+    transform: height(100%)
+    opacity: 1
+  100%
+    transform: height(0)
+    opacity: 0 
+
+.icon_expand
+  width: 1rem
+  height: 1rem
+  fill: colors.$primary
+  transition: fill .3s ease-in-out
+  cursor: pointer
+
+  &:hover
+    fill: colors.$primary-hover

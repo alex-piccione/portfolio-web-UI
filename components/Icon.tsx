@@ -1,6 +1,6 @@
 import { Component, createElement } from "react"
 import { FiPlus, FiPlusCircle, FiCode, FiTrendingUp } from "react-icons/fi"
-import { MdAdd, MdAccountBalance, MdLockClock, MdTimeline, MdSavings } from "react-icons/md"
+import { MdAdd, MdAccountBalance, MdLockClock, MdTimeline, MdSavings, MdExpandMore, MdExpandLess } from "react-icons/md"
 //I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
 //``import { IconName } from "react-icons/fi"``
 // Icons library: https://feathericons.com
@@ -20,7 +20,9 @@ const iconsMap = {
   //"delete-record": //"plus-circle": FiPlusCircle""
   "bank": MdSavings, // MdAccountBalance,
   "exchange": MdTimeline, // FiCode,
-  "stacking": MdLockClock // FiTrendingUp  // FiRepeat
+  "stacking": MdLockClock, // FiTrendingUp  // FiRepeat
+  "expand": MdExpandMore,
+  "collapse": MdExpandLess,
 }
 
 export type IconType = 
@@ -28,7 +30,9 @@ export type IconType =
   //"delte-record" |
   "bank" | 
   "exchange" | 
-  "stacking"
+  "stacking" | 
+  "expand" | 
+  "collapse"
 
 //iconsMap[props.icon]()
 
