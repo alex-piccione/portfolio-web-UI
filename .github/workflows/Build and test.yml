@@ -101,6 +101,7 @@ jobs:
     steps:
       # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
       - name: remove label
+        if: github.event.action == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'docker:image')
         uses: actions-ecosystem/action-remove-labels@v1
         #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
         with:
