@@ -38,6 +38,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
       - name: Install packages
         run: yarn install
       - name: Run Jest
@@ -45,12 +46,14 @@ jobs:
 
   tests_cypress:
     name: Run Cypress Tests
-    if: github.event.action != 'labeled'
+    #if: github.event.action != 'labeled'
+    if: github.event.action == 'pull_request'
     #needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
       - name: Install packages
         run: yarn install
       - name: Run Cypress
