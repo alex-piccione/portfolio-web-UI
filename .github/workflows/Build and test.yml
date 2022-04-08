@@ -92,7 +92,7 @@ jobs:
   build_docker_image:
     name: Build Docker image
     if: >-
-      github.event.action == 'push' && github.head_ref == 'main'
+      github.event.action == 'push' && github.ref == 'refs/heads/main'
       ||       
       github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
       && contains( github.event.pull_request.labels.*.name, 'build:success')
