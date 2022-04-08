@@ -55,12 +55,12 @@ const View = (props:TableProps) => {
       <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={()=> openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
     </div>
     <SpinnerContainer isLoading={isLoading}>{balance &&
-    <Table striped bordered id="balanceTable">
+    <Table id="balanceTable">
       <thead>
         <tr>
           <th>Currency</th>
-          <th>Quantity</th>
-          <th>Value (in {baseCurrency})</th>
+          <th className={Styles.text.alignRight}>Quantity</th>
+          <th className={Styles.text.alignRight}>Value (in {baseCurrency})</th>
           <th>Companies</th>
           <th></th>
         </tr>

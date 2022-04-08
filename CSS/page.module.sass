@@ -2,12 +2,13 @@
 @use "./typography.module.sass" as text
 
 .container
-  background: linear-gradient(to bottom, #fdfbff, #dbe2ff, #fff)
+  background: linear-gradient(to bottom, #fdfbff, colors.lighten(colors.$primary), colors.$background) //#dbe2ff
   padding: .5rem
   display: flex
   flex-direction: column
-  justify-content: center
+  //justify-content: center
   align-items: center
+  height: 100vh
 
 .title
   margin-bottom: 1rem

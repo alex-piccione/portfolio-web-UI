@@ -12,7 +12,7 @@ class CompaniesTable extends React.Component<Props> {
   render() {
     const {companies} = this.props
 
-    return <Table striped bordered>
+    return <Table striped>
       <thead>
         <tr>
             <th>Name</th>
