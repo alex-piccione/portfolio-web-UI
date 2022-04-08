@@ -1,3 +1,9 @@
+# 
+# - uses: actions/setup-node@v3 https://github.com/actions/setup-node
+# Documentation says it will cache Yarn dependencies
+# Before adding it the build was 3'20"
+# After adding it the build is the same
+
 name: Build and test
 on:  
   push:
@@ -11,9 +17,17 @@ env:
   REPO: portfolio
 
 jobs:
+  info:
+    name: Info
+    runs-on: ubuntu-latest
+    steps:
+      - name: action
+        run: echo github.event.action - ${github.event.action}
+
   build:
     name: "Build"
-    if: github.event.action != 'labeled'
+    #if: github.event.action != 'labeled'
+    if: github.event.action == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: remove labels
@@ -46,8 +60,7 @@ jobs:
 
   tests_cypress:
     name: Run Cypress Tests
-    #if: github.event.action != 'labeled'
-    if: github.event.action == 'pull_request'
+    if: github.event.action != 'labeled'
     #needs: [build]
     runs-on: ubuntu-latest
     steps:
@@ -63,7 +76,8 @@ jobs:
   # We mark the build Success only when build and all the tests passes
   label_success:
     runs-on: ubuntu-latest
-    if: github.event.action != 'labeled'
+    #if: github.event.action != 'labeled'
+    if: github.event.action == 'pull_request'
     needs: [build, tests_jest, tests_cypress]
     steps:
       - uses: actions-ecosystem/action-add-labels@v1
