@@ -68,6 +68,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with:
+          cache: 'yarn'
       - name: Install packages
         run: yarn install
       - name: Run Cypress
