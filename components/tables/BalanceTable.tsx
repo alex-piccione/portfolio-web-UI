@@ -14,6 +14,7 @@ import { Balance, Fund } from "../../Entities"
 
 import Styles from "../styles"
 import Icon from "../Icon"
+import FundTableRow from "./FundTableRow"
 
 
 interface TableProps {
@@ -86,7 +87,7 @@ const View = (props:TableProps) => {
           </tr>
           <tr className={expandedFunds.includes(fund.currencyCode) ? Styles.table.row_expanded : Styles.table.row_collapsed} >
             <td colSpan={6}>
-              {fund.currencyCode}
+              {expandedFunds.includes(fund.currencyCode) && <FundTableRow currencyCode={fund.currencyCode} />}
             </td>
           </tr>
         </React.Fragment>
