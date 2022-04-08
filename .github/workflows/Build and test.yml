@@ -18,7 +18,7 @@ env:
 
 jobs:
   info:
-    name: Info
+    name: Info for ${{ github.event.action }}
     runs-on: ubuntu-latest
     steps:
       - name: action
