@@ -64,25 +64,25 @@ const View = (props:TableProps) => {
     <SpinnerContainer isLoading={isLoading}>{balance &&
     <Table id="balanceTable">
       <thead>
-        <tr >
-          <th></th>
+        <tr>          
           <th>Currency</th>
           <th className={Styles.text.alignRight}>Quantity</th>
           <th className={Styles.text.alignRight}>Value (in {baseCurrency})</th>
           <th>Companies</th>
+          <th></th>
           <th></th>
         </tr>
       </thead>
       <tbody>
       {balance.fundsByCurrency.map(fund => 
         <React.Fragment key={fund.currencyCode}>
-          <tr onClick={() => toggleExpandedFund(fund.currencyCode)} style={{cursor: "pointer"}}>
-            <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" /> : <Icon icon="expand" /> }</td>
+          <tr onClick={() => toggleExpandedFund(fund.currencyCode)} style={{cursor: "pointer"}}>            
             <td>{fund.currencyCode}</td>
             <td className={Styles.text.alignRight}>{fund.quantity}</td>
             <td className={Styles.text.alignRight}>n/a</td>
             <td>{renderCompanies(fund.companies)}</td>
             <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
+            <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" /> : <Icon icon="expand" /> }</td>
           </tr>
           <tr className={expandedFunds.includes(fund.currencyCode) ? Styles.table.row_expanded : Styles.table.row_collapsed} >
             <td colSpan={6}>
