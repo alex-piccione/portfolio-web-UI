@@ -1,5 +1,5 @@
 import CurrenciesProvider from "./server providers/CurrencyServerProvider"
-import helper from "./helper"
+import helper from "./api helper"
 import { NextApiRequest, NextApiResponse } from "next"
 
 const currencyProvider = new CurrenciesProvider()

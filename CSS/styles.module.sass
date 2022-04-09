@@ -148,11 +148,11 @@
 
 .row_expanded
   display: table-row
-  animation: expand-row 0.5s ease forwards
+  animation: expand-row 1.5s linear forwards
 
 .row_collapsed
   display: none
-  animation: collapse-row 0.5s ease forwards
+  animation: collapse-row 0.5s linear forwards
 
 @keyframes expand-row
   0%
@@ -179,3 +179,25 @@
 
   &:hover
     fill: colors.$primary-hover
+
+.fundRecord_td
+  max-width: 100px // this thing is impeeding the td to grow horizontally indefinitely
+  overflow-x: auto  
+  
+.fundRecord_row  
+  //border: solid 1px red  // for debugging
+  display: grid
+  grid-auto-flow: column
+  grid-auto-columns: min-content  
+  //display: flex
+  //flex-direction: row
+  //flex-wrap: nowrap
+
+.fundRecord_column 
+  //border: solid 2px colors.$border-light // for debugging
+  width: 150px
+  margin: 0 .1rem
+  padding: .2rem   
+  border: solid 2px colors.$border-light
+  //background-color: colors.$background-shadow
+  //border: solid 2px colors.$border-light

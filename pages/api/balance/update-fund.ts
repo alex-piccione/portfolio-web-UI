@@ -1,5 +1,5 @@
 import BalanceProvider from "../server providers/BalanceServerProvider"
-import helper from "../helper"
+import helper from "../api helper"
 import { FundUpdate } from "../../../Entities"
 import { NextApiRequest, NextApiResponse } from "next"
 

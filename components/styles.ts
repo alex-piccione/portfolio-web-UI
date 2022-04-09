@@ -18,6 +18,12 @@ const Styles = {
   table: {
     row_expanded: styles.row_expanded,
     row_collapsed: styles.row_collapsed,
+  },
+  fundRecord: {
+    td: styles.fundRecord_td,
+    container: styles.fundRecord_container,
+    row: styles.fundRecord_row,
+    column: styles.fundRecord_column,
   }
 }
 

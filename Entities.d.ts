@@ -12,7 +12,6 @@ export interface Currency {
   name: string
 }
 
-
 export interface Fund {
   currencyCode:string, quantity:number, companies:{ id:string, name:string }[]
 }
@@ -28,4 +27,13 @@ export type FundUpdate = {
   currencyCode: string,
   quantity: number,
   companyId: string
+}
+
+export interface FundRecord {
+  id: string,
+  date: Date,
+  currencyCode: string,
+  companyId: string,
+  quantity: number,
+  updatedOn: Date
 }

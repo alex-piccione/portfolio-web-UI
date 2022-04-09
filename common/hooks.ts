@@ -1,6 +1,7 @@
 import axios from "axios"
 import { EffectCallback, useEffect, useState } from "react"
 import { Company } from "../Entities"
+import { getUserLocale } from "./locale"
 import { getLocale } from "./utils"
 
 const defaultLocale = "it"
@@ -10,6 +11,7 @@ const defaultLocale = "it"
  * hook to run a function when component mount
  */
 export const useMountEffect = (handler:EffectCallback) => useEffect(handler, [])
+
 
 /**
  * useLocale
@@ -37,7 +39,7 @@ export const useLocale = () => {
     locale: locale,
     language: language,
     setLocale,
-    setLanguage,
+    setLanguage 
   }
 }
 

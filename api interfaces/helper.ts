@@ -1,5 +1,5 @@
 import axios from "axios";
-import helper from "../pages/api/helper"
+import helper from "../pages/api/api helper"
 
 export interface ApiResult<T> {
   isSuccess: boolean;

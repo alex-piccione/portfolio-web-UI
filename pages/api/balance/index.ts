@@ -1,5 +1,5 @@
 import BalanceServerProvider from "../server providers/BalanceServerProvider"
-import helper from "../helper"
+import helper from "../api helper"
 import { NextApiRequest, NextApiResponse } from "next/types"
 
 const balanceProvider = new BalanceServerProvider()
