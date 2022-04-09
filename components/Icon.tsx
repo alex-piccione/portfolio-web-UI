@@ -1,6 +1,7 @@
 import { Component, createElement } from "react"
 import { FiPlus, FiPlusCircle, FiCode, FiTrendingUp } from "react-icons/fi"
 import { MdAdd, MdAccountBalance, MdLockClock, MdTimeline, MdSavings, MdExpandMore, MdExpandLess } from "react-icons/md"
+import Styles, { Color } from "./styles"
 //I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/react-icons/icons?name=fi
 //``import { IconName } from "react-icons/fi"``
 // Icons library: https://feathericons.com
@@ -36,9 +37,10 @@ export type IconType =
 
 //iconsMap[props.icon]()
 
-const Icon = (props:{icon:IconType, clickable?:boolean}) => {
+const Icon = (props:{icon:IconType, color?:Color, clickable?:boolean}) => {
   const element = createElement(iconsMap[props.icon], {})
-  return <> {props.clickable ? <span style={{cursor: "pointer"}}>{element}</span> : element}</>
+  const colorStyle = props.color === undefined ? "inherit" : Styles.colors[props.color]
+  return <> {props.clickable ? <span style={{cursor: "pointer", color: `${colorStyle}`}} >{element}</span> : element}</>
 }
   
   //props.clickable ? <span style={{cursor: "pointer"}}>{iconsMap[props.icon]}</span> : iconsMap[props.icon]

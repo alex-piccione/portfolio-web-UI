@@ -1,12 +1,12 @@
 import { format } from "date-fns/fp"
 import { FC, useState } from "react"
 import { Api } from "../../api interfaces/Api"
-import formatter from "../../common/formatter"
 import { useMountEffect } from "../../common/hooks"
 import { getUserCulture } from "../../common/locale"
 import { showError, useNotifications } from "../../containers/Notifications"
 import SpinnerContainer from "../../containers/SpinnerContainer"
 import { FundRecord } from "../../Entities"
+import CompanyBadge, { CompanyNameBadge } from "../CompanyBadge"
 import Styles from "../styles"
 
 interface Props {
@@ -28,37 +28,23 @@ const FundTableRow:FC<Props> = props => {
 
   useMountEffect(() => {loadFund()})
 
-  return <SpinnerContainer isLoading={isLoading} occupyMinSpace={false}>
+  return <SpinnerContainer isLoading={isLoading} size="small" occupyMinSpace={false}>
     <div className={Styles.fundRecord.row}>
       {funds && funds.map(fund => <FundRecordValue key={fund.id} fund={fund} />) }
     </div>
   </SpinnerContainer> 
 }
 
-
 const FundRecordValue:FC<{fund:FundRecord}> = props => {
   const {fund} = props
-
   const userCulture = getUserCulture()
-  const pattern = userCulture.ShortDatePattern
-    //.replace("yyyy", "yy").replace("yy", "")
-    //.replace("MMM", "M").replace("MM", "M").replace("dd", "d")
-
   
-  const monthDay = (date:Date) => {     
-
-    return format(userCulture.ShortDatePattern, new Date(date))
-
-    //new Date(date).toS
-    //return pattern
-    //  .replace("M", (new Date(date).getMonth()+1).toString())
-    //  .replace("d", new Date(date).getDate().toString())
-  }
+  const monthDay = (date:Date) => format(userCulture.ShortDatePattern, new Date(date))
 
   return <div className={Styles.fundRecord.column}>
     <div>{monthDay(fund.date)}</div>
-    <div>Company: {fund.companyId}</div>
-    <div>Quantity: {fund.quantity}</div>
+    <div><CompanyBadge company={fund.company} /></div>
+    <div>{fund.quantity} <span className={Styles.text.small}>{fund.currencyCode}</span></div>
   </div>
 }
 

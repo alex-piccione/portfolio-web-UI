@@ -84,7 +84,7 @@ const View = (props:TableProps) => {
             <td className={Styles.text.alignRight}>n/a</td>
             <td>{renderCompanies(fund.companies)}</td>
             <td><TextButton onClick={() => openUpdateFundDialog(fund) } >Update</TextButton></td>
-            <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" /> : <Icon icon="expand" /> }</td>
+            <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" color="primary" /> : <Icon icon="expand" /> }</td>
           </tr>
           <tr className={expandedFunds.includes(fund.currencyCode) ? Styles.table.row_expanded : Styles.table.row_collapsed} >
             <td colSpan={6} className={Styles.fundRecord.td}>

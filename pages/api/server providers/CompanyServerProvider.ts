@@ -18,7 +18,7 @@ const headers = {Host: host}
 const CompanyServerProvider = {  
   getCompanies: async () =>  {
     return axios.get(`${baseUrl}/company`, {headers:headers})
-    .then(result =>  parser.parseCompanies(result.data))
+    .then(result => parser.parseCompanies(result.data))
     .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
   },
   createCompany: async (company:Company) =>  {
@@ -26,6 +26,13 @@ const CompanyServerProvider = {
     .then(result => company) // parser.parseCompanies(result.data))
     .catch(error => {throw Error(`Failed to call API Gateway. ${error}`)});     
   },
+  getUnknownCompany: (id:string):Company => {
+    return {
+      id: id,
+      name: "Unknown" + (id||"").substring(0,8),
+      types: [],
+    }
+  }
 }
 
 const parser = {

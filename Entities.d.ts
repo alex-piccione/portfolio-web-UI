@@ -33,7 +33,7 @@ export interface FundRecord {
   id: string,
   date: Date,
   currencyCode: string,
-  companyId: string,
+  company: Company,
   quantity: number,
   updatedOn: Date
 }

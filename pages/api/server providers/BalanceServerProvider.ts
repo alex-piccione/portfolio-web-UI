@@ -4,6 +4,7 @@ import CompanyProvider from "./CompanyServerProvider";
 
 class BalanceServerProvider extends BaseServerProvider {  
   async getBalance(baseCurrency:string) {
+    // TODO: do not retrieve this data at each call
     const companies = await CompanyProvider.getCompanies();
     return super.get(`balance?base-currency=${baseCurrency}`, (data) => parser.parseBalance(data, companies)) 
   }
