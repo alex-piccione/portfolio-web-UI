@@ -63,7 +63,6 @@ const View = (props:TableProps) => {
       <div style={{flex: "50%", textAlign: "right" }}><TextButton onClick={() => openUpdateFundDialog(undefined)}>Add Fund</TextButton></div>
     </div>
     <SpinnerContainer isLoading={isLoading}>{balance &&
-    /* tablelayout: fixed prevent the table rows to expand when the content is larger */
     <Table id="balanceTable" className={Styles.fundRecord.table}>
       <thead>
         <tr>          
@@ -87,7 +86,7 @@ const View = (props:TableProps) => {
             <td>{expandedFunds.includes(fund.currencyCode) ? <Icon icon="collapse" color="primary" /> : <Icon icon="expand" /> }</td>
           </tr>
           <tr className={expandedFunds.includes(fund.currencyCode) ? Styles.table.row_expanded : Styles.table.row_collapsed} >
-            <td colSpan={6} className={Styles.fundRecord.td}>
+            <td colSpan={6} className={Styles.fundRecord.expandable_td}>
               {expandedFunds.includes(fund.currencyCode) && <FundTableRow currencyCode={fund.currencyCode} />}
             </td>
           </tr>

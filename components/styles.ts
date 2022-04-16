@@ -23,14 +23,11 @@ const Styles = {
   },
   fundRecord: {
     table: styles.fundRecord_table,
-    td: styles.fundRecord_td,
-    container: styles.fundRecord_container,
-    row: styles.fundRecord_row,
-    column: styles.fundRecord_column,
-    date: styles.fundRecord_date,
-    company: styles.fundRecord_company,
+    expandable_td: styles.fundRecord_expandable_td,
     
+    dates_container: styles.fundRecord_dates_container,
     grid: styles.fundRecord_grid,
+    date: styles.fundRecord_date, 
     companies: styles.fundRecord_companies,
     total: styles.fundRecord_total,
   }
