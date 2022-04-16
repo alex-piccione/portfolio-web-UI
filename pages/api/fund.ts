@@ -8,8 +8,8 @@ const fundProvider = new FundServerProvider()
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
   if (req.method == "GET") {
     const currency = helper.getQuerystringValue(req, "currency")
-    const limit = Number(helper.getQuerystringValue(req, "limit"))
-    return await fundProvider.getFundRecords(currency, limit).then(result => {
+    const from = new Date(helper.getQuerystringValue(req, "from"))
+    return await fundProvider.getFundRecords(currency, from).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {

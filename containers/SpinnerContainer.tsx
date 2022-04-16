@@ -14,7 +14,7 @@ The position: relative is required to ...
 */
 export const SpinnerContainer:FC<Props> = props => {
   const {isLoading, size, occupyMinSpace, children} = props
-  return <div style={{position:"relative", minHeight: occupyMinSpace === undefined ? 150 : 50}}>
+  return <div style={{position:"relative", minHeight: occupyMinSpace === undefined ? 150 : 40}}>
     <div>{children}</div>
     {isLoading ? <div className={styles.loader_overlay}>
       <span className={styles.loader_spinner}><Spinner type="Spin" small={size === "small"} /></span>

@@ -64,7 +64,7 @@ const View = (props:TableProps) => {
     </div>
     <SpinnerContainer isLoading={isLoading}>{balance &&
     /* tablelayout: fixed prevent the table rows to expand when the content is larger */
-    <Table id="balanceTable">
+    <Table id="balanceTable" className={Styles.fundRecord.table}>
       <thead>
         <tr>          
           <th>Currency</th>
@@ -79,7 +79,7 @@ const View = (props:TableProps) => {
       {balance.fundsByCurrency.map(fund => 
         <React.Fragment key={fund.currencyCode}>
           <tr onClick={() => toggleExpandedFund(fund.currencyCode)} style={{cursor: "pointer"}}>            
-            <td>{fund.currencyCode}</td>
+            <td><strong>{fund.currencyCode}</strong></td>
             <td className={Styles.text.alignRight}>{fund.quantity}</td>
             <td className={Styles.text.alignRight}>n/a</td>
             <td>{renderCompanies(fund.companies)}</td>

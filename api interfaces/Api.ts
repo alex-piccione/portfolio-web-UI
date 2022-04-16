@@ -1,4 +1,4 @@
-import { Currency, Company, Balance, FundUpdate, FundRecord } from "../Entities"
+import { Currency, Company, Balance, FundUpdate, CompanyFundsAtDate } from "../Entities"
 import { get, post } from "./helper"
 
 /*
@@ -23,7 +23,7 @@ export namespace Api {
     updateBalance: (fundUpdate:FundUpdate) => post<FundUpdate>("/api/balance/update-fund", fundUpdate)
   }
 
-  export const Fund = {
-    getOfCurrency: (currency:string, limit:number|undefined ) => get<FundRecord[]>(`/api/fund?currency=${currency}&limit=${limit}`),
+  export const Fund = {    
+    getOfCurrency: (currency:string, from:Date ) => get<CompanyFundsAtDate[]>(`/api/fund?currency=${currency}&from=${from.toISOString()}`),
   }
 }

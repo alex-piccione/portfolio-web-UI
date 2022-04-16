@@ -3,6 +3,7 @@
 //@import "./colors.sass"  // this is still applied and visible because import makes it global visible
 @use "./colors.module.sass" as colors
 @use "./typography.module.sass" as text
+@import "./BalanceTable.module.sass"
 @import "./typography.sass"
 
 @mixin button-padding()
@@ -179,26 +180,3 @@
 
   &:hover
     fill: colors.$primary-hover
-
-.fundRecord_td
-  max-width: 100px // this thing is impeeding the td to grow horizontally indefinitely
-  overflow-x: auto  
-  
-.fundRecord_row  
-  //border: solid 1px red  // for debugging
-  display: grid
-  grid-auto-flow: column
-  grid-auto-columns: min-content  
-  //display: flex
-  //flex-direction: row
-  //flex-wrap: nowrap
-
-.fundRecord_column 
-  //border: solid 2px colors.$border-light // for debugging
-  width: 80px
-  margin: 0 .1rem
-  //@include text.small  
-  padding: .2rem   
-  border: solid 1px colors.$border-light
-  //background-color: colors.$background-shadow
-  //border: solid 2px colors.$border-light

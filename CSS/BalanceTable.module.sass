@@ -1,0 +1,80 @@
+@use "./colors.module.sass"
+@use "./typography.module.sass" as text
+
+.fundRecord_table
+  & tr:nth-child(2n+1) td
+    border-bottom: 0
+    border-top: solid 1px colors.$border-light
+  & tr:nth-child(2n) td
+    border-bottom: solid 1px colors.$border-light
+
+.fundRecord_td
+  max-width: 10px // this thing is impeding the td to grow horizontally indefinitely
+  overflow-x: auto  
+
+  &:nth-child(2n)
+    border: 0    
+
+.fundRecord_row  
+  display: grid
+  grid-auto-flow: column
+  grid-auto-columns: min-content    
+  padding-left: 1rem  
+  margin-bottom: 1rem
+
+.fundRecord_column 
+  width: 160px
+  margin: 0 .1rem
+  @include text.small  
+  padding: .2rem 
+  border: solid 1px colors.$border-light
+  border-radius: 4px
+  transition: color 0.15s ease, border-color 0.15s ease
+  background: colors.$background  
+
+.fundRecord_date
+  color: colors.$primary
+
+.fundRecord_company
+  color: colors.$secondary
+  padding: 0
+
+  &.quantity
+    color: colors.$alternative
+    text-align: right
+
+.fundRecord_grid
+  display: grid
+  grid-template-rows: .1fr 1fr .1fr
+  grid-template-columns: 1fr  
+
+  & > div
+    margin-right: 1rem
+
+  &:nth-child(n+2)::after
+    content: ''
+    width: 1px
+    height: 100%
+    display: block
+    background-color: #c0c0c0 // colors.$border-light
+    position: absolute
+    margin-left: -8px
+    top: 01px
+    bottom: 10px
+
+.fundRecord_companies
+  display: grid
+  grid-template-columns: 1fr 1fr
+  grid-template-rows: repeat(auto-fill, minmax(1.5rem, 1fr))
+  column-gap: .5vw
+  border-top: solid 1px colors.$border-light
+  border-bottom: solid 1px colors.$border-light
+  white-space: nowrap
+
+  & div:nth-child(2n)     
+    text-align: right
+
+.fundRecord_total
+  align-self: center
+  text-align: right
+  font-weight: bold

@@ -41,6 +41,10 @@ a {
   padding: .3rem;
 }
 
-.badge {
+.badge {  
   font-weight: normal;
+  color: #fcfcfc;
+  display: inline;
+  text-transform: uppercase;
+  border-radius: 4px !important;
 }

@@ -30,6 +30,9 @@ $background-shadow: scale-color($background, $lightness: -25%, $alpha: +25%)
 $border-light: scale-color( mix($primary, $secondary), $lightness: +25%)
 $border-dark: scale-color( mix($primary, $secondary), $lightness: -25%)
 
+@function elevation($level)
+  @return shadow($level, $primary-shadow)
+
 :export
   primary: $primary
   secondary: $secondary

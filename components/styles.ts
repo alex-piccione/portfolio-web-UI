@@ -6,7 +6,6 @@ export type Color = "primary" | "secondary" | "alternative" | "light" | "dark"
 export type ButtonColor = "primary" | "secondary" | "alternative"
 export type ButtonStyle = "border" | "text"
 export type ButtonVariant = "primary" | "alternative"
-//export type IconColor = "primary" | "secondary" | "alternative"
 
 const Styles = {
   section: styles.section,
@@ -23,10 +22,17 @@ const Styles = {
     row_collapsed: styles.row_collapsed,
   },
   fundRecord: {
+    table: styles.fundRecord_table,
     td: styles.fundRecord_td,
     container: styles.fundRecord_container,
     row: styles.fundRecord_row,
     column: styles.fundRecord_column,
+    date: styles.fundRecord_date,
+    company: styles.fundRecord_company,
+    
+    grid: styles.fundRecord_grid,
+    companies: styles.fundRecord_companies,
+    total: styles.fundRecord_total,
   }
 }
 
