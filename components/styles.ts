@@ -29,7 +29,13 @@ const Styles = {
     grid: styles.fundRecord_grid,
     date: styles.fundRecord_date, 
     companies: styles.fundRecord_companies,
+    companies_row: styles.fundRecord_companies_row,
     total: styles.fundRecord_total,
+
+    added: styles.fundRecord_added,
+    updated: styles.fundRecord_updated,    
+    deleted: styles.fundRecord_deleted,
+    inherited: styles.fundRecord_inherited   
   }
 }
 

@@ -36,7 +36,9 @@ export interface CompanyFundsAtDate {
 }
 
 export interface CompanyFund {
-  recordId: string,
+  isInherited: boolean,
+  //isAdded: boolean,
+  recordId?: string,
   company: Company,
   quantity: number,
   lastChangeDate: Date,

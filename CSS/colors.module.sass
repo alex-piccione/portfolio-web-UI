@@ -3,11 +3,19 @@ $secondary: #04273B
 $alternative: #FF4141
 $background: #F9F9F9
 $text: #333
+$border: #666
+$disabled: #AAA
+$success: #00ea00
+$failure: #ea0000
+$update: #003bea
 
 $overlay: rgba(250,250,250,0.7)
 
 @function lighten($color)
-  @return scale-color($color, $lightness: +80%)
+  @return scale-color($color, $lightness: +50%)
+
+@function darken($color)
+  @return scale-color($color, $lightness: -50%)
 
 // text-on
 $primary-text-on-background: lighten($primary)
@@ -27,9 +35,12 @@ $alternative-shadow: #FF414180 // opacify($alternative, .25)  // scale-color($al
 $background-shadow: scale-color($background, $lightness: -25%, $alpha: +25%)
 
 // borders
-$border-light: scale-color( mix($primary, $secondary), $lightness: +25%)
-$border-dark: scale-color( mix($primary, $secondary), $lightness: -25%)
+$border-light: lighten($border) // scale-color( mix($primary, $secondary), $lightness: +25%)
+$border-dark: darken($border) // scale-color( mix($primary, $secondary), $lightness: -25%)
 
+$items-separator: lighten($border)
+
+// TODO: is this used ??
 @function elevation($level)
   @return shadow($level, $primary-shadow)
 

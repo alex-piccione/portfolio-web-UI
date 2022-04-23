@@ -1,4 +1,4 @@
-@use "./colors.module.sass"
+@use "./colors.module.sass" as colors
 @use "./typography.module.sass" as text
 
 .fundRecord_table
@@ -23,6 +23,7 @@
   display: grid
   grid-template-rows: .1fr 1fr .1fr
   grid-template-columns: 1fr  
+  grid-row-gap: 4px
 
   & > div
     margin-right: 1rem
@@ -32,28 +33,52 @@
     width: 1px
     height: 100%
     display: block
-    background-color: #c0c0c0 // colors.$border-light
+    background-color: colors.$items-separator
     position: absolute
     margin-left: -8px
-    top: 01px
-    bottom: 10px
+    top: 1px
+    bottom: 8px
 
 .fundRecord_date
   color: colors.$primary
+  text-align-last: center
+  border-bottom: solid 1px colors.$border-dark
 
 .fundRecord_companies
   display: grid
   grid-template-columns: 1fr 1fr
   grid-template-rows: repeat(auto-fill, minmax(1.5rem, 1fr))
   column-gap: .5vw
-  border-top: solid 1px colors.$border-light
-  border-bottom: solid 1px colors.$border-light
   white-space: nowrap
 
-  & div:nth-child(2n)     
+  & > div:nth-child(2n)     
     text-align: right
 
 .fundRecord_total
   align-self: center
   text-align: right
   font-weight: bold
+  border-top: solid 1px colors.$border-dark
+
+@mixin fundBorder($color)
+  border-left: solid 2px $color
+  border-radius: 0px
+  padding-left: 4px
+  //background: linear-gradient(to right, $color 0%, colors.lighten($color) 5%)
+
+.fundRecord_added
+  color: colors.$primary
+  @include fundBorder(colors.$success)
+
+.fundRecord_updated
+  color: colors.$primary
+  @include fundBorder(colors.$update)
+  
+
+.fundRecord_deleted
+  color: colors.$alternative
+  @include fundBorder(colors.$failure)
+
+.fundRecord_inherited
+  color: colors.$disabled
+  @include fundBorder(colors.$disabled)

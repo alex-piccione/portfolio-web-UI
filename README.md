@@ -1,4 +1,5 @@
 # portfolio-web-UI
+
 Web UI for the Portfolio project
 
 [![Build and test](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Build%20and%20test.yml/badge.svg)](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Build%20and%20test.yml)
@@ -10,7 +11,6 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ``yarn dev``
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
@@ -71,8 +71,9 @@ a_AWS_KEY_SECRET=***
 
 These values are loded by Next.js within _process.env.AAA_.  
 ref:
-  - https://vercel.com/docs/concepts/next.js/overview#adding-secrets
-  - https://nextjs.org/docs/basic-features/environment-variables
+
+- https://vercel.com/docs/concepts/next.js/overview#adding-secrets
+- https://nextjs.org/docs/basic-features/environment-variables
 
 variables are prefixed with "a_" because many of them are used  by Next.js/Vercel itself.  
 For production these values are stored in the Vercel project Environment Variables.  
@@ -104,9 +105,9 @@ I choose [__Feather__](https://feathericons.com/) https://react-icons.github.io/
 ``yarn add react-icons``  
 ``import { IconName } from "react-icons/fi"``
 
-## Grid Layout
+## Styling
 
-Nice guide/tutorial: https://www.quackit.com/css/grid/tutorial/explicit_vs_implicit_grid.cfm
+See [CSS README](./CSS/CSS%20README.md).
 
 ## Tests
 
@@ -133,7 +134,6 @@ This (or similar) is due to clash between Jest and Typescript.
 Maybe a ts.config.json file stored in different places (for cypress) is a solution.
 In my case I just switched the "jest" and "cypress" _types_ in ts.config.json, putting the _jest_ first, ant it works.
 
-
 ## Yarn
 
 Yarn does not have a "search" functionality. Use ``npm search`` or search on the web.  
@@ -155,9 +155,11 @@ In this way it will take the old yarn.lock but it will update the packages chang
 
 ## Issues
 
-0. Warning when run ``yarn test:ui:open``
+1. Warning when run ``yarn test:ui:open``
+
 > [0102/180334.258:ERROR:registration_protocol_win.cc(102)] CreateFile: The system cannot find the file specified. (0x2)
 It does not happen on another project with older versions:  
+
 - "next": "11.1.2",
 - "react": "17.0.2",
 Upgrading Cypress from version 9.0.0 to 9.2.0 does not fix the issue.
@@ -174,18 +176,19 @@ Interface is not nice, too simple.
 Documentation on localization is not clear and ambiguous.
 
 ### react-modern-calendar-datepicker
-No No.   
+
+No No.  
 It rendered out of the screen, on top of the textbox.  
 Only 2 locales are available, actually languages,  "en" and "fa".  
 
 ### react-nice-dates
+
 https://reactnicedates.hernansartorio.com
 ``yarn add react-nice-dates date-fns``
 locale is in the format of "enUS" and needs to be imported in advance
 
 ### react-day-picker
+
 http://react-day-picker.js.org/examples/localization
-
-
 
 ### https://github.com/wojtekmaj/react-datetime-picker#readme
