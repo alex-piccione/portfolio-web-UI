@@ -1,5 +1,4 @@
-// try to rename it fund.api.ts
-import helper from "./api helper"
+import helper from "./helper"
 import { NextApiRequest, NextApiResponse } from "next"
 import FundServerProvider from "./server providers/FundServerProvider"
 

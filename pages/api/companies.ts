@@ -1,5 +1,5 @@
 import CompanyProvider from "./server providers/CompanyServerProvider"
-import helper from "./api helper"
+import helper from "./helper"
 import { NextApiRequest, NextApiResponse } from "next"
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
