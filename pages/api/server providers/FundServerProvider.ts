@@ -2,9 +2,12 @@ import { Company, CompanyFundsAtDate } from "../../../Entities"
 import BaseServerProvider from "./BaseServerProvider"
 import CompanyProvider from "./CompanyServerProvider"
 
+const companyProvider = new CompanyProvider()
+
 class FundServerProvider extends BaseServerProvider {  
+
   getFundRecords = async (currency:string, from:Date) => {
-    const companies = await CompanyProvider.getCompanies()
+    const companies = await companyProvider.getCompanies()
     return await super.get(`fund?currency=${currency}&from=${from.toISOString()}`, (data) => parser.parseCurrencyFundByDate(data as unknown as any[], companies))  
   }
 }
@@ -33,7 +36,7 @@ const parseCompanyFund = (data:any, companies: Company[]):CompanyFundsAtDate => 
         return {
           isInherited: cf.Id == null,
           recordId: cf.Id,
-          company: companies.filter(c => c.id == cf.CompanyId)[0] || CompanyProvider.getUnknownCompany(cf.CompanyId),
+          company: companies.filter(c => c.id == cf.CompanyId)[0] || companyProvider.getUnknownCompany(cf.CompanyId),
           quantity: cf.Quantity,
           lastChangeDate: cf.LastUpdateDate,
           note: ""
