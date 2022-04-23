@@ -5,16 +5,13 @@ import styles from  "../CSS/styles.module.sass"
 interface Props {
   isLoading:boolean,
   size?: "big"|"small",
-  occupyMinSpace?: boolean
+  occupyHighSpace?: boolean
 }
 
-/*
-The position: relative is required to ...
-
-*/
+// "position: relative" is required to render it inside the container it is positioned in.
 export const SpinnerContainer:FC<Props> = props => {
-  const {isLoading, size, occupyMinSpace, children} = props
-  return <div style={{position:"relative", minHeight: occupyMinSpace === undefined ? 150 : 40}}>
+  const {isLoading, size, occupyHighSpace, children} = props
+  return <div style={{position:"relative", minHeight: occupyHighSpace === undefined ? 150 : 40}}>
     <div>{children}</div>
     {isLoading ? <div className={styles.loader_overlay}>
       <span className={styles.loader_spinner}><Spinner type="Spin" small={size === "small"} /></span>

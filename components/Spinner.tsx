@@ -5,8 +5,7 @@ const Spinner = (props:{id?:string, small?:boolean, type?:SpinnerType}) =>
     className={ 
       props.type == "Pulse" ?        
         (props.small ? "spinner-grow spinner-grow-sm" : "spinner-grow") :
-        (props.small ? "spinner-border spinner-border-sm" : "spinner-border")
-        + " text-secondary"} 
+        (props.small ? "spinner-border spinner-border-sm" : "spinner-border")} 
     role="status">
   </div>
 

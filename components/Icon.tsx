@@ -21,7 +21,7 @@ const iconsMap = {
 
 export type IconType = 
   "add-record" | 
-  //"delte-record" |
+  //"remove-record" |
   "bank" | 
   "exchange" | 
   "stacking" | 
@@ -29,18 +29,10 @@ export type IconType =
   "collapse" | 
   "note"
 
-//iconsMap[props.icon]()
-
 const Icon = (props:{icon:IconType, color?:Color, clickable?:boolean}) => {
   const element = createElement(iconsMap[props.icon], {})
   const colorStyle = props.color === undefined ? "inherit" : Styles.colors[props.color]
   return <> {props.clickable ? <span style={{cursor: "pointer", color: `${colorStyle}`}} >{element}</span> : element}</>
 }
-  
-  //props.clickable ? <span style={{cursor: "pointer"}}>{iconsMap[props.icon]}</span> : iconsMap[props.icon]
-  //<span style={{cursor: "pointer", color: "red"}}>{iconsMap[props.icon]}</span>
-  //<>
-  //  {props.clickable ? <span style={{cursor: "pointer"}}>{iconsMap[props.icon]}</span> : iconsMap[props.icon]}
-  //</>
 
 export default Icon

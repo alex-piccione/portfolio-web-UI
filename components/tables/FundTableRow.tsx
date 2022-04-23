@@ -36,7 +36,7 @@ const FundTableRow:FC<Props> = props => {
 
   useMountEffect(() => {loadFund()})
 
-  return <SpinnerContainer isLoading={isLoading} size="small" occupyMinSpace={false}>
+  return <SpinnerContainer isLoading={isLoading} size="small" occupyHighSpace={false}>
     <div className={Styles.fundRecord.dates_container}>           
       {funds && funds.map(fund => <FundRecordValue key={fund.totalQuantity} currencyCode={props.currencyCode} fund={fund} />) }
     </div>
