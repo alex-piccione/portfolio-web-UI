@@ -6,7 +6,7 @@ Web UI for the Portfolio project
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).  
 It communicates with backend API (AWS Lambda functions).
 
-![Portfolio Infrastructure](https://user-images.githubusercontent.com/876490/164887537-99842c7f-4b63-49a6-a0da-4f986c41e884.png)
+![Portfolio Infrastructure](https://user-images.githubusercontent.com/876490/164887610-48e1a3fc-ca4f-45db-a21d-06081f55f6ff.png)
 
 ## To run the app
 
