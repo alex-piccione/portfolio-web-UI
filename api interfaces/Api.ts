@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Currency, Company, Balance, FundUpdate, CompanyFundsAtDate } from "../Entities"
-import apiHelper from "../pages/api/api helper"
+import apiHelper from "../pages/api/helper"
 
 /*
 This API is used to call the NextJs server from the client.
