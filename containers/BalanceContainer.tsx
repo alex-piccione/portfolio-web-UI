@@ -11,14 +11,15 @@ export interface FundUpdate {
 
 const baseCurrency = "EUR"
 
+/* axios usage example: https://stackoverflow.com/questions/52766608/how-to-retrieve-data-from-reactjs-and-api */
+
 const getBalance = async ():Promise<Balance> => {
-  /* axios usage example: https://stackoverflow.com/questions/52766608/how-to-retrieve-data-from-reactjs-and-api */
+  
   return await axios.get(`/api/balance?base-currency=${baseCurrency}`)
     .then(response => response.data)  
 }
 
 const updateFund = async (update:FundUpdate) => {
-  /* axios usage example: https://stackoverflow.com/questions/52766608/how-to-retrieve-data-from-reactjs-and-api */
   return await axios.post(`/api/balance/update-fund`, update)
 }
 
