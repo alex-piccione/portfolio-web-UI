@@ -17,7 +17,11 @@ const FundTableRow:FC<Props> = props => {
   const [funds, setFunds] = useState<CompanyFundsAtDate[]>([])
 
   const sortData = (data:CompanyFundsAtDate[]) => {
-    data.forEach(fund => fund.companies.sort((a, b) => a.company.id < b.company.id ? 1 : -1))
+    data.forEach(fund => fund.companies.sort((a, b) => 
+      a.isInherited ? -1 : b.isInherited ? 1 :
+      a.quantity > 0 ? -1 : b.quantity > 0 ? 1 :
+      a.company.name < b.company.name ? -1 : 1
+      ))
     return data.sort((x,y) => x.date < y.date ? 1 : -1)
   }  
 
