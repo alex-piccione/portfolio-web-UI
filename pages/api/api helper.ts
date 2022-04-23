@@ -10,13 +10,13 @@ const helper = {
     error.request ? `Server API call response not received, please retry. ${error.request}` :
     `Failed to call server API. ${error.message}`,
 
-  /* return undefined if not found */
+  /* returns undefined if not found */
   getQuerystringValue: (req:NextApiRequest, property:string) => req.query[property] as string,
 
-  /* return undefined if not found */
+  /* returns undefined if not found */
   getQuerystringNumber: (req:NextApiRequest, property:string) => Number(req.query[property] as string),
 
-  /* return undefined if not found */
+  /* returns undefined if not found */
   getQuerystringArray: (req:NextApiRequest, property:string) => req.query[property] as string[] 
 
   /*

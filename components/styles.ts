@@ -34,7 +34,7 @@ const Styles = {
 
     added: styles.fundRecord_added,
     updated: styles.fundRecord_updated,    
-    deleted: styles.fundRecord_deleted,
+    removed: styles.fundRecord_removed,
     inherited: styles.fundRecord_inherited   
   }
 }

@@ -9,7 +9,7 @@
     border-bottom: solid 1px colors.$border-light
 
 .fundRecord_expandable_td
-  max-width: 10px // this thing is impeding the td to grow horizontally indefinitely
+  max-width: 10px //  (any value) this is for impeding the TD to grow horizontally indefinitely
   overflow-x: auto
 
 .fundRecord_dates_container  
@@ -64,7 +64,6 @@
   border-left: solid 2px $color
   border-radius: 0px
   padding-left: 4px
-  //background: linear-gradient(to right, $color 0%, colors.lighten($color) 5%)
 
 .fundRecord_added
   color: colors.$primary
@@ -72,10 +71,9 @@
 
 .fundRecord_updated
   color: colors.$primary
-  @include fundBorder(colors.$update)
-  
+  @include fundBorder(colors.$update)  
 
-.fundRecord_deleted
+.fundRecord_removed
   color: colors.$alternative
   @include fundBorder(colors.$failure)
 

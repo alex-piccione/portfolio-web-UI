@@ -35,14 +35,10 @@ $alternative-shadow: #FF414180 // opacify($alternative, .25)  // scale-color($al
 $background-shadow: scale-color($background, $lightness: -25%, $alpha: +25%)
 
 // borders
-$border-light: lighten($border) // scale-color( mix($primary, $secondary), $lightness: +25%)
-$border-dark: darken($border) // scale-color( mix($primary, $secondary), $lightness: -25%)
+$border-light: lighten($border)
+$border-dark: darken($border)
 
 $items-separator: lighten($border)
-
-// TODO: is this used ??
-@function elevation($level)
-  @return shadow($level, $primary-shadow)
 
 :export
   primary: $primary

@@ -50,7 +50,7 @@ const FundRecordValue:FC<{currencyCode:string, fund:CompanyFundsAtDate}> = props
   const style = (companyFund:CompanyFund) => 
     //companyFund.added
     companyFund.isInherited ? Styles.fundRecord.inherited : 
-    companyFund.quantity == 0 ? Styles.fundRecord.deleted :
+    companyFund.quantity == 0 ? Styles.fundRecord.removed :
     Styles.fundRecord.updated  
 
   return <div className={Styles.fundRecord.grid}>
