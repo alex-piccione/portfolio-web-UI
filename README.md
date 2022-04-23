@@ -3,7 +3,10 @@ Web UI for the Portfolio project
 
 [![Build and test](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Build%20and%20test.yml/badge.svg)](https://github.com/alex-piccione/portfolio-web-UI/actions/workflows/Build%20and%20test.yml)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).  
+It communicates with backend API (AWS Lambda functions).
+
+![Portfolio Infrastructure](https://user-images.githubusercontent.com/876490/164887537-99842c7f-4b63-49a6-a0da-4f986c41e884.png)
 
 ## To run the app
 
