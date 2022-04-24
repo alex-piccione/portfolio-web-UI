@@ -1,18 +1,14 @@
 ---
 name: Feature request
 about: Add a functionality to this project
-title: ''
-labels: ''
+title: '[Feature]'
+labels: 'Frontend'
 assignees: alex-piccione
 
 ---
 
-As a user of the applicarion
-I want ...
-So that ...
+## Description / Why we need this change
 
----
+## How / What is changed
 
-## Acceptance Criteria
-- [ ] criteria
-- [ ] criteria
+
