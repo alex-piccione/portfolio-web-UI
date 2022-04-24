@@ -3,7 +3,7 @@ import { Currency, Company, Balance, FundUpdate, CompanyFundsAtDate } from "../E
 import apiHelper from "../pages/api/helper"
 
 /*
-This API is used to call the NextJs server from the client.
+This API is used to call the NextJs api server (Client API) from the client.
 It is intended to be used from the client to reach the backend API.
 The type passed in the call is the client type, it can have any shape the client likes.
 */
