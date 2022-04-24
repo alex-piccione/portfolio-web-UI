@@ -6,9 +6,13 @@ labels: 'Frontend'
 assignees: alex-piccione
 
 ---
-## Description / Why we need this change
+## Description / What we want to achieve
 
 
-## How / What is changed
+### Implementation suggestions
 
 
+## Acceptance criteria
+- [ ] ...
+- [ ] ... 
+- [ ] ...
