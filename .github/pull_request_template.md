@@ -1,15 +1,11 @@
-# Why we need these changes
-
+## Description / Why we need this change
 Describe the big picture of your changes here to communicate why we need the changes.  
 If it fixes a bug or resolves a feature request, be sure to link to that issue.
 
-## What is changed
-
+## Implementation / What is changed
 What changes does your code introduce to this project?
 
 ### Screenshots
-
-Add some screenshots is possible
 
 <details>
 <summary>Screenshots</summary>
@@ -17,7 +13,6 @@ Add some screenshots is possible
 </details>
 
 ## How is it tested
-
 Write here what tests were executed.
 
 ## Actions
