@@ -3,6 +3,7 @@
 //@import "./colors.sass"  // this is still applied and visible because import makes it global visible
 @use "./colors.module.sass" as colors
 @use "./typography.module.sass" as text
+@import "./BalanceTable.module.sass"
 @import "./typography.sass"
 
 @mixin button-padding()
@@ -139,9 +140,44 @@
     transform: -ms-translate(-50%, -50%)
     transform: scale(1.5)
     animation: start-loading 2s ease forwards
+    color: colors.$border-light
     
 @keyframes start-loading
   0%
     opacity: 0
   100%
     opacity: 1 
+
+.row_expanded
+  display: table-row
+  animation: expand-row 1s linear forwards
+
+.row_collapsed
+  display: none
+  animation: collapse-row 0.5s linear forwards
+
+@keyframes expand-row
+  0%
+    transform: height(0)
+    opacity: 0
+  100%
+    transform: height(100%)
+    opacity: 1
+
+@keyframes collapse-row
+  0%
+    transform: height(100%)
+    opacity: 1
+  100%
+    transform: height(0)
+    opacity: 0 
+
+.icon_expand
+  width: 1rem
+  height: 1rem
+  fill: colors.$primary
+  transition: fill .3s ease-in-out
+  cursor: pointer
+
+  &:hover
+    fill: colors.$primary-hover

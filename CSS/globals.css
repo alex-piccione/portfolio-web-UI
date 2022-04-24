@@ -26,7 +26,7 @@ a {
 
 
 .error-on-load {
-  color: red;
+  color: red; /* TODO: colors.failure */
   font-size: 150%;
 }
 
@@ -41,6 +41,10 @@ a {
   padding: .3rem;
 }
 
-.badge {
+.badge {  
   font-weight: normal;
+  color: #fcfcfc; /* TODO: colors.text-inverted */
+  display: inline;
+  text-transform: uppercase;
+  border-radius: 4px !important;
 }

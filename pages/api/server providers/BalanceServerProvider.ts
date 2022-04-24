@@ -2,9 +2,12 @@ import { Balance, Company, Fund, FundUpdate } from "../../../Entities"
 import BaseServerProvider from "./BaseServerProvider"
 import CompanyProvider from "./CompanyServerProvider";
 
+const companyProvider = new CompanyProvider()
+
 class BalanceServerProvider extends BaseServerProvider {  
-  async getBalance(baseCurrency:string) {
-    const companies = await CompanyProvider.getCompanies();
+
+  async getBalance(baseCurrency:string) {  
+    const companies = await companyProvider.getCompanies();
     return super.get(`balance?base-currency=${baseCurrency}`, (data) => parser.parseBalance(data, companies)) 
   }
 

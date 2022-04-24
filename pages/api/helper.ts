@@ -1,3 +1,5 @@
+import { NextApiRequest } from "next"
+
 const helper = {
   Error_400: (response:any, error:string) => response.status(400).json({message:error}),
   Error_500: (response:any, error:string) => response.status(500).json({message:error}),
@@ -6,7 +8,17 @@ const helper = {
   getErrorString: (error: any) => 
     error.response ? error.response.data.message as string :
     error.request ? `Server API call response not received, please retry. ${error.request}` :
-    `Failed to call server API. ${error.message}`
+    `Failed to call server API. ${error.message}`,
+
+  /* returns undefined if not found */
+  getQuerystringValue: (req:NextApiRequest, property:string) => req.query[property] as string,
+
+  /* returns undefined if not found */
+  getQuerystringNumber: (req:NextApiRequest, property:string) => Number(req.query[property] as string),
+
+  /* returns undefined if not found */
+  getQuerystringArray: (req:NextApiRequest, property:string) => req.query[property] as string[] 
+
   /*
   if (error.response) {
     // The request was made and the server responded with a status code

@@ -34,7 +34,9 @@ const NotificationProvider:FC = ({children}) => {
 
 const useNotifications = () => useContext(MessagesContext);
 // Error at runtime: "Hooks can only be called inside of the body of a function component"
-const showInfo = (message:string) => useContext(MessagesContext).showNotification(message, "info");
-const showSuccess = (message:string) => useContext(MessagesContext).showNotification(message, "success");
+const showInfo = (message:string) => useContext(MessagesContext).showNotification(message, "info")
+const showSuccess = (message:string) => useContext(MessagesContext).showNotification(message, "success")
+const showError = (message:string) => useContext(MessagesContext).showNotification(message, "danger")
 
-export {NotificationProvider, useNotifications, showInfo, showSuccess}
+
+export {NotificationProvider, useNotifications, showInfo, showSuccess, showError}
