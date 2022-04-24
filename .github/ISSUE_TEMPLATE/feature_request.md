@@ -4,7 +4,6 @@ about: Add a functionality to this project
 title: '[Feature]'
 labels: 'Frontend'
 assignees: alex-piccione
-projects: 'Portfolio'
 
 ---
 ## Description / Why we need this change
