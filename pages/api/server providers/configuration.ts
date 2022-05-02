@@ -1,4 +1,5 @@
 export type configuration = {
+  API_URL: string,
   AWS: {
     region: string,
     apiGatewayId: string,
@@ -9,14 +10,16 @@ export type configuration = {
   defaultLocale: string,
 }
 
-function getEnv (variable:string) {
+function getEnv (variable:string, ifNull?:string) {
   const value = process.env[variable]
-  if (value === undefined) throw new Error(`${variable} is not defined in .env`) 
+  if (value === undefined)
+    if (ifNull !== undefined) return ifNull
+    else throw new Error(`${variable} is not defined in .env`) 
   return value 
 }
   
-
 export const getConfiguration = (serverRuntimeConfig:any):configuration => { return {
+  API_URL: getEnv("API_URL", ""),
   AWS: {
     region: getEnv("a_AWS_REGION"), // serverRuntimeConfig.AWS.region,
     apiGatewayId: getEnv("a_AWS_API_ID"), // serverRuntimeConfig.AWS.apiGatewayId,

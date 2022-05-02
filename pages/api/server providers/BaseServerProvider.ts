@@ -4,8 +4,9 @@ import axios, { AxiosResponse } from "axios"
 const {serverRuntimeConfig, publicRuntimeConfig} = getConfig()
 const serverConfig = getConfiguration(serverRuntimeConfig)
 
+
 const host = `${serverConfig.AWS.apiGatewayId}.execute-api.${serverConfig.AWS.region}.amazonaws.com`
-const baseUrl = `https://${host}/${serverConfig.AWS.apiStage}`
+const baseUrl = serverConfig.API_URL || `https://${host}/${serverConfig.AWS.apiStage}`
 const headers = {Host: host} // what is this for???
 
 const isSuccess = (status:number) => Math.floor(status / 100) === 2
