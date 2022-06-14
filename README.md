@@ -11,13 +11,40 @@ It communicates with backend API (AWS Lambda functions).
 
 ## To run the app
 
-``yarn dev``
-
+Call ``yarn dev``  
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+
+## Configuration
+
+Private configuration is stored in _.env.local_ file like:
+
+```env
+API_URL=http://localhost:5000
+a_AWS_REGION=eu-central-1
+a_AWS_API_ID=***
+a_AWS_API_STAGE=***
+a_AWS_KEY_ID=***
+a_AWS_KEY_SECRET=***
+```
+
+API_URL: the root endpoint for the Server API.  
+localhost:5000 is used to point to local development server,  
+if commented out or left empty, the root endpoint (AWS API Gateway URL) will be calculated using the other AWS variables.
+
+These values are loaded by Next.js within _process.env.AAA_.  
+The "a_" in the names is a convention to avoid conflicts with the Next.js system variables.  
+Refs:
+
+- https://vercel.com/docs/concepts/next.js/overview#adding-secrets
+- https://nextjs.org/docs/basic-features/environment-variables
+
+variables are prefixed with "a_" because many of them are used  by Next.js/Vercel itself.  
+In production these values are stored in the Vercel project Environment Variables.  
+
 
 ## Next.js
 
@@ -59,27 +86,6 @@ To generate the locale.js and locale-names.js files I used F#: devops/[generate 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Configuration
-
-Private configuration is stored in _.env.local_ file like:
-
-```env
-a_AWS_REGION=eu-central-1
-a_AWS_API_ID=***
-a_AWS_API_STAGE=***
-a_AWS_KEY_ID=***
-a_AWS_KEY_SECRET=***
-```
-
-These values are loded by Next.js within _process.env.AAA_.  
-ref:
-
-- https://vercel.com/docs/concepts/next.js/overview#adding-secrets
-- https://nextjs.org/docs/basic-features/environment-variables
-
-variables are prefixed with "a_" because many of them are used  by Next.js/Vercel itself.  
-For production these values are stored in the Vercel project Environment Variables.  
 
 ## Bootstrap
 
