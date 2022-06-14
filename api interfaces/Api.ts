@@ -20,12 +20,12 @@ export namespace Api {
   }
 
   export const Balance = {
-    getBalance: (baseCurrency:string) => get<Balance>(`/api/balance?base-currency=${baseCurrency}`),  
-    updateBalance: (fundUpdate:FundUpdate) => post<FundUpdate>("/api/balance/update-fund", fundUpdate)
+    getBalance: (baseCurrency:string) => get<Balance>(`/api/balance?base-currency=${baseCurrency}`)    
   }
 
   export const Fund = {    
     getOfCurrency: (currency:string, from:Date ) => get<CompanyFundsAtDate[]>(`/api/fund?currency=${currency}&from=${from.toISOString()}`),
+    updateFund: (fundUpdate:FundUpdate) => post<FundUpdate>("/api/fund/update", fundUpdate)
   }
 }
 

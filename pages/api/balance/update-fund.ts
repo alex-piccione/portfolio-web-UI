@@ -9,7 +9,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   try {
     const body:FundUpdate = req.body // null if not found
 
-    return provider.updateFund(body).then(result => {
+    return provider._updateFund(body).then(result => {
       return res.status(200).json(result)
     })
     .catch(error => {

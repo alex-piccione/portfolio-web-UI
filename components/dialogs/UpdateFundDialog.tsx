@@ -53,7 +53,7 @@ const UpdateFundDialog:FC<UpdateFundDialogProps> = (props) => {
     }
 
     setIsSaving(true)
-    const result = await Api.Balance.updateBalance(update)
+    const result = await Api.Fund.updateFund(update)
     setIsSaving(false)
     
     if (result.isSuccess) { 

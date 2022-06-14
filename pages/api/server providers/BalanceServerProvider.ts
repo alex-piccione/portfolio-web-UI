@@ -11,7 +11,8 @@ class BalanceServerProvider extends BaseServerProvider {
     return super.get(`balance?base-currency=${baseCurrency}`, (data) => parser.parseBalance(data, companies)) 
   }
 
-  async updateFund(update:FundUpdate) {
+  // move to FundServerProvider
+  async _updateFund(update:FundUpdate) {
 
     const payload = {
       "date": update.date, //.toISOString(),
