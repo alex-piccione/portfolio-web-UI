@@ -126,4 +126,11 @@ jobs:
           docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
+          docker logout
+          echo -----
+          echo look for docker config.json
+          echo /home/runner/.docker/config.json
+          cd /home/runner/.docker/
+          echo “$(<config.json)”
+          echo -----
           echo -----
