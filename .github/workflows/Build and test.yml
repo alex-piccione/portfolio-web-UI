@@ -123,8 +123,5 @@ jobs:
           echo look for docker config.json
           echo /home/runner/.docker/config.json
           cd /home/runner/.docker/
-          echo $(ls)
           echo “$(<config.json)”
-          echo ---
-          find / -type f -name config.json
           echo -----
