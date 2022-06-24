@@ -1,4 +1,4 @@
-import { Company, CompanyFundsAtDate } from "../../../Entities"
+import { Company, CompanyFundsAtDate, FundUpdate } from "../../../Entities"
 import BaseServerProvider from "./BaseServerProvider"
 import CompanyProvider from "./CompanyServerProvider"
 
@@ -9,6 +9,18 @@ class FundServerProvider extends BaseServerProvider {
   getFundRecords = async (currency:string, from:Date) => {
     const companies = await companyProvider.getCompanies()
     return await super.get(`fund?currency=${currency}&from=${from.toISOString()}`, (data) => parser.parseCurrencyFundByDate(data as unknown as any[], companies))  
+  }
+
+  async updateFund(update:FundUpdate) {
+
+    const payload = {
+      "date": update.date, //.toISOString(),
+      "currencyCode": update.currencyCode,
+      "quantity": update.quantity,
+      "CompanyId": update.companyId
+    }
+
+    return super.put(`balance/update`, payload, (data) => parser.parseResponse(data))
   }
 }
 
@@ -53,7 +65,10 @@ const parseCompanyFund = (data:any, companies: Company[]):CompanyFundsAtDate => 
 
 
 const parser = {
-  parseCurrencyFundByDate: (data:any[], companies: Company[]):CompanyFundsAtDate[] => data.map( item => parseCompanyFund(item, companies))   
+  parseCurrencyFundByDate: (data:any[], companies: Company[]):CompanyFundsAtDate[] => data.map( item => parseCompanyFund(item, companies)),
+  parseResponse: (data:any) => {
+    return {success: true}
+  }
 }
 
 export default FundServerProvider
