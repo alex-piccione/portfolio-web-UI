@@ -114,14 +114,16 @@ jobs:
           docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
           echo -----
           echo ### Container Registry Login and Push ###
-          echo ${{secrets.CR_PWD}}| docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo ${{secrets.CR_PWD}} | docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo -----
+          echo look for docker config.json
+          echo /home/runner/.docker/config.json
+          cd /home/runner/.docker/
+          echo “$(<config.json)”
+          echo -----
           echo re-tag and push the images
           docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
           docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
-          echo look for docker config.json
-          echo /home/runner/.docker/config.json
-          cd /home/runner/.docker/
-          echo “$(<config.json)”
           echo -----
