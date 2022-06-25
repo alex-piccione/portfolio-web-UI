@@ -132,5 +132,7 @@ jobs:
           echo /home/runner/.docker/config.json
           cd /home/runner/.docker/
           echo “$(<config.json)”
+          rm /home/runner/.docker/config.json
+          echo “$(<config.json)”
           echo -----
           echo -----
