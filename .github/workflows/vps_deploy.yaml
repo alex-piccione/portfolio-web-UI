@@ -20,12 +20,17 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add - <<< "$SSH_PRIVATE_KEY"          
+          ssh-add - <<< "$SSH_PRIVATE_KEY" 
+      - name: test ssh
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock        
+        run: |
+          echo SSH connection
+          ssh -i key $USER@$HOST ls /tmp/doc  
           
       - name: ssh
         run: |
           echo SSH connection 
-          echo add server "key" to ~/.ssh/authorized_keys
           #touch ~/.ssh/authorized_keys
           mkdir ~/.ssh
           #echo "$HOST_ID" >> ~/.ssh/authorized_keys
