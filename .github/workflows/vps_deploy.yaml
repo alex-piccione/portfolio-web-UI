@@ -21,7 +21,16 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           ssh-keyscan -H $HOST > ~/.ssh/known_hosts
           echo test connecttion...
-          ssh $USER@$HOST ls /tmp/doc  
+          ssh $USER@$HOST ls /tmp  
+
+      - name: Write SSH keys 2
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          hosts="$(dig +short "$HOST" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+          ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+          echo test connecttion...
+          ssh $USER@$HOST ls /tmp
 
       - name: Setup SSH Keys and known_hosts
         env:
