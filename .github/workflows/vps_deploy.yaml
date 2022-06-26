@@ -9,12 +9,19 @@ env:
   HOST_ID: ${{ secrets.host_id }}
   KNOWN_HOST: ${{ secrets.known_host }}
   USER: ${{ secrets.host_user }}
-  PRIVATE_SSH_KEY: ${{ secrets.host_ssh_private_key }}
+  SSH_PRIVATE_KEY: ${{ secrets.host_ssh_private_key }}
 
 jobs: 
   ssh_test:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup SSH Keys and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "$SSH_PRIVATE_KEY"          
+          
       - name: ssh
         run: |
           echo SSH connection 
@@ -23,7 +30,7 @@ jobs:
           mkdir ~/.ssh
           #echo "$HOST_ID" >> ~/.ssh/authorized_keys
           echo "$KNOWN_HOST" >> ~/.ssh/known_host
-          echo "$PRIVATE_SSH_KEY" >> key 
+          echo "$SSH_PRIVATE_KEY" >> key 
           ssh -i key $USER@$HOST ls /tmp/doc
           rm key
 
