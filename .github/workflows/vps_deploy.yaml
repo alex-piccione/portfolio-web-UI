@@ -1,11 +1,13 @@
 name: Deploy on VPS
 
 on: 
-  push: 
+  push:
     branches: [main]
 
-env:
-  USER: github_deploy
+env:  
+  HOST: ${{ secrets.host_ip }}
+  USER: ${{ secrets.host_user }}
+  PRIVATE_SSH_KEY: ${{ secrets.host_ssh_private_key }}
 
 jobs: 
   ssh_test:
@@ -13,5 +15,8 @@ jobs:
     steps:
       - name: ssh
         run: |
-          echo SSH connection
-        
+          echo SSH connection 
+          echo "$PRIVATE_SSH_KEY" >> key 
+          ssh -i key $USER@$HOST ls /tmp/doc
+          rm key
+
