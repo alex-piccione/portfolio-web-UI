@@ -23,22 +23,25 @@ jobs:
           echo test connecttion...
           ssh $USER@$HOST ls /tmp  
 
-      - name: Write SSH keys 2
-        run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          hosts="$(dig +short "$HOST" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
-          ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-          echo test connecttion...
-          ssh $USER@$HOST ls /tmp
+      #- name: Write SSH keys 2
+      #  run: |
+      #    install -m 600 -D /dev/null ~/.ssh/id_rsa
+      #    echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+      #    hosts="$(dig +short "$HOST" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+      #    ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+      #    echo test connecttion...
+      #    ssh $USER@$HOST ls /tmp
 
       - name: Setup SSH Keys and known_hosts
+        if: 0 == 1
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
           ssh-agent -a $SSH_AUTH_SOCK > /dev/null
           ssh-add - <<< "$SSH_PRIVATE_KEY" 
+
       - name: test ssh
+        if: 0 == 1
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock        
         run: |
@@ -46,13 +49,13 @@ jobs:
           ssh $USER@$HOST ls /tmp/doc  
           
       - name: ssh
+        if: 1 == 1
         run: |
           echo SSH connection 
-          #touch ~/.ssh/authorized_keys
           mkdir ~/.ssh
-          #echo "$HOST_ID" >> ~/.ssh/authorized_keys
-          echo "$KNOWN_HOST" >> ~/.ssh/known_host
-          echo "$SSH_PRIVATE_KEY" >> key 
-          ssh -i key $USER@$HOST ls /tmp/doc
+          #echo "$KNOWN_HOST" >> ~/.ssh/known_host
+          echo "$SSH_PRIVATE_KEY" >> ~/.ssh/key 
+          ssh-keyscan -f ~/.ssh/key -H $HOST > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/key $USER@$HOST ls /tmp/doc
           rm key
 
