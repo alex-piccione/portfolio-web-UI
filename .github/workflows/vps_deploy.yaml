@@ -1,16 +1,17 @@
 name: Deploy on VPS
 
 on: 
-  push: main
+  push: 
+    branches: [main]
 
 env:
   USER: github_deploy
 
 jobs: 
   ssh_test:
-  runs-on: ubuntu-latest
-  steps:
-    - name: ssh
-      run: |
-        echo SSH connection
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh
+        run: |
+          echo SSH connection
         
