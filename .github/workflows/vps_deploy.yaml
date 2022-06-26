@@ -52,7 +52,7 @@ jobs:
         if: 1 == 1
         run: |
           echo SSH connection 
-          mkdir ~/.ssh
+          mkdir -p ~/.ssh
           #echo "$KNOWN_HOST" >> ~/.ssh/known_host
           echo "$SSH_PRIVATE_KEY" >> ~/.ssh/key 
           ssh-keyscan -f ~/.ssh/key -H $HOST > ~/.ssh/known_hosts
