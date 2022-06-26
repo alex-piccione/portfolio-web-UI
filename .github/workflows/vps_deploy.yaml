@@ -18,7 +18,8 @@ jobs:
         run: |
           echo SSH connection 
           echo add server "key" to ~/.ssh/authorized_keys
-          touch ~/.ssh/authorized_keys
+          #touch ~/.ssh/authorized_keys
+          mkdir ~/.ssh
           echo "$HOST_ID" >> ~/.ssh/authorized_keys
           echo "$PRIVATE_SSH_KEY" >> key 
           ssh -i key $USER@$HOST ls /tmp/doc
