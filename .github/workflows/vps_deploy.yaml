@@ -6,6 +6,7 @@ on:
 
 env:  
   HOST: ${{ secrets.host_ip }}
+  HOST_ID: ${{ secrets.host_id }}
   USER: ${{ secrets.host_user }}
   PRIVATE_SSH_KEY: ${{ secrets.host_ssh_private_key }}
 
@@ -16,6 +17,8 @@ jobs:
       - name: ssh
         run: |
           echo SSH connection 
+          echo add server "key" to ~/.ssh/authorized_keys
+          echo "$HOST_ID" >> ~/.ssh/authorized_keys
           echo "$PRIVATE_SSH_KEY" >> key 
           ssh -i key $USER@$HOST ls /tmp/doc
           rm key
