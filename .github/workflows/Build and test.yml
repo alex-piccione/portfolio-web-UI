@@ -89,7 +89,7 @@ jobs:
           labels: build:success
   
   build_docker_image:
-    name: Build Docker image
+    name: Create Docker image
     if: >-
       github.event_name== 'push' && github.ref == 'refs/heads/main'
       ||       
@@ -125,7 +125,7 @@ jobs:
           docker push $REPO/$IMAGE:$VERSION          
           docker push $REPO/$IMAGE:latest 
           echo ---     
-      - name: Publish Docker image for c8n
+      - name: Publish Docker image on c8n
         env: 
           REPO: portfolio
         run: |
