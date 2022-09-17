@@ -13,9 +13,8 @@ on:
 
 env:  
   VERSION: 0.1.${{github.run_number}}
-  CR_URL: c8n.io
-  REPO: portfolio
-
+  CR_URL: c8n.io  
+  IMAGE: portfolio-api
 jobs:
   info:
     name: Info for ${{ github.event.action }}
@@ -108,11 +107,28 @@ jobs:
           labels: docker:image
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build Docker image        
+      - name: Build Docker image
+        run: docker image build -t $IMAGE -f devops/Dockerfile.2 . 
+      - name: Publish Docker image on AWS ECR        
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_DEVOP_ACCESS_KEY_SECRET}}
+          AWS_REGION: eu-central-1
+          REPO: ${{secrets.AWS_ECR_URL}}
         run: |
-          echo build the image using the Dockerfile in devops folder
-          docker image build -t $REPO:0 -f devops/Dockerfile.2 .    
-          echo -----
+          echo "### Push image on AWS ECR"
+          # login using environment variables: 
+          password=$(aws ecr get-login-password)
+          echo $password | docker login -u AWS $REPO --password-stdin
+          docker tag $IMAGE $REPO/$IMAGE:$VERSION
+          docker tag $IMAGE $REPO/$IMAGE:latest
+          docker push $REPO/$IMAGE:$VERSION          
+          docker push $REPO/$IMAGE:latest 
+          echo ---     
+      - name: Publish Docker image for c8n
+        env: 
+          REPO: portfolio
+        run: |
           echo ### Container Registry Login and Push ###
           echo ${{secrets.CR_PWD}} | docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
           echo -----
@@ -122,8 +138,8 @@ jobs:
           echo “$(<config.json)”
           echo -----
           echo re-tag and push the images
-          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
-          docker image tag $REPO:0 $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image tag $IMAGE $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $IMAGE $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
           docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
           docker logout
@@ -134,5 +150,4 @@ jobs:
           echo “$(<config.json)”
           rm /home/runner/.docker/config.json
           echo “$(<config.json)”
-          echo -----
           echo -----
