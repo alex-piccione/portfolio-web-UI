@@ -21,7 +21,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## To tun the tests
 
-Call  ``yarn dev`` to start the local application.  
+Call ``yarn dev`` to start the local application.  
 Call ``yarn test`` to run Cypress and Jest tests.  
 Call ``yarn test:unit`` to run Jest tests only.  
 Call ``yarn test:ui:run`` to run Cypress tests only.  
