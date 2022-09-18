@@ -56,6 +56,8 @@ jobs:
           #echo "$KNOWN_HOST" >> ~/.ssh/known_host
           echo step 1
           echo "$SSH_PRIVATE_KEY" >> ~/.ssh/key 
+          # chmod  400 ~/.ssh/id_rsa
+          chmod  400 ~/.ssh/key
           echo step 2
           ssh-keyscan -f ~/.ssh/key -H $HOST > ~/.ssh/known_hosts
           echo step 3
