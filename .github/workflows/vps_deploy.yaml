@@ -46,7 +46,7 @@ jobs:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock        
         run: |
           echo SSH connection
-          ssh $USER@$HOST ls /tmp/doc  
+          ssh $USER@$HOST ls /tmp  
           
       - name: ssh
         if: 1 == 1
@@ -61,7 +61,7 @@ jobs:
           echo step 2
           ssh-keyscan -f ~/.ssh/key -H $HOST > ~/.ssh/known_hosts
           echo step 3
-          ssh -i ~/.ssh/key $USER@$HOST ls /tmp/doc
+          ssh -i ~/.ssh/key $USER@$HOST ls /tmp
           echo step 4
           rm key
 
