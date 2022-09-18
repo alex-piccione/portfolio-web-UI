@@ -5,7 +5,7 @@
   "scripts": {
     "scripts": "echo available scripts: \n dev, build, start, lint, \n test, test:unit, test:ui:run, test:ui:run-feature, test:ui:open",
     "dev": "yarn install && next dev",
-    "build": "next build",
+    "build": "yarn install && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "cypress run && jest",
@@ -26,7 +26,6 @@
     "react-datepicker": "^4.6.0",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
-    "react-nice-dates": "^3.1.0",
     "swr": "^1.0.1"
   },
   "devDependencies": {
