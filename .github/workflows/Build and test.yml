@@ -44,7 +44,7 @@ jobs:
         with:
           cache: 'yarn'
       - name: Build
-        run: yarn install; yarn build
+        run: yarn build
   
   tests_jest:
     name: Run Jest tests
