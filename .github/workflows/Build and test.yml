@@ -56,6 +56,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with: 
+          node-version: 18
       - name: Install packages
         run: yarn install
       - name: Run Jest
