@@ -63,5 +63,5 @@ jobs:
           echo step 3
           ssh -i ~/.ssh/key $USER@$HOST ls /tmp
           echo step 4
-          rm key
+          rm ~/.ssh/key
 
