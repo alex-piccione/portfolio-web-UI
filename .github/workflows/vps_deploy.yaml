@@ -17,11 +17,11 @@ jobs:
     steps:
       - name: Write SSH keys
         run: |
-          install -m 400 -D /dev/null ~/.ssh/id_rsa
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           ssh-keyscan -H $HOST > ~/.ssh/known_hosts
           echo test connection...
-          ssh $USER@$HOST ls /tmp  
+          echo $(ssh $USER@$HOST ls /tmp)
 
       #- name: Write SSH keys 2
       #  run: |
