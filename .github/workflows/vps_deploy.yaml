@@ -20,7 +20,7 @@ jobs:
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           ssh-keyscan -H $HOST > ~/.ssh/known_hosts
-          echo test connecttion...
+          echo test connection...
           ssh $USER@$HOST ls /tmp  
 
       #- name: Write SSH keys 2
@@ -54,8 +54,12 @@ jobs:
           echo SSH connection 
           mkdir -p ~/.ssh
           #echo "$KNOWN_HOST" >> ~/.ssh/known_host
+          echo step 1
           echo "$SSH_PRIVATE_KEY" >> ~/.ssh/key 
+          echo step 2
           ssh-keyscan -f ~/.ssh/key -H $HOST > ~/.ssh/known_hosts
+          echo step 3
           ssh -i ~/.ssh/key $USER@$HOST ls /tmp/doc
+          echo step 4
           rm key
 
