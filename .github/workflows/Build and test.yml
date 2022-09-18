@@ -43,6 +43,7 @@ jobs:
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
         with:
           cache: 'yarn'
+          node-version: 18
       - name: Build
         run: yarn build
   
