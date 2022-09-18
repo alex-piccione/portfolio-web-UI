@@ -45,7 +45,7 @@ jobs:
           cache: 'yarn'
           node-version: 18
       - name: Build
-        run: yarn build
+        run: yarn install && yarn build
   
   tests_jest:
     name: Run Jest tests
