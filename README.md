@@ -66,6 +66,9 @@ To create a small and clean Docker image I followed the offcial documentation:
 https://github.com/vercel/next.js/tree/canary/examples/with-docker  
 Only the `COPY . .` was replaced by a precise copy of wanted files to avoid copy unwanted file/folders and replace of node_module.
 
+`yarn build` will create the code to run in production.  
+_output: 'standalone'_ is enabled in nextjs.config.js and cause a warning because the feature is experimental.
+
 ### Locale
 
 Next.js detect the locale automatically.  
