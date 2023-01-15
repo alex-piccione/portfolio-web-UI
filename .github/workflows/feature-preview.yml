@@ -1,7 +1,8 @@
 name: Build Feature Preview
+
 on:
   push:
-    branches: feature/**
+    branches: feature/*
 
 env:
   VERSION: 0.1.${{github.run_number}}-preview
