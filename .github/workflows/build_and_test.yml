@@ -2,16 +2,7 @@
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
 name: Build and Test
-on:
-  workflow_call
-  #workflow_call:
-  #inputs:
-  #version:
-  #  required: true
-  #  type: string
-  #image:
-  #  required: true
-  #  type: string
+on: workflow_call
 
 jobs:
   build:
@@ -29,9 +20,7 @@ jobs:
 
   tests_jest:
     name: Run Jest tests
-    #if: github.event.action != 'labeled'
-    if: false
-    #needs: [build]
+    if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -46,9 +35,8 @@ jobs:
 
   tests_cypress:
     name: Run Cypress Tests
-    #if: github.event.action != 'labeled'
+    if: github.event.action != 'labeled'
     if: false
-    #needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

@@ -4,28 +4,14 @@ on:
   push:
     branches: feature/**
 
-#env:
-#  IMAGE: portfolio-web
-#  VERSION: 0.1.${{github.run_number}}-preview
-
 jobs:
-  call-test-workflow:
-    name: call test
-    uses: ./.github/workflows/test.yml
-    with:
-      image: $IMAGE
-    secrets: inherit
-
   call-build-and-test-workflow:
-    if: false
     name: build and test
-    #uses: alex-piccione/portfolio-web-UI/.github/workflows/build_and_test.yml@main
     uses: ./.github/workflows/build_and_test.yml
 
   call-create-image-workflow:
-    if: true
     name: create Docker image
-    #needs: call-build-and-test-workflow
+    needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
       version_postfix: "-preview"
