@@ -3,16 +3,14 @@ name: Create image
 on:
   workflow_call:
     inputs:
-      image:
-        required: true
-        type: string
-      version:
-        required: true
+      version_postfix:
+        required: false
         type: string
 
 env:
-  IMAGE: ${{ inputs.image }}
-  VERSION: ${{ inputs.version }}
+  #env variables are not passed to nested workflow
+  IMAGE: portfolio-web
+  VERSION: 0.1.${{github.run_number}}${{ inputs.version_postfix }}
 
 jobs:
   build_docker_image:

@@ -23,11 +23,10 @@ jobs:
     uses: ./.github/workflows/build_and_test.yml
 
   call-create-image-workflow:
-    if: false
+    if: true
     name: create Docker image
     needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
-      image: "$IMAGE"
-      version: "$VERSION"
+      version_postfix: "-preview"
     secrets: inherit
