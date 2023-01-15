@@ -14,11 +14,11 @@ env:
 jobs:
   build_docker_image:
     name: Create Docker image
-    if: >-
-      github.event_name== 'push' && github.ref == 'refs/heads/main'
-      ||       
-      github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
-      && contains( github.event.pull_request.labels.*.name, 'build:success')
+    #if: >-
+    #  github.event_name== 'push' && github.ref == 'refs/heads/main'
+    #  ||
+    #  github.event.action == 'labeled' && github.event.label.name == 'docker:image'
+    #  && contains( github.event.pull_request.labels.*.name, 'build:success')
 
     runs-on: ubuntu-latest
     steps:
