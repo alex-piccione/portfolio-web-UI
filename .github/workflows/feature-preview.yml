@@ -4,9 +4,9 @@ on:
   push:
     branches: feature/**
 
-env:
-  IMAGE: portfolio-web
-  VERSION: 0.1.${{github.run_number}}-preview
+#env:
+#  IMAGE: portfolio-web
+#  VERSION: 0.1.${{github.run_number}}-preview
 
 jobs:
   call-test-workflow:

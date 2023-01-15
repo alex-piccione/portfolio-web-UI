@@ -39,8 +39,11 @@ jobs:
           # login using environment variables: 
           password=$(aws ecr get-login-password)
           echo $password | docker login -u AWS $REPO --password-stdin
-          docker tag $IMAGE $REPO/$IMAGE:$VERSION
-          $LATEST & docker tag $IMAGE $REPO/$IMAGE:latest
-          docker push $REPO/$IMAGE:$VERSION          
-          $LATEST & docker push $REPO/$IMAGE:latest 
+          docker tag $IMAGE $REPO/$IMAGE:$VERSION          
+          docker push $REPO/$IMAGE:$VERSION     
+          echo "is latest: $LATEST"     
+          if $LATEST; then
+            docker tag $IMAGE $REPO/$IMAGE:latest
+            docker push $REPO/$IMAGE:latest 
+          fi
           echo ---
