@@ -1,6 +1,7 @@
 # build the soluton and execute tests
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
+name: Build and Test (reusable)
 on:
   workflow_call:
     inputs:
