@@ -112,14 +112,14 @@ const BalanceTable = () => {
     setLoading(false)
   }
 
-  const reload = () => {
+  const reload = async () => {
     setError(undefined)
-    loadBalance()
+    await loadBalance()
   }
 
   useMountEffect(() => {loadBalance()})
 
-  useEffect(reload, [baseCurrency.currency])
+  useEffect(() => {reload()}, [baseCurrency.currency])
  
   return error ? 
     <><Alert type="error">{error}</Alert> <div onClick={reload} style={{cursor: "pointer"}}>Ok, retry</div></> :
