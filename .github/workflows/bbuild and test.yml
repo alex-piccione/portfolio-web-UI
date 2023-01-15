@@ -1,0 +1,155 @@
+# - uses: actions/setup-node@v3 https://github.com/actions/setup-node
+# Documentation says it will cache Yarn dependencies
+# Before adding it the build was 3'20"
+# After adding it the build is the same
+
+name: Build and test
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+env:
+  VERSION: 0.1.${{github.run_number}}
+  CR_URL: c8n.io
+  IMAGE: portfolio-web
+jobs:
+  info:
+    name: Info for ${{ github.event.action }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: action
+        run: |
+          echo github.event.action - ${{ github.event.action }}
+          echo github.head_ref     - ${{ github.head_ref }}
+
+  build:
+    name: "Build"
+    if: github.event.action != 'labeled'
+    runs-on: ubuntu-latest
+    steps:
+      - name: remove labels
+        uses: actions-ecosystem/action-remove-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: |
+            build:success
+            docker:image
+
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with:
+          cache: "yarn"
+          node-version: 18
+      - name: Build
+        run: yarn install && yarn build
+
+  tests_jest:
+    name: Run Jest tests
+    if: github.event.action != 'labeled'
+    #needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with:
+          node-version: 18
+      - name: Install packages
+        run: yarn install
+      - name: Run Jest
+        run: yarn test:unit
+
+  tests_cypress:
+    name: Run Cypress Tests
+    if: github.event.action != 'labeled'
+    #needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: "yarn"
+      - name: Install packages
+        run: yarn install
+      - name: Run Cypress
+        #run: yarn start & yarn test:ui:run  # yarn start requires next build
+        run: yarn dev & yarn test:ui:run
+
+  # We mark the build Success only when build and all the tests passes
+  label_success:
+    runs-on: ubuntu-latest
+    #if: github.event.action != 'labeled'
+    if: github.event.action == 'pull_request'
+    needs: [build, tests_jest, tests_cypress]
+    steps:
+      - uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: build:success
+
+  build_docker_image:
+    name: Create Docker image
+    if: >-
+      github.event_name== 'push' && github.ref == 'refs/heads/main'
+      ||       
+      github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
+      && contains( github.event.pull_request.labels.*.name, 'build:success')
+
+    runs-on: ubuntu-latest
+    steps:
+      # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
+      - name: remove label
+        if: github.event.action == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'docker:image')
+        uses: actions-ecosystem/action-remove-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: docker:image
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker image build -t $IMAGE -f devops/Dockerfile.2 .
+      - name: Publish Docker image on AWS ECR
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_DEVOP_ACCESS_KEY_SECRET}}
+          AWS_REGION: eu-central-1
+          REPO: ${{secrets.AWS_ECR_URL}}
+        run: |
+          echo "### Push image on AWS ECR"
+          # login using environment variables: 
+          password=$(aws ecr get-login-password)
+          echo $password | docker login -u AWS $REPO --password-stdin
+          docker tag $IMAGE $REPO/$IMAGE:$VERSION
+          docker tag $IMAGE $REPO/$IMAGE:latest
+          docker push $REPO/$IMAGE:$VERSION          
+          docker push $REPO/$IMAGE:latest 
+          echo ---
+      - name: Publish Docker image on c8n (c8n.io)
+        env:
+          REPO: portfolio
+        run: |
+          echo ### Container Registry Login and Push ###
+          echo ${{secrets.CR_PWD}} | docker login -u ${{secrets.CR_USERID}} $CR_URL --password-stdin
+          echo -----
+          echo look for docker config.json
+          echo /home/runner/.docker/config.json
+          cd /home/runner/.docker/
+          echo “$(<config.json)”
+          echo -----
+          echo re-tag and push the images
+          docker image tag $IMAGE $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION
+          docker image tag $IMAGE $CR_URL/${{secrets.CR_USERID}}/$REPO:latest
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:$VERSION           
+          docker image push $CR_URL/${{secrets.CR_USERID}}/$REPO:latest 
+          docker logout
+          echo -----
+          echo look for docker config.json
+          echo /home/runner/.docker/config.json
+          cd /home/runner/.docker/
+          echo “$(<config.json)”
+          rm /home/runner/.docker/config.json
+          echo “$(<config.json)”
+          echo -----
