@@ -1,0 +1,50 @@
+# build the soluton and execute tests
+# https://docs.github.com/en/actions/using-workflows/reusing-workflows
+
+name: Build and Test
+on: workflow_call
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with:
+          cache: "yarn"
+          node-version: 18
+      - name: Build
+        run: yarn install && yarn build
+
+  tests_jest:
+    name: Run Jest tests
+    if: github.event.action != 'labeled'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
+        with:
+          node-version: 18
+      - name: Install packages
+        run: yarn install
+      - name: Run Jest
+        run: yarn test:unit
+
+  tests_cypress:
+    name: Run Cypress Tests
+    if: github.event.action != 'labeled'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: "yarn"
+      - name: Install packages
+        run: yarn install
+      - name: Run Cypress
+        #run: yarn start & yarn test:ui:run  # yarn start requires next build
+        run: yarn dev & yarn test:ui:run

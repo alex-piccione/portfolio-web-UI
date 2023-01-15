@@ -1,16 +1,16 @@
-#
 # - uses: actions/setup-node@v3 https://github.com/actions/setup-node
 # Documentation says it will cache Yarn dependencies
 # Before adding it the build was 3'20"
 # After adding it the build is the same
 
-name: Build and test
+name: Build Main
 on:
   push:
     branches: main
-  pull_request:
-    branches: main
-    types: [opened, synchronize, reopened, labeled]
+  #pull_request:
+  #  branches:
+  #    - main
+  #  types: [opened, synchronize, reopened, labeled]
 
 env:
   VERSION: 0.1.${{github.run_number}}
@@ -129,7 +129,7 @@ jobs:
           docker push $REPO/$IMAGE:$VERSION          
           docker push $REPO/$IMAGE:latest 
           echo ---
-      - name: Publish Docker image on c8n
+      - name: Publish Docker image on c8n (c8n.io)
         env:
           REPO: portfolio
         run: |
