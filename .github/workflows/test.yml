@@ -6,7 +6,10 @@ on:
         required: true
         type: string
 
-jobs:
+env:
+  IMAGE: ${{ inputs.image }}
+
+jobs:dd env
   print_variables:
     name: "Print variables"
     runs-on: ubuntu-latest
