@@ -11,8 +11,8 @@ on:
         type: string
 
 env:
-  IMAGE: $image
-  VERSION: $version
+  IMAGE: ${{ inputs.image }}
+  VERSION: ${{ inputs.version }}
 
 jobs:
   build_docker_image:
