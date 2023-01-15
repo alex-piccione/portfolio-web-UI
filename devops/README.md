@@ -1,6 +1,6 @@
 # Deploy
 
-The application is deployed on a remote Linux machine, usually Ubuntu 20.04.  
+The application is deployed on a remote Linux machine, at the moment Ubuntu 22.04.  
 The machine (Host) should have Docker and needs to download an run the image created and updated by the deployment process.  
 The Docker image is created in GitHub Action and pushed on AWS ECR in a private repository.
 

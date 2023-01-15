@@ -1,19 +1,18 @@
-# 
 # - uses: actions/setup-node@v3 https://github.com/actions/setup-node
 # Documentation says it will cache Yarn dependencies
 # Before adding it the build was 3'20"
 # After adding it the build is the same
 
 name: Build and test
-on:  
+on:
   push:
     branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, labeled]
 
-env:  
+env:
   VERSION: 0.1.${{github.run_number}}
-  CR_URL: c8n.io  
+  CR_URL: c8n.io
   IMAGE: portfolio-web
 jobs:
   info:
@@ -21,13 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: action
-        run: | 
+        run: |
           echo github.event.action - ${{ github.event.action }}
           echo github.head_ref     - ${{ github.head_ref }}
 
   build:
     name: "Build"
-    if: github.event.action != 'labeled'    
+    if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
       - name: remove labels
@@ -42,11 +41,11 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
         with:
-          cache: 'yarn'
+          cache: "yarn"
           node-version: 18
       - name: Build
         run: yarn install && yarn build
-  
+
   tests_jest:
     name: Run Jest tests
     if: github.event.action != 'labeled'
@@ -56,7 +55,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3 # use cache for Yarn dependencies https://github.com/actions/setup-node
-        with: 
+        with:
           node-version: 18
       - name: Install packages
         run: yarn install
@@ -73,7 +72,7 @@ jobs:
         uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          cache: 'yarn'
+          cache: "yarn"
       - name: Install packages
         run: yarn install
       - name: Run Cypress
@@ -90,7 +89,7 @@ jobs:
       - uses: actions-ecosystem/action-add-labels@v1
         with:
           labels: build:success
-  
+
   build_docker_image:
     name: Create Docker image
     if: >-
@@ -98,8 +97,8 @@ jobs:
       ||       
       github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
       && contains( github.event.pull_request.labels.*.name, 'build:success')
-      
-    runs-on: ubuntu-latest  
+
+    runs-on: ubuntu-latest
     steps:
       # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
       - name: remove label
@@ -111,13 +110,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build Docker image
-        run: docker image build -t $IMAGE -f devops/Dockerfile.2 . 
-      - name: Publish Docker image on AWS ECR        
+        run: docker image build -t $IMAGE -f devops/Dockerfile.2 .
+      - name: Publish Docker image on AWS ECR
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_DEVOP_ACCESS_KEY_SECRET}}
           AWS_REGION: eu-central-1
-          REPO: ${{secrets.AWS_ECR_URL}}          
+          REPO: ${{secrets.AWS_ECR_URL}}
         run: |
           echo "### Push image on AWS ECR"
           # login using environment variables: 
@@ -127,9 +126,9 @@ jobs:
           docker tag $IMAGE $REPO/$IMAGE:latest
           docker push $REPO/$IMAGE:$VERSION          
           docker push $REPO/$IMAGE:latest 
-          echo ---     
-      - name: Publish Docker image on c8n
-        env: 
+          echo ---
+      - name: Publish Docker image on c8n (c8n.io)
+        env:
           REPO: portfolio
         run: |
           echo ### Container Registry Login and Push ###
