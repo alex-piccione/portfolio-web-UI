@@ -7,7 +7,9 @@ on:
         type: string
 
 env:
-  IMAGE: ${{ inputs.image }}
+  #IMAGE: ${{ inputs.image }} # env variables are not passed to nested workflow
+  IMAGE: portfolio-web
+  VERSION: 0.1.${{github.run_number}}-preview
 
 jobs:dd env
   print_variables:
@@ -15,4 +17,4 @@ jobs:dd env
     runs-on: ubuntu-latest
     steps:
       - name: Checkoutprint
-        run: echo I\'m a test for the image ${{ inputs.image }}
+        run: echo I\'m a test for the image $IMAGE
