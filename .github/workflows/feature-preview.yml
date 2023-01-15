@@ -10,7 +10,7 @@ env:
 
 jobs:
   call-build-and-test-workflow:
-    uses: alex-piccione/portfolio-web-UI/.github/workflows/common/build_and_test.yml@main
+    uses: alex-piccione/portfolio-web-UI/.github/workflows/build_and_test.yml@main
     #with:
     #  config-path: .github/workflows/common/build_and_test.yml
     secrets:
