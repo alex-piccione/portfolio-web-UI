@@ -9,8 +9,8 @@ env:
 
 jobs:
   call-build-and-test-workflow:
-    uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
-    with:
-      config-path: .github/workflows/common/build_and_test.yml
+    uses: alex-piccione/portfolio-web-UI/.github/workflows/common/build_and_test.yml
+    #with:
+    #  config-path: .github/workflows/common/build_and_test.yml
     secrets:
       envPAT: ${{ secrets.envPAT }}
