@@ -25,7 +25,7 @@ jobs:
   call-create-image-workflow:
     if: true
     name: create Docker image
-    needs: call-build-and-test-workflow
+    #needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
       version_postfix: "-preview"
