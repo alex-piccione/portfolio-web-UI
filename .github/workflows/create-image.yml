@@ -14,21 +14,9 @@ env:
 jobs:
   build_docker_image:
     name: Create Docker image
-    #if: >-
-    #  github.event_name== 'push' && github.ref == 'refs/heads/main'
-    #  ||
-    #  github.event.action == 'labeled' && github.event.label.name == 'docker:image'
-    #  && contains( github.event.pull_request.labels.*.name, 'build:success')
-
     runs-on: ubuntu-latest
     steps:
-      # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
-      - name: remove label
-        if: github.event.action == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'docker:image')
-        uses: actions-ecosystem/action-remove-labels@v1
-        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
-        with:
-          labels: docker:image
+      # TODO: use artifact to avoid Checkout?
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build Docker image
