@@ -19,5 +19,6 @@ jobs:
     steps:
       - name: action
         run: |
+          echo "Info:"
           echo github.event.action - ${{ github.event.action }}
           echo github.head_ref     - ${{ github.head_ref }}
