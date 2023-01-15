@@ -1,4 +1,4 @@
-name: Build and test
+name: Build Preview
 on:
   push:
     branches: [feature]
@@ -8,11 +8,9 @@ env:
   IMAGE: portfolio-web
 
 jobs:
-  info:
-    name: Info for ${{ github.event.action }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: action
-        run: |
-          echo github.event.action - ${{ github.event.action }}
-          echo github.head_ref     - ${{ github.head_ref }}
+  call-build-and-test-workflow:
+    uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
+    with:
+      config-path: .github/labeler.yml
+    secrets:
+      envPAT: ${{ secrets.envPAT }}
