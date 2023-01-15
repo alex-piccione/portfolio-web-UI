@@ -3,14 +3,15 @@
 
 name: Build and Test
 on:
-  workflow_call:
-    inputs:
-      #version:
-      #  required: true
-      #  type: string
-      #image:
-      #  required: true
-      #  type: string
+  workflow_call
+  #workflow_call:
+  #inputs:
+  #version:
+  #  required: true
+  #  type: string
+  #image:
+  #  required: true
+  #  type: string
 
 jobs:
   build:
