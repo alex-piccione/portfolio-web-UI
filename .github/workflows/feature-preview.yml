@@ -11,6 +11,6 @@ jobs:
   call-build-and-test-workflow:
     uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
     with:
-      config-path: .github/labeler.yml
+      config-path: .github/build and test.yml
     secrets:
       envPAT: ${{ secrets.envPAT }}
