@@ -9,3 +9,42 @@ on:
       image:
         required: true
         type: string
+
+jobs:
+  build_docker_image:
+    name: Create Docker image
+    if: >-
+      github.event_name== 'push' && github.ref == 'refs/heads/main'
+      ||       
+      github.event.action == 'labeled' && github.event.label.name == 'docker:image' 
+      && contains( github.event.pull_request.labels.*.name, 'build:success')
+
+    runs-on: ubuntu-latest
+    steps:
+      # Do we need checkout? https://stackoverflow.com/questions/71668199/github-action-job-can-continue-from-the-state-the-previous-job-left-without-a
+      - name: remove label
+        if: github.event.action == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'docker:image')
+        uses: actions-ecosystem/action-remove-labels@v1
+        #if: ${{ startsWith(github.event.comment.body, '/remove-labels') }}
+        with:
+          labels: docker:image
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker image build -t $IMAGE -f devops/Dockerfile.2 .
+      - name: Publish Docker image on AWS ECR
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_DEVOP_ACCESS_KEY_SECRET}}
+          AWS_REGION: eu-central-1
+          REPO: ${{secrets.AWS_ECR_URL}}
+        run: |
+          echo "### Push image on AWS ECR"
+          # login using environment variables: 
+          password=$(aws ecr get-login-password)
+          echo $password | docker login -u AWS $REPO --password-stdin
+          docker tag $IMAGE $REPO/$IMAGE:$VERSION
+          docker tag $IMAGE $REPO/$IMAGE:latest
+          docker push $REPO/$IMAGE:$VERSION          
+          docker push $REPO/$IMAGE:latest 
+          echo ---
