@@ -10,6 +10,7 @@ env:
 
 jobs:
   call-build-and-test-workflow:
+    name: build and test
     #uses: alex-piccione/portfolio-web-UI/.github/workflows/build_and_test.yml@main
     uses: ./.github/workflows/build_and_test.yml
     with:

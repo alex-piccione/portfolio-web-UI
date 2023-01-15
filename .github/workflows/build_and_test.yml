@@ -42,3 +42,20 @@ jobs:
         run: yarn install
       - name: Run Jest
         run: yarn test:unit
+
+  tests_cypress:
+    name: Run Cypress Tests
+    if: github.event.action != 'labeled'
+    #needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          cache: "yarn"
+      - name: Install packages
+        run: yarn install
+      - name: Run Cypress
+        #run: yarn start & yarn test:ui:run  # yarn start requires next build
+        run: yarn dev & yarn test:ui:run
