@@ -6,15 +6,19 @@ on:
       version_postfix:
         required: false
         type: string
+      is_latest:
+        required: false
+        type: boolean
 
 env:
   #env variables are not passed to nested workflow
   IMAGE: portfolio-web
   VERSION: 0.1.${{github.run_number}}${{ inputs.version_postfix }}
+  LATEST: ${{ inputs.is_latest }}
 
 jobs:
   build_docker_image:
-    name: Create Docker image
+    name: Docker image
     runs-on: ubuntu-latest
     steps:
       # TODO: use artifact to avoid Checkout?
@@ -36,7 +40,7 @@ jobs:
           password=$(aws ecr get-login-password)
           echo $password | docker login -u AWS $REPO --password-stdin
           docker tag $IMAGE $REPO/$IMAGE:$VERSION
-          docker tag $IMAGE $REPO/$IMAGE:latest
+          $LATEST & docker tag $IMAGE $REPO/$IMAGE:latest
           docker push $REPO/$IMAGE:$VERSION          
-          docker push $REPO/$IMAGE:latest 
+          $LATEST & docker push $REPO/$IMAGE:latest 
           echo ---
