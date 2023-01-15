@@ -21,7 +21,7 @@ jobs:
     #  envPAT: ${{ secrets.envPAT }}
 
   call-create-image-workflow:
-    name: build and test
+    name: create Docker image
     needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
