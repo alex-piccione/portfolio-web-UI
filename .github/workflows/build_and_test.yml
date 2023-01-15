@@ -36,7 +36,6 @@ jobs:
   tests_cypress:
     name: Run Cypress Tests
     if: github.event.action != 'labeled'
-    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
