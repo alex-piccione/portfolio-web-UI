@@ -1,21 +1,20 @@
 # build the soluton and execute tests
 # https://docs.github.com/en/actions/using-workflows/reusing-workflows
 
-name: Build and Test (reusable)
+name: Build and Test
 on:
   workflow_call:
     inputs:
-      version:
-        required: true
-        type: string
-      image:
-        required: true
-        type: string
+      #version:
+      #  required: true
+      #  type: string
+      #image:
+      #  required: true
+      #  type: string
 
 jobs:
   build:
     name: "Build"
-    #if: github.event.action != 'labeled'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

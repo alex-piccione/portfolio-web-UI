@@ -1,0 +1,11 @@
+name: Create image
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+      image:
+        required: true
+        type: string

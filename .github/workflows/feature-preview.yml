@@ -13,9 +13,9 @@ jobs:
     name: build and test
     #uses: alex-piccione/portfolio-web-UI/.github/workflows/build_and_test.yml@main
     uses: ./.github/workflows/build_and_test.yml
-    with:
-      version: $VERSION
-      image: $IMAGE
+    #with:
+    #  version: $VERSION
+    #  image: $IMAGE
     #  config-path: .github/workflows/common/build_and_test.yml
     #secrets:
     #  envPAT: ${{ secrets.envPAT }}
