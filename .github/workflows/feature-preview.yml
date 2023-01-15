@@ -25,6 +25,6 @@ jobs:
     needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
-      image: $IMAGE
-      version: $VERSION
+      image: ${{ env.IMAGE }}
+      version: ${{ env.VERSION }}
     secrets: inherit
