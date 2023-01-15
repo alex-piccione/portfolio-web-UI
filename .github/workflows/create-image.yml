@@ -19,7 +19,7 @@ jobs:
       # TODO: use artifact to avoid Checkout?
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build Docker image
+      - name: Build Docker image "$IMAGE:$VERSION"
         run: docker image build -t $IMAGE -f devops/Dockerfile.2 .
       - name: Publish Docker image on AWS ECR
         env:
