@@ -12,4 +12,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkoutprint
-        run: echo "I'm a test"
+        run: echo I'm a test for the image ${{ inputs.image }}
