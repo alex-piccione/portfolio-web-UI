@@ -16,5 +16,5 @@ jobs:
       version: $VERSION
       image: $IMAGE
     #  config-path: .github/workflows/common/build_and_test.yml
-    secrets:
-      envPAT: ${{ secrets.envPAT }}
+    #secrets:
+    #  envPAT: ${{ secrets.envPAT }}
