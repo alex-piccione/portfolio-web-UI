@@ -3,12 +3,15 @@ name: Create image
 on:
   workflow_call:
     inputs:
+      image:
+        required: true
+        type: string
       version:
         required: true
         type: string
 
 env:
-  IMAGE: portfolio-web
+  IMAGE: $image
   VERSION: $version
 
 jobs:
@@ -19,8 +22,10 @@ jobs:
       # TODO: use artifact to avoid Checkout?
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Build Docker image "$IMAGE:$VERSION"
-        run: docker image build -t $IMAGE -f devops/Dockerfile.2 .
+      - name: Build Docker image
+        run: |
+          echo build "$IMAGE:$VERSION"
+          docker image build -t $IMAGE -f devops/Dockerfile.2 .
       - name: Publish Docker image on AWS ECR
         env:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}

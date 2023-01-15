@@ -5,8 +5,8 @@ on:
     branches: feature/**
 
 env:
-  VERSION: 0.1.${{github.run_number}}-preview
   IMAGE: portfolio-web
+  VERSION: 0.1.${{github.run_number}}-preview
 
 jobs:
   call-build-and-test-workflow:
@@ -25,5 +25,6 @@ jobs:
     needs: call-build-and-test-workflow
     uses: ./.github/workflows/create-image.yml
     with:
+      image: $IMAGE
       version: $VERSION
     secrets: inherit
