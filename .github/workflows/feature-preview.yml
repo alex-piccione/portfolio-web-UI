@@ -19,3 +19,10 @@ jobs:
     #  config-path: .github/workflows/common/build_and_test.yml
     #secrets:
     #  envPAT: ${{ secrets.envPAT }}
+
+  call-create-image-workflow:
+    name: build and test
+    needs: call-build-and-test-workflow
+    uses: ./.github/workflows/create-image.yml
+    with:
+      version: $VERSION

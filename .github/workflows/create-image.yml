@@ -6,9 +6,10 @@ on:
       version:
         required: true
         type: string
-      image:
-        required: true
-        type: string
+
+env:
+  IMAGE: portfolio-web
+  VERSION: $version
 
 jobs:
   build_docker_image:
