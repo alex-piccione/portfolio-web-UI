@@ -11,7 +11,7 @@ env:
   IMAGE: portfolio-web
   VERSION: 0.1.${{github.run_number}}-preview
 
-jobs:dd env
+jobs:
   print_variables:
     name: "Print variables"
     runs-on: ubuntu-latest
