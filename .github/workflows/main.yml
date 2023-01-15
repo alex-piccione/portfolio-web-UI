@@ -3,10 +3,10 @@
 # Before adding it the build was 3'20"
 # After adding it the build is the same
 
-name: Build and test
+name: Build Main
 on:
   push:
-    branches: [main]
+    branches: main
   pull_request:
     types: [opened, synchronize, reopened, labeled]
 

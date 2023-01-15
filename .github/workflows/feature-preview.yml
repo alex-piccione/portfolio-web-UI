@@ -1,4 +1,4 @@
-name: Build Preview
+name: Build Feature Preview
 on:
   push:
     branches: feature/**
