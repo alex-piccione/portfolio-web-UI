@@ -1,0 +1,49 @@
+name: Create image
+
+on:
+  workflow_call:
+    inputs:
+      version_postfix:
+        required: false
+        type: string
+      is_latest:
+        required: false
+        type: boolean
+
+env:
+  # env variables are not passed to nested workflow
+  IMAGE: portfolio-web
+  VERSION: 0.1.${{github.run_number}}${{ inputs.version_postfix }}
+  LATEST: ${{ inputs.is_latest }}
+
+jobs:
+  build_docker_image:
+    name: Docker image
+    runs-on: ubuntu-latest
+    steps:
+      # TODO: use artifact to avoid Checkout?
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build Docker image
+        run: |
+          echo build "$IMAGE:$VERSION"
+          docker image build -t $IMAGE -f devops/Dockerfile.2 .
+      - name: Publish Docker image on AWS ECR
+        env:
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_DEVOP_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_DEVOP_ACCESS_KEY_SECRET}}
+          AWS_REGION: eu-central-1
+          REPO: ${{secrets.AWS_ECR_URL}}
+        run: |
+          echo "### Push image on AWS ECR"
+          # login using environment variables: 
+          password=$(aws ecr get-login-password)
+          echo $password | docker login -u AWS $REPO --password-stdin
+          docker tag $IMAGE $REPO/$IMAGE:$VERSION          
+          docker push $REPO/$IMAGE:$VERSION     
+          echo "is latest: $LATEST"     
+          if $LATEST; then
+            docker tag $IMAGE $REPO/$IMAGE:latest
+            docker push $REPO/$IMAGE:latest 
+          fi
+          echo ---
