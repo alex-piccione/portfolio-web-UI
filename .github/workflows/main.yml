@@ -7,6 +7,10 @@ name: Build Main
 on:
   push:
     branches: main
+  #pull_request:
+  #  branches:
+  #    - main
+  #  types: [opened, synchronize, reopened, labeled]
 
 env:
   VERSION: 0.1.${{github.run_number}}
