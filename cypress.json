@@ -11,5 +11,11 @@
   "supportFile": "tests/cypress/support/index.js",
   "screenshotsFolder": "tests/cypress/screenshots",
   "videosFolder": "tests/cypress/videos",
-  "downloadsFolder": "tests/cypress/downloads" 
+  "downloadsFolder": "tests/cypress/downloads",
+
+  "component": {
+    "testFiles": "**/*.test.{js,ts,jsx,tsx}",
+    "_testFiles": ["**/*.{component.ts,component.js}"],
+    "componentsFolder": "components"
+  }
 }
